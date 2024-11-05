@@ -1,1 +1,3415 @@
+\documentclass[a4paper]{report}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{hyperref, lineno} % TODO REMOVE
+\usepackage{mystyle}
+%
+% \graphicspath{{images/}}
+% \SetWatermarkAngle{90} % TODO REMOVE
+% \SetWatermarkScale{0.3} % TODO REMOVE
+% \SetWatermarkHorCenter{1cm} % TODO REMOVE
+\setcounter{tocdepth}{3} % SUBSECTIONS IN TOC
+%
+\author{
+  Julianne Cai\\
+} 
+\title{}
+\date{\today}
 
+\usepackage[myheadings]{fullpage}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{graphicx, wrapfig, subcaption, setspace, booktabs}
+\usepackage[protrusion=true, expansion=true]{microtype}
+\usepackage{sectsty}
+\usepackage{titling}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+\theoremstyle{proposition}
+\newtheorem{proposition}{Proposition}
+\theoremstyle{conjecture}
+\newtheorem{conjecture}{Conjecture}
+\theoremstyle{lemma}
+\newtheorem{lemma}{Lemma}
+\theoremstyle{corollary}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{exercise}
+\newtheorem{exercise}{Exercise}
+
+\newtheorem{example}{Example}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+
+\newcommand{\mcal}{\mathcal}
+\newcommand{\diff}{\,\mathrm{d}}
+
+\newcommand{\Ell}{\mcal{E}\ell\ell}
+
+\newcommand{\on}{\operatorname}
+
+\newcommand{\spec}{\on{Spec}}
+\newcommand{\proj}{\on{Proj}}
+\newcommand{\bspec}{\on{\mathbf{Spec}}}
+\newcommand{\sym}{\on{Sym}}
+
+\newcommand{\D}{\on{D}}
+\newcommand{\bounded}{\on{b}}
+
+\newcommand{\qcoh}{\on{\mathbf{QCoh}}}
+\newcommand{\coh}{\on{\mathbf{Coh}}}
+\newcommand{\Mod}{\on{\mathbf{Mod}}}
+\newcommand{\Vect}{\on{\mathbf{Vect}}}
+\newcommand{\fin}{\on{fin}}
+
+\newcommand{\fuch}{\on{fuch}}
+\newcommand{\DiffEq}{\on{\mathbf{DiffEq}}}
+\newcommand{\DiffMod}{\on{\mathbf{DiffMod}}}
+
+\newcommand{\supp}{\on{supp}}
+
+\newcommand{\Hom}{\on{Hom}}
+\newcommand{\RHom}{\on{\textit{R}Hom}}
+\newcommand{\Ext}{\on{Ext}}
+
+\newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
+
+\begin{document}
+
+\title{ \normalsize \textsc{Live-TeXed Lecture Notes}
+		\\ [2.0cm]
+		\HRule{0.5pt} \\
+		\LARGE \textbf{MAST90023 - Algebraic Topology}
+		\HRule{2pt} \\ [0.5cm]
+        }
+
+\date{}
+\author{
+		Julianne Cai \\\\
+        }
+\maketitle
+\newpage
+
+\tableofcontents
+\newpage
+
+\chapter{Week One}
+
+\paragraph{This week, we learned about\ldots} Something
+
+\section{Lecture 1, 28/02/2024}
+
+\subsection{Toplogy and Topological Spaces}
+
+\begin{definition}
+    Let $X$ be a set. Then, the \emph{power set} of $X$ -- denoted by 
+    $\mcal{P}(X)$ -- is the set of all subsets of $X$.
+    A subset $\tau \subset \mcal{P}(X)$ is a \emph{topology} if the following
+    holds:
+    \begin{itemize}
+        \item[(i)] $\emptyset, X \in \tau$,
+        \item[(ii)] (Closure under Arbitrary Union) $\bigcup_{\alpha \in \Lambda} U_\alpha \in \tau$ if 
+            $U_\alpha \in \tau$ for each $\alpha \in \Lambda$,
+        \item[(iii)] (Closure under Finite Intersections) 
+            $\bigcup_{i=1}^n U_i \in \tau$ if each $U_i \in \tau$.
+    \end{itemize}
+    The pair $(X,\tau)$ is called a \emph{topological space}.
+\end{definition}
+
+\begin{remark}
+    Often, we will just drop $\tau$ and say that $X$ is a toplogical space, where
+    there is no confusion.
+\end{remark}
+
+\begin{example}
+    The \emph{one-point space} is given by 
+    $\tau_{\on{in}} = \lbrace X,\emptyset\rbrace$.
+    The \emph{discrete topology} $\tau_{\on{discrete}} = \mcal{P}(X)$ is the smallest topology
+    that can exist.
+\end{example}
+
+\begin{example}[Metric Spaces]
+    A metric space $(X,d)$ defines a topological space via open balls
+    $$B_r(x) := \lbrace y \in X : d(x,y) < r\rbrace.$$
+    In particular, we say that $U \in \tau_d$ if $U = \bigcup_{x \in U}B_r(x)$.
+    This defines a topology on $(X,d)$, and is sometimes called the 
+    \emph{induced topology}.
+\end{example}
+
+\begin{example}[Standard Euclidean Space]
+    Let $X = \mathbb{R}^n$, and define 
+    $$d(x,y) = \sqrt{\sum_{i=1}^n (x_i-y_i)^2},$$
+    to be the \emph{Euclidean metric}. The metric space $(\mathbb{R}^n,d)$, 
+    together with the induced topology
+    $(\mathbb{R}^n,\tau_{d})$ is called the \emph{standard Euclidean space}.
+\end{example}
+
+\begin{example}[The $n$-Sphere]
+    Let $$\mathbb{S}^n = \lbrace x \in \mathbb{R}^{n+1} : d(x,0) = 1\rbrace,$$
+    be the \emph{$n$-sphere}. One can equip $\mathbb{S}^n$ with the structure
+    of a topological space via the usual Euclidean metric, or we can take the one
+    induced from the topological structure from the one on $\mathbb{R}^{n+1}$.
+\end{example}
+
+\subsection{Continuous Maps}
+
+\begin{remark}[Diarmuid Wisdom]
+    The point of topology is that it is the study of maps. Spaces are 
+    interesting, but maps are the stars of the show. In particular, they are at 
+    least as important as spaces (Diarmuid, 2024).
+\end{remark}
+
+\begin{definition}
+    Given a map $f:  X \to Y$ of topological spaces, then $f$ is 
+    \emph{continuous} if given any open set $U$ of $Y$, the 
+    pre-image $f^{-1}(U)$ is open in $X$.
+\end{definition}
+
+\begin{exercise}
+    Prove that a map $f : (X, d_X) \to (Y,d_Y)$ is continuous (in the 
+    metric space sense) if and only if it is continuous (in the topology space
+    sense).
+\end{exercise}
+
+Recall:
+
+\begin{definition}[Metric Space Continuity]
+    A map of metric spaces $f : (X, d_X) \to (Y,d_Y)$ is \emph{continuous} if 
+    for all $\varepsilon > 0$, there exists $\delta > 0$ such that if
+    $d_X(x,y) < \delta$, then $d_Y(f(x),f(y)) < \varepsilon$.
+\end{definition}
+
+\begin{example}
+    The map 
+    $$1_X : (X,\tau) \longrightarrow (X,\tau),$$
+    is continuous. 
+    The map 
+    $$1_X : (X,\tau_{\on{in}}) \longrightarrow (X,\tau_{\on{discrete}}),$$
+    is \emph{not} continuous in general.
+\end{example}
+
+
+\begin{lemma}
+    If $f : X \to Y$ and $g : Y \to Z$ are both continuous, then 
+    $f \circ g : X \to Z$ is continuous.
+\end{lemma}
+
+\begin{proof}
+    Let $U\subseteq Z$ be open. Then, $g^{-1}(U)$ is open in $Y$ by continuity
+    of $g$. By continuity of $f$, the set $(f\circ g)^{-1}(U)$ is open in $X$.
+\end{proof}
+
+\begin{remark}
+    Given any function $f:  X \to Y$, and a subset $U \subseteq Y$,
+    the \emph{pre-image} of $U$ is:
+    $$f^{-1}(U) := \lbrace x \in X : f(x) \in U \rbrace.$$
+\end{remark}
+
+\begin{example}
+    The addition function $+ : \mathbb{R}^2 \to \mathbb{R}$ and 
+    the multiplication function $\cdot : \mathbb{R}^2 \to \mathbb{R}$ 
+    are both continuous maps. 
+    This is an example of a \emph{topological group} or \emph{toplogical ring}.
+\end{example}
+
+\begin{definition}
+    A bijection $f : X \to Y$ is a \emph{homeomorphism} if $f$ and $f^{-1}$ 
+    are continuous.
+\end{definition}
+
+\begin{remark}
+    Homeomorphisms serve as a topological analogue for isomorphisms.
+\end{remark}
+
+\paragraph{Problem:} Given $X$ and $Y$, decide if they are homeomorphic or not. For instance, are $\mathbb{R}^2$ and $\mathbb{R}^3$ homeomorphic? The answer
+is no, thankfully, but this is quite difficult to prove. But it follows from invariance of domain. We will prove this later.\\\\
+This is quite a difficult problem in general. When proving theorems like this, 
+we need to be careful of space-filling curves --- which are 
+surjective maps $\gamma : I \to I^2$. This is quite shocking.
+
+\subsection{Examples of Spaces}
+
+\begin{definition}
+    Let $(X, \tau_X)$ be a topological space, and $A\subseteq X$ a subset. 
+    The \emph{subspace topology} $\tau_A$  is a topology on $A$ inherited from 
+    the one on $X$ in the following way:
+    $U \in \tau_A$ if and only if $U = A \cap V$ for some $V \in \tau_X$.
+\end{definition}
+
+\begin{exercise}
+    Show that $\tau_A$ is a toplogy on $A$.
+\end{exercise}
+
+\begin{exercise}
+    If $\tau_X = \tau_d$ for some metric $d$ on $X$, then the restriction
+    $d_A := d\vert_{A\times A}$ defines a metric on $A$.
+    Show that $(A,\tau_A) = (A,\tau_{d_A})$.
+\end{exercise}
+
+\begin{example}
+    We can topologise $\mathbb{S}^n$ as a subspace of $\mathbb{R}^{n+1}$
+    via the subspace topology.
+\end{example}
+
+\begin{example}[Cantor Set]
+    Start with $C_0 = [0,1]$. Then, remove the middle third of the interval
+    to get $$C_1 = [0,1/3]\cup [2/3,1],$$
+    and punch out the middle thirds in each of the disjoint intervals to get 
+    $C_2$. Then, repeat forever. It is a compact set.
+\end{example}
+
+\begin{definition}[Neighbourhoods]
+    Given a point $x\in X$, then a subset $N\subset X$ is a 
+    \emph{neighbourhood} of $x$ if there exists a set $U \in\tau$
+    such that $x \in U \subseteq N$.
+\end{definition}
+
+\begin{remark}
+    It is useful at times to think about neighbourhoods that are not open.
+\end{remark}
+
+\begin{definition}[Manifold]
+    $M$ is an $n$-manifold if every $X\subseteq M$ has a neighbourhood 
+    homeomorphic to $\mathbb{R}^n$, or an open subset of $\mathbb{R}^n$.
+    In other words, $n$-manifolds are \emph{locally Euclidean of constant
+    dimension}. 
+\end{definition}
+
+\begin{remark}
+    We technically also require that $M$ be paracompact and Hausdorff.
+    But, we will not define paracompactness. We will talk about 
+    the Hausdorff property next time. They are also covered in the notes.
+\end{remark}
+
+\begin{example}
+    $\mathbb{S}^1$ defines a $1$-manifold. $\mathbb{S}^n$ defines an
+    $n$-manifold.
+\end{example}
+
+\section{Lecture 2, 29/02/2024}
+
+\subsection{Examples of Spaces Continued}
+
+\begin{definition}[Product Topology]
+    Let $X$ and $Y$ be topological spaces. Then, define the 
+    topology $\tau_{X\times Y}$ to be the topology whose open sets 
+    are of the form $U = \bigcup_{\alpha,\beta \in \Lambda} U_\alpha \times V_\beta$,
+    where $U_\alpha$ and $V_\beta$ are open in $X$ and $Y$, respectively.
+\end{definition}
+
+\begin{example}
+    The $2$-torus is given by $T^2 = \mathbb{S}^1 \times \mathbb{S}^1$.
+    One may also think of $T$ as a quotient of the space $I\times I$,
+    where $I = [0,1]$ is the unit interval. \\\\
+    Moreover, one may also take the $3$-torus by 
+    $T^3 = \mathbb{S}^1 \times\mathbb{S}^1 \times \mathbb{S}^1$.
+    More generally, the $n$-torus is given by 
+    $T^n = \mathbb{S}^1 \times \cdots \times \mathbb{S}^1$. We may 
+    topologise these spaces via the product topology, using the 
+    topology on $\mathbb{S}^1$, which is induced from the one on 
+    $\mathbb{R}^2$.\\\\
+    Another interesting topological space that we can consider is 
+    $M^4 := \mathbb{S}^2 \times \mathbb{S}^2$.
+    Generally, $M = \mathbb{S}^{n_1}\times \mathbb{S}^{n_j}$,
+    for $n_1,\cdots,n_j \in \mathbb{N}^+$. 
+    We make the identification
+    $\mathbb{S}^0 = \lbrace \pm 1\rbrace$ as the two-point space.
+\end{example}
+
+\begin{remark}
+    The spaces $X\times (Y\times Z)$ and $(X\times Y)\times Z$ are canonically
+    homeomorphic.
+\end{remark}
+
+\begin{lemma}\label{lem_prod_cts}
+    Let $f : W \to Y$ and $g : W \to Z$, and $h : X \to Z$ be maps of topological
+    spaces. Then, the following are continous:
+    \begin{itemize}
+        \item[(i)] $f\times g : W \to Y \times Z$ defined by 
+            $w\mapsto (f(w),g(w))$,
+        \item[(ii)] $f \times h : W \times X \to Y \times Z$ defined by 
+            $(w,x) \mapsto (f(w),g(x))$.
+    \end{itemize}
+\end{lemma}
+
+\begin{proof}
+    \leavevmode
+    \begin{itemize}
+        \item[(i)] Let $U_\alpha \in \tau_Y$, and $V_\beta \in \tau_Z$. 
+            Then, 
+            $$(f\times g)^{-1}(U_\alpha \times V_\beta) = f^{-1}(U_\alpha) \cap g^{-1}(V_\beta),$$
+            which is open by continuity of $f$ and $g$.
+        \item[(ii)] Similarly, 
+            $$(f \times h)^{-1}(U_\alpha \times V_\beta) = f^{-1}(U_\alpha) \times h^{-1}(V_\beta),$$
+            which is open again by the continuity of $f$ and $h$.
+    \end{itemize}
+\end{proof}
+
+\begin{remark}
+    For any space $W$, we have $$\Delta : W \longrightarrow W \times W,\quad w \longmapsto (w,w),$$
+    which is called the \emph{diagonal map}.
+    Let us write 
+    $$f \overline{\times} g := (f\times g)\circ \Delta.$$
+\end{remark}
+
+\begin{exercise}
+    Show that $\Delta$ is continuous for all topological spaces.
+\end{exercise}
+
+\begin{lemma}\label{lem_proj_cts}
+    Consider the map 
+    $$\on{pr}_j : \prod_{i=1}^n X_i \longrightarrow X_j,$$
+    which projects onto the $i$-th factor. 
+    Then, $\on{pr}_j$ is continuous.
+\end{lemma}
+
+\begin{proof}
+    Exercise.
+\end{proof}
+
+\begin{remark}
+    $f : W \to Y \times Z$ is continuous if and only if 
+    $\on{pr}_Y \circ f$ and $\on{pr}_Z \circ f$ are continuous.
+\end{remark}
+
+Recall from last time that we defined continuous maps 
+$$ + : \mathbb{R}^2 \longrightarrow \mathbb{R}, \quad \times : \mathbb{R}^2 \longrightarrow \mathbb{R}.$$
+
+\begin{lemma}
+    The map
+    $$\diff p : \mathbb{R}^n \times \mathbb{R}^n \longrightarrow \mathbb{R},\quad (\mathbf{x},\mathbf{y}) \longrightarrow \sum_{i=1}^n x_iy_i,$$
+    is continuous.
+\end{lemma}
+
+\begin{proof}
+    Take projections $\on{pr}_i \times \on{pr}_j : \mathbb{R}^n \times \mathbb{R}^n \to \mathbb{R} \times \mathbb{R}$,
+    and compose this with $+ : \mathbb{R} \times \mathbb{R} \to \mathbb{R}$.
+    The projection maps are continuous by Lemma \ref{lem_proj_cts}, and thus their products are continuous by Lemma \ref{lem_prod_cts}[(i)].
+    The addition map is continuous, as aforementioned last lecture.
+\end{proof}
+
+\subsection{The Quotient Topology}
+
+Let $X$ be a topological space, and $\sim$ an equivalence relation on $X$.
+\begin{example}
+    On $\mathbb{R}$, we can define an equivalence relation 
+    stating that $x\sim y$ if and only if $x-y \in \mathbb{Z}$
+\end{example}
+
+\begin{example}
+    If a group $G$ acts on $X$, then we set $x \sim y$ if and only if 
+    there exists $g \in G$ such that $x = yg$. We can quotient by the 
+    group action and obtain the space $X/G$.
+\end{example}
+
+Let $$\overline{X} := \lbrace [x] : x \in X\rbrace,$$
+where $$[x] :=\lbrace y \in X : y \sim x\rbrace,$$
+is the \emph{equivalence class} of $x$. 
+There is a quotient map
+$$q : X \longmapsto \overline{X},\quad x \longmapsto [x].$$
+It is clear that $q$ is surjective.
+We topologise $\overline{X}$ by defining open sets in $\overline{X}$
+to be those sets $U$ for which $q^{-1}(U)$ is open under the topology on $X$.
+Denote the resulting topology by $\overline{\tau}$.
+
+\begin{example}
+    Let $X = \mathbb{R}$, and define a $\mathbb{Z}$-action on 
+    $\mathbb{R}$ by $n \cdot x := x + n$. This is equivalent to defining
+    an equivalence $x \sim y$ on $\mathbb{R}$ defined by the condition that 
+    $x-y \in \mathbb{Z}$. Then, the resulting quotient space is given by 
+    $\overline{\mathbb{R}} = \mathbb{R}/\mathbb{Z}$, which is homeomorphic
+    to $\mathbb{S}^1$, since $0\sim 1$.
+\end{example}
+
+\begin{lemma}
+    Given a continuous map $f : X \to Y$, and 
+    a quotient map $q : X \to \overline{X}$, there exists a 
+    continuous map $\overline{f} : \overline{X} \to Y$ such that the diagram
+    $$\begin{tikzcd}
+X \arrow[rd, "q"'] \arrow[rr, "f"] &                                                  & Y \\
+                                   & \overline{X} \arrow[ru, "\overline{f}"', dashed] &  
+\end{tikzcd}$$
+    commutes.
+\end{lemma}
+
+\begin{proof}
+    Define $\overline{f}([x]) = f(x)$. Then, $\overline{f}$ is continuous
+    and we are done.
+\end{proof}
+
+\begin{lemma}
+    Any map $\overline{f} : \overline{X} \to Y$ is continuous
+    if and only if $f := \overline{f} \circ q$ is continuous.
+\end{lemma}
+
+\begin{proof}
+    Suppose $\overline{f}$ is continuous. Then, since $q$ is continuous,
+    then $f = \overline{f} \circ q$ is also continuous. \\\\
+    Suppose $f$ is continuous. Let $U \in \tau_Y$, and 
+    consider the diagram 
+    $$\begin{tikzcd}
+X \arrow[rd, "q"'] \arrow[rr, "f"] &                                                  & Y \\
+                                   & \overline{X} \arrow[ru, "\overline{f}"', dashed] &  
+    \end{tikzcd}$$
+    Observe that $f^{-1}(U) = q^{-1}(\overline{f}^{-1}(U))$. Since $f$ is continuous,
+    it follows that $\overline{f}^{-1}(U)$ is also open.
+\end{proof}
+
+\begin{example}
+    Consider the diagram
+    $$\begin{tikzcd}
+\mathbb{R} \arrow[rd, "q"'] \arrow[rr, "\exp"] &                                                           & \mathbb{S}^1 \\
+                                               & \mathbb{R}/\mathbb{Z} \arrow[ru, "\overline{f}"', dashed] &             
+    \end{tikzcd}$$
+    where $\exp : t \mapsto e^{2\pi i t}$.
+    Check that $\overline{f}$ is a continuous bijection.
+    Since $\mathbb{R}/\mathbb{Z} = [0,1]/\sim$, it follows that 
+    $\mathbb{R}/\mathbb{Z}$ is compact. Moreover, since $\mathbb{S}^1$
+    is Hausdorff and compact, it follows then that $\overline{f}$
+    is a homeomorphism.
+\end{example}
+
+\subsection{Topological Equivalence}
+
+\begin{lemma}
+    If $f : X \to Y$ and $g : Y \to Z$ are homeomorphisms, then 
+    so are $g \circ f : Y \to Z$ and $f^{-1} : Y \to X$.
+\end{lemma}
+
+\begin{corollary}
+    Homeomorphisms defines an equivalence relations on the set of all
+    topological spaces.
+\end{corollary}
+
+\begin{exercise}
+    Show that compactness is preserved under homeomorphisms.
+\end{exercise}
+
+\paragraph{Goal:} Define a weaker equivalence relation on topological spaces.\\\\
+In particular, we wish to say that $X \cong Y$ if and only if 
+there exists $f : X \to Y$ and $g : Y \to X$ such that $f\circ g = 1_Y$,
+and $g\circ f = 1_X$.
+
+\subsection{Homotopy}
+
+Homotopy defines an equivalence relation on maps $X \to Y$. We say that 
+$f,g : X \to Y$ are \emph{homotopic} if there exists a $H : I \times X \to Y$
+such that $f = H\vert_{\lbrace 0 \rbrace \times X}$, and 
+$g = H\vert_{\lbrace 1 \rbrace \times X}$.
+
+\section{Lecture 3, 01/03/2024}
+
+\begin{definition}
+Let $f,g : X \to Y$ be continuous maps. Then, $f$ is \emph{homotopic} to $g$ --
+denoted $f \sim g$ if there exists a map $H : X \times I \to Y$ such that 
+$f = H \vert_{X \times \lbrace 0 \rbrace}$, and $g = H\vert_{X \times \lbrace 1\rbrace}$. 
+\end{definition}
+In effect, this allows us to ``interpolate'' between $f$ and $g$.
+
+\begin{remark}
+    One can topologise $\on{Map}(X,Y)$.
+\end{remark}
+
+Observe that we have a family of continuous maps 
+$H_t := H\vert_{X \times \lbrace t\rbrace}$ 
+for all $ t\in [0,1]$.
+
+\begin{definition}
+    A \emph{path} in a space $Z$ is a map $\gamma : I \to Z$. 
+\end{definition}
+
+With this definition, one can view homotopies as paths in the space of 
+continuous maps $\on{Map}(X,Y)$. So, an alternate definition is to say that a 
+homotopy is a path of continuous maps in $\on{Map}(X,Y)$.\\\\
+
+\begin{example}
+    Let $X = \mathbb{S}^1$, and $Y = \mathbb{R}^2 \supset \mathbb{S}^1$.
+    Then, consider the maps $f,g : \mathbb{S}^1 \to \mathbb{R}^2$ by
+    $f(x,y) = (x,y)$, and $g(x,y) = (2x,2y)$. 
+    The first map is the identity map, and the second map scales 
+    the radius of the circle by $2$.
+    Define $$H : \mathbb{S}^1 \times I \longrightarrow \mathbb{R}^2,\quad ( (x,y),t) \longmapsto (1+t)(x,y),$$
+    which defines a homotopy of $f$ into $g$.
+    Observe in particular that $H$ lands in 
+    $\mathbb{R}^2\setminus \lbrace 0\rbrace$.
+    In fact, all maps into any $\mathbb{R}^n$ are homotopic. 
+    Given any $f,g :  X \to \mathbb{R}^n$, we may define a homotopy 
+    $$H : X \times I \longrightarrow \mathbb{R}^n,\quad (x,t) \longmapsto (1-t)f(x) + tg(x),$$
+    called the \emph{straight line homotopy}.
+\end{example}
+
+\begin{example}
+    Consider $f : \mathbb{S}^1 \to \mathbb{R}^2\setminus \lbrace0\rbrace$ and 
+    $c : \mathbb{S}^1 \to \mathbb{R}^2\setminus \lbrace 0\rbrace$
+    mapping $c : (x,y) \longmapsto x$. These maps are \emph{not} homotopic.
+    We will see why this is the case later (in like, a month).
+\end{example}
+
+\subsection{Homotopy Equivalence of Spaces}
+
+\begin{definition}
+    A map $f : X \to Y$ is a \emph{homotopy equivalence} if and only if 
+    there exists $g : Y \to X$ such that 
+    $$g \circ f \sim \on{id}_X,\quad f \circ g \sim \on{id}_Y,$$
+    are homotopic. If this is the case, then we say that $X$ and $Y$ 
+    are \emph{homotopy equivalent} -- denoted by $X \simeq Y$.
+\end{definition}
+
+\begin{remark}
+    Homeomorphisms are naturally homotopy equivalences. But this gives a much
+    broader equivalence relation for topological spaces. 
+\end{remark}
+However, note that it remains to be shown that if 
+$f : X \to Y$ and $h : Y \to Z$ are homotopy equivalences,
+then so is $h \circ f$.\\\\
+To show this, we know that $g\circ f \sim \on{id}_X$, $i \circ h \sim \on{id}_Y$,
+where $i : Z \to Y$. Then, we wish to show that 
+$(g\circ i ) \circ )(h\circ f) \sim \on{id}_X$.
+Observe that this can be re-written as $g\circ (i\circ h)\circ f \sim \on{id}_Y$.
+So, now we may construct a composition of maps
+$$I \times X \stackrel{\on{id} \times f}{\longrightarrow} I \times Y \stackrel{H}{\longrightarrow} I \times Y \stackrel{\on{id} \times g}{\longrightarrow} I \times X.$$
+It now remains to check that 
+$(\on{id} \times f) \circ H \circ (\on{id} \times g)$ is a homotopy
+from $g\circ i \circ h \circ f$ to $g \circ f$.
+This follows as a result of the gluing lemma.
+
+\begin{example}
+    Let us show that $\mathbb{R}^n \simeq \on{pt}$, where $\on{pt}$ is the 
+    one-point space.
+\end{example}
+
+\begin{proof}
+    Define $c : \mathbb{R}^n \to \on{pt}$ and $i : \on{pt} \to \mathbb{R}^n$. 
+    One checks that $c\circ i = \on{id}_{\on{pt}}$, and that 
+    $i\circ c$ is the constant 
+    map --- that is, every point 
+    in $\mathbb{R}^n$ gets mapped to a point. Then just use the straight line homotopy.\\\\
+    But all maps to $\mathbb{R}^n$ from any space are homotopic. Hence, $i \circ c$ is homotopic to $1_{\mathbb{R}^n}$. 
+    We say that any space homotopy equivalen to $\on{pt}$ is \emph{contractible.}
+    We say that a map homotopic to a constant map is \emph{null-homotopic}. Further, a non-null-homotopic map is \emph{essential.}
+\end{proof}
+
+\begin{example}
+    Consider the identity map
+    $1_{\mathbb{S}^1} : \mathbb{S}^1 \to \mathbb{S}^1$ 
+    Is this essential or null-homotopic? The answer is that this map is essential.
+\end{example}
+
+\begin{example}
+    $1_X : X \to X$ is null-homotopic if and only if $X$ is contractible.
+\end{example}
+
+Let us consider the map:
+$$f_d : \mathbb{S}^1 \longrightarrow \mathbb{S}^1,\quad z\longmapsto z^d, \quad d\in \mathbb{N}.$$
+
+\paragraph{Question:} Is $f_d$ homotopic or null-homotopic? 
+\paragraph{Answer:} The answer is no. We will explain why in two weeks.\\\\
+\begin{proposition}[Fascinating Fact]
+    There exists essential aps $\mathbb{S}^{n+k} \to \mathbb{S}^k$ for $n,k$ with $k > 1$.
+\end{proposition}
+
+\begin{example}
+    One such example of an essential map is the Hopf map from $\mathbb{S}^3 \to \mathbb{S}^2$.
+\end{example}
+
+\subsection{Cell Complexes}
+
+\subsubsection{Cell Addition}
+
+Let $f : \mathbb{S}^{n-1} \to A$ be a map. Let $D^n$ be the $n$0disk, and define 
+$$A \cup_f D^n := (A \sqcup D^n)/\sim_f,$$
+where $A \sqcup D^n$ is topologise by defining the open sets to be those either coming from $D^n$ or $A$, and
+the equivalence relation
+$\sim_f$ is given by 
+$x \sim_f f(x)$ for all $x\in \mathbb{S}^{n-1}$.
+Check that $a \sim a'$ if and only if $a = a'$, for $a,a' \in A, D^n\setminus \mathbb{S}^{n-1}$,
+$x\sim x'$ if and only if $x=x'$ for $x,x' \in \on{Int}(D^n) := D^n\setminus \mathbb{S}^{n-1}$,
+and $x\sim x'$ if and only if 
+$f(x) = f(x')$ for $x,x' \in \mathbb{S}^{n-1}$.
+
+\begin{example}
+    We have that $$\mathbb{S}^1 = \on{pt} \cup_{\on{const}} D^1,$$
+    where $\on{const}$ is the constant map.
+\end{example}
+
+\begin{example}
+    Consider the $2$-torus 
+    $T^2 = \mathbb{S}^1 \times \mathbb{S}^1$. 
+    We may write this as 
+    $$T^2 = (\mathbb{S}^1 \vee \mathbb{S}^1) \cup_\varphi D^2,$$
+    where for $(X,x)$ and $(Y,x)$ pointed spaces, the product $\vee$ is the disjoint union
+    $$X \vee Y := X \sqcup Y,$$
+    obtained by setting $x=y$ and no other relations. Assume that 
+    $\mathbb{S}^1 \times \mathbb{S}^1 \cong (I\times I)/\sim$,
+    where $(x,0) \sim (x,1)$
+    and $(0,y) \sim (1,y)$
+    is the equivalence relation. Visually, this is the square construction where opposite ends are identified and glued together.
+    Note that $I \times I \cong D^2$.
+\end{example}
+
+\begin{definition}[Informal Definition]
+    $X$ is a \emph{CW-complex} if there is a fitration 
+    $$X^0 \subset X^1 \subset X^2 \subset \cdots \subset  X,$$
+    such that 
+    \begin{itemize}
+        \item[(i)] $X^0$ is discrete,
+        \item[(ii)] (Inductive Step) $X^k = X^{k-1} \cup_{\varphi_i} D^k_i,$ where 
+            $D^k_i$ are \emph{affine $k$-cells},
+        \item[(iii)] $\dim X = \max \lbrace k : X^k \neq X^{k-1}\rbrace.$ If $\dim X$ is infinite, then $U\subset X$ is open if and only if $U\cap X^k$ is open for all $k$.
+    \end{itemize}
+\end{definition}
+
+\begin{remark}[Diarmuid Wisdom]
+    If you think about everything just purely in terms of CW-complexes, you are guaranteed to get a high distinction in this class!
+\end{remark}
+
+\begin{remark}[Fun Fact]
+    Every manifold is a CW-complex except possibly in dimension $4$.
+\end{remark}
+
+\paragraph{Idea of the Class:} Start with topology. From our point of view, they are given by continuous maps between topological spaces $f : X \to Y$.\\\\
+From this, we can get the ``algebra'' part of ``algebraic topology'' by considering homology groups $H_i(X)$ and $H_i(Y)$. Then, any continuous map $f : X \to Y$ 
+induces a map $f_\ast : H_i(X) \to H_i(Y)$ in homology. Moreover,
+if $f\sim g$ then $f_\ast \sim g_\ast$. From this, we can deduce that
+homotopy equivalent spaces have isomorphic homotopy groups.\\\\
+Given a map of pointed spaces 
+$f : (X,x) \to (Y,y)$, we can associate to them homotopy groups $\pi_i(X)$ and $\pi_i(Y)$, which are ``similar'' to homology groups. It induces a map 
+$f_\ast : \pi_i(X) \to \pi_i(Y)$. When $i=1$, we get an important class of groups called fundamental groups.
+
+\chapter{Week Two}
+
+\section{Lecture 1, 06/03/2024}
+
+\subsection{Paths and Path Homotopy}
+
+\begin{remark}[Unrecorded Diarmuid Wisdom]
+    Should have at least $6$ hours of study time -- both prepping for lectures
+    and working through exercises. Good idea to have a look at what lectures
+    will be covering before the lectures.
+\end{remark}
+
+Let $X$ be a topological space. One simple way that we will make groups from
+spaces is the idea of a path homotopy.
+
+\begin{definition}
+    A \emph{path} in $X$ is a continuous map $\gamma : I \to X$ such that 
+    $f(0) = x_0$, and $f(1) = x_1$. 
+\end{definition}
+
+\begin{remark}
+    The map does \emph{not} have to be injective -- i.e. it can have 
+    self-intersections. 
+\end{remark}
+
+Many paths can have the same endpoints. To capture this idea, we may 
+define the idea of a \emph{path homotopy}. In particular, 
+we only consider paths up to homotopy.
+
+\begin{definition}
+    A \emph{path homotopy} $f_t$ is a homotopy fixed on 
+    $I \times \lbrace 0,1\rbrace$.
+    That is, it is a map $f_t : I \times I \to X$ defined by 
+    $(s,t) \mapsto f_t(s)$.
+\end{definition}
+
+\begin{definition}
+    $\pi_0(X)$ is the set of all equivalence classes of points 
+    given by $x_0 \sim x_1$ if there is a path from $x_0$ to $x_1$.
+\end{definition}
+
+Indeed, $x_0 \sim x_0$ via the constant path $c_{x_0}$. Given $x_0 \sim x_1$,
+we have $x_1 \sim x_0$ by taking the path going in the opposite direction.
+If $f$ is a path from $x_0$ to $x_1$, we denote the path going in
+the opposite direction by $\overline{f}(s) = f(1-s)$.
+Given any a path $f$ given by $x_0 \sim x_1$, and $g$ given by $x_1 \sim x_2$, 
+then we can glue the paths together the same way we glue continuous functions
+together. In particular, $x_0 \sim x_2$ via 
+$$f \cdot g (s) := \begin{cases}
+    f(2s) \quad 0\leq s \leq \frac{1}{2}\\
+    g(2s-1) \quad \frac{1}{2} \leq s \leq 1
+\end{cases}.$$
+
+\begin{definition}
+    $X$ is \emph{path-connected} if $\vert \pi_0(X) \vert = 1$. 
+    Equivalently, any pair of points on $X$ has a path between them.
+\end{definition}
+
+\begin{example}
+    If $X = V$ is a topological vector space over $\mathbb{R}$ 
+    (i.e. $V = \mathbb{R}^n$). If $f_0(0) = f_1(0)$, and 
+    $f_0(1) = f_1(1)$, then $f_1$ and $f_2$ are path homotopic via
+    the \emph{straight line homotopy}:
+    $$f_t(s) = (1-t)f_0(s) + tf_1(s).$$
+\end{example}
+
+\begin{remark}
+    The above construction does not make sense if we do not have a vector
+    space structure on $X$. 
+\end{remark}
+
+\begin{proposition}
+    Path homotopy defines an equivalence relation on the set of paths 
+    from $x_0$ to $x_1$.
+\end{proposition}
+
+\begin{proof}
+    Exercise. Use the gluing lemma.
+\end{proof}
+
+\subsection{The Fundamental Groupoid}
+
+Recall that given $f_0(1) = f_1(0)$, we may \emph{concatenate} the paths by:
+$$f_0 \cdot f_1 = \begin{cases}
+    f_0(2s) \quad 0\leq s \leq 1/2\\
+    f_1(2s-1) \quad 1/2 \leq s \leq 1
+\end{cases}.$$
+
+\begin{definition}
+    The \emph{fundamental groupoid} -- denoted by $\pi_1(X)$ -- is the set 
+    $$\pi_1(X) := \lbrace [f] : \text{path homotopy classes of all paths in $X$}\rbrace.$$
+\end{definition}
+
+Given a map 
+$$\on{ep} : \pi_1(X) \longrightarrow X \times X,\quad [f] \longmapsto (f(0),f(1)),$$
+then define 
+$$\pi_1(X,x_0,x_1) := \on{ep}^{-1} (x_0,x_1).$$
+Then, we have maps
+$$\pi_1(X,x_0,x_1) \times \pi_1(X,x_1,x_2) \longrightarrow \pi_1(X,x_0,x_2),\quad \longmapsto ([f],[g]) \longmapsto ([f\cdot g]).$$
+One can use this to show associativity.
+
+\begin{definition}
+    A path $f$ for which $f(0) = f(1)$ is called a \emph{loop}. 
+    Let $\pi_1(X,x_0) := \pi_1(X,x_0,x_0)$ be the set of path homotopy
+    classes of loops at $x_0$. This is called the \emph{fundamental group} of 
+    $X$.
+\end{definition}
+
+We will now see why this is called a fundamental \emph{group}:
+
+\begin{proposition}\label{prop_fund_group}
+    $\pi_1(X,x_0)$ is a group, with identity given by the constant path 
+    $[c_{x_0}]$ at $x_0$. Given any $[f] \in \pi_1(X,x_0)$, its inverse
+    is given by $[\overline{f}]$ -- that is, $[f]^{-1} = [\overline{f}]$.
+\end{proposition}
+
+\begin{remark}
+    Observe that $f \cdot (\cdot g \cdot h) \neq (f\cdot g)\cdot h$ in general, 
+    since $f$ goes ``twice as fast'', but $g\cdot h$ goes four times 
+    as fast. On the other hand, $f\cdot g$ goes four times as fast,
+    but $h$ goes twice as fast. So they are not the same loop.
+    Hatcher explains this idea much more nicely.
+\end{remark}
+
+First, a lemma:
+
+\begin{lemma}[Reparametrisation]
+    Let $\varphi : I \to I$ be a map such that 
+    $\varphi(0) = 0$ and $\varphi(1) = 1$.
+    Then, $f\circ \varphi \sim f$.
+\end{lemma}
+
+\begin{proof}
+    Consider the straight line homotopy $\varphi_t(s) = (1-t) \varphi(s) - st$.
+    Note that $\varphi_t(s)$ lies between $s$ and $\varphi(s)$ for all $t$.
+    Then, $f_t = f \circ \varphi_t$ is a path homotopy from $f$ to 
+    $f\circ \varphi$.
+\end{proof}
+
+\begin{proof}[Proof of Proposition \ref{prop_fund_group}]
+    $f \cdot (g\cdot h)$ is obtained by a reparametrisation of 
+    $(f\cdot g)\cdot h$ with a piecewise linear path (see Hatcher for the 
+    picture). Call this graph $\Gamma(\varphi)$. Hence, 
+    $[f\cdot (g\cdot h)] = [(f\cdot g)\cdot h]$. By definition,
+    $([f] \cdot [g])\cdot [h] = [f] \cdot ([g] \cdot [h])$, 
+    and this proves associativity.\\\\
+    $f \cdot c$ just makes $f$ goes around twice as fast, and then does 
+    nothing for the remaining time. $c\cdot f$ does nothing for half the time,
+    then makes $f$ go aroudn twice as fast. To see this mathematically, 
+    one reparametrises $\overline{c}$ as graphs (see Hatcher again for the 
+    pictures).\\\\
+    To show that $[f]^{-1} = [\overline{f}]$, one needs to show that 
+    $\overline{f} \cdot f \sim c \sim f\cdot \overline{f}$. Set 
+    $$f_t(s) = \begin{cases}
+        f(t) \quad s \geq 1-t\\
+        f(s) \quad 0\leq s \leq 1-t
+    \end{cases}.$$
+    Then, set $h_t := \overline{f}_t \cdot f_t$, which is always a loop.
+    Indeed, $h_0 = \overline{f}_0 \cdot f_0 = \overline{f}\cdot f$,
+    and similarly $h_1 = \overline{f}_1 \cdot f = \overline{c} \cdot c = c$.
+    It is an exercise to check that continuity, and that $h_t$ defines a path 
+    homotopy. Similarly, check that $\overline{h}_t = f_t \cdot \overline{f}_t$
+    is a path homotopy from $f\cdot f$ to $c$.
+\end{proof}
+
+\begin{proposition}[Basepoint Independence]
+    For any two points $x_0$ and $x_1$, $\pi_1(X,x_0) \cong \pi_1(X,x_1)$.
+\end{proposition}
+
+
+\begin{proof}
+    If there exists a path $h$ from $x_0$ to $x_1$, then 
+    we can define $$\beta_h : \pi_1(X,x_0) \longrightarrow \pi_1(X,x_1),\quad [f] \longmapsto [\overline{h}\cdot f \cdot h].$$
+    If $[h] = [h'] \in \pi_1(X,x_0,x_1)$, then 
+    $\beta_h = \beta_{h'}$. This allows us to define $\beta_{[h]}$ one the 
+    equivalence classes of paths in $\pi_1(X,x_0,x_1)$.
+    We show that $\beta_h$ is an isomorphism. 
+    First, we see that 
+    $$\beta_h ([f] \cdot [g]) = [\overline{h}\cdot f \cdot h\cdot \overline{h} \cdot g \cdot h] = [\overline{h} \cdot f] \cdot [\overline{h} \cdot g \cdot h] = \beta_h([f]) \cdot \beta_h([g]).$$
+    We leave it as an exercise to check that 
+    $\beta_{\overline{h}}$ is a suitable choice of inverse. That is,
+    $$\beta_h \circ \beta_{\overline{h}} = \beta_{h\cdot \overline{h}} = \beta_{[c_{x_0}]} = \on{id}_{\pi_1(X,x_0)}.$$ 
+    For the other direction, 
+    $\beta_{\overline{h}} \circ \beta_h = \beta_{\overline{h}\cdot h}\on{id}_{\pi_1(X,x_1)}$.
+\end{proof}
+
+\begin{remark}[Diarmuid Wisdom]
+    Learning when you have to care about basepoints and ignore them is an 
+    important skill in algebraic topology.
+\end{remark}
+
+\section{Lecture 2, 07/03/2024}
+
+\begin{definition}
+    $X$ is called \emph{simply-connected} if 
+    \begin{itemize}
+        \item[(i)] $X$ is path-connected,
+        \item[(ii)] $\pi_1(X,x_1,x_0) = 1$ -- that is, all choices of paths are 
+            homotopic to one another
+    \end{itemize}
+\end{definition}
+
+\begin{proposition}
+    A path-connected space is simply-connected if and only if 
+    $\pi_1(X)$ is trivial.
+\end{proposition}
+
+\begin{proof}
+    The $\Longleftarrow$ direction is clear. In particular, 
+    $\pi_1(X,x)$ acts freely and transitively on $\pi_1(X,x_0,x)$
+    by concatenation. The proof of this is left as an exercise.
+\end{proof}
+
+\subsection{Fundamental Group of $\mathbb{S}^1$}
+
+We wish to consider $\pi_1(\mathbb{S}^1,1)$.
+
+For some $n \in \mathbb{Z}$, let $\omega_n(s) = e^{2\pi i ns},$ which is the loop that wraps around the circle $n$ times. Intuitively, this tells us that $\pi_1(\mathbb{S}^1)$ should be isomorphic to $\mathbb{Z}$. This turns out to be the case.
+
+\begin{theorem}\label{thm_fundgrp_circle}
+    $\pi_1(\mathbb{S}^1)\cong \mathbb{Z}$.
+\end{theorem}
+
+The proof uses the idea of a covering space.
+
+\begin{definition}
+    A \emph{covering space} of $X$ is a map $p : \widetilde{X} \to X$ 
+    such that for every $x \in X$, there exists an open set $U$ containing $x$ such that $p^{-1}(U)$ is homeomorphic to a disjoint union $\sqcup_{\alpha \in \Lambda} U_\alpha$ such that $p\vert_{U_\alpha} : U_\alpha \stackrel{\simeq}{\to} U$.
+    Such a $U$ is said to be \emph{evenly covered}.
+\end{definition}
+
+\begin{exercise}
+    Show that $p : \mathbb{R} \to \mathbb{S}^1$ is a covering space.
+\end{exercise}
+
+We have some properties of covering spaces:
+\begin{itemize}
+    \item[(i)]
+        Given a map $f : I \to X$ given by 
+        $f(0) = x_0$, $f(1) = x_1$, then there 
+        exists a unique $\widetilde{f} : I \to \widetilde{X}$ lifting $f$ -- that is, the lift $\widetilde{f}$ starts at 
+        $\widetilde{f}(0) = \widetilde{x_0}$, and satisfies $p\circ \widetilde{f} = f$. That is, we have a commutative diagram:
+        $$\begin{tikzcd}
+                                                 & \widetilde{X}     \\
+I \arrow[r, "f"] \arrow[ru, "\exists !", dashed] & X \arrow[u, "p"']
+\end{tikzcd}$$
+    \item[(ii)] For each homotopy $f_t : I \times I \to X$ of paths 
+        starting at $x_0$ and $\widetilde{x_0} \in p^{-1}(x_0)$, there is a unique 
+        lift $\widetilde{f}_t : I \to \widetilde{X}$ of paths starting at 
+        $\widetilde{x_0}$ such that the diagram commutes  $$\begin{tikzcd}
+                                                           & \widetilde{X}     \\
+I \times I \arrow[r, "f_t"'] \arrow[ru, "\exists !", dashed] & X \arrow[u, "p"']
+\end{tikzcd}$$
+\end{itemize}
+
+\begin{remark}
+    The proof below is messily transcribed. You're much  better off just 
+    going just reading page 30 of Hatcher, ``Proof of Theorem 1.7''.
+\end{remark}
+
+\begin{proof}[Proof of Theorem \ref{thm_fundgrp_circle}]
+    Define a map 
+    $$\Phi : \pi_1(\mathbb{S}^1) \longrightarrow \mathbb{Z},\quad [f]\longmapsto \widetilde{f}(1),$$
+    which is well-defined by Property (ii) of covering spaces. Further, if $f \sim f'$ via $f_t$, then we have 
+    $\widetilde{f}_t'(1) : I \to \mathbb{R}$, which is continuous, and $I$ is path-connected. Therefore, $f_t'(I)$ is path-connected and constant.
+    This implies that 
+    $\widetilde{f}_t'(1) = \widetilde{f}(1)$,
+    and we thus have a well-defined map.
+    By construction, we have $$\Phi([\omega_n]) = \widetilde{\omega_n}(1) = n.$$
+    By Property (i), we then have that $\widetilde{\omega_n}(s) = ns$.\\\\
+    Suppose that $\Phi([f]) = 0$. Then, 
+    $\widetilde{f}(0) = 0 = \widetilde{f}(1)$.
+    Take a straight line path homotopy from the loop $\widetilde{f}$ to the constant map $c_0$. Then, $p\circ \widetilde{f}_t$  is a path homotopy to $c_1$.
+    \begin{exercise}
+        Show that if $\Phi$ is a homotopy, then $\Phi$ is a bijection.
+    \end{exercise}
+    \begin{proof}
+        Just translate lifts along to show this.
+    \end{proof}
+
+We have one more property of covering spaces:
+\begin{itemize}
+    \item[(iii)] 
+    Given a homotopy $F : Y \times I \to X$, and a covering space $p : \widetilde{X} \to X$,
+    there exists a unique lift $\widetilde{F}$ of $F$ wih $G : Y \times \lbrace 0 \rbrace \to \widetilde{X}$ 
+    such that $p\circ G = F\vert_{Y \times \lbrace 0 \rbrace}$, and
+    such that $\widetilde{F}\vert_{Y \times \lbrace 0 \rbrace} = G$.
+    That is, we have a commutative diagram:
+    $$\begin{tikzcd}
+Y \times \lbrace 0 \rbrace \arrow[r, "G"] \arrow[d]       & \widetilde{X}     \\
+Y\times I \arrow[r, "F"'] \arrow[ru, "\exists !", dashed] & X \arrow[u, "p"']
+\end{tikzcd}$$
+\end{itemize}
+
+\begin{proof}[Proof of Property (iii)]
+    Let $y \in Y$, and
+    find a neighbourhood $y_0 \in N$ and construct $\widetilde{F}$ on $N\times I$. By continuity of $F$ and definition of product topologyon $N\times I$, there exists neighbourhoods
+    $N_t \times (a_t,b_t)$ containing $(y_0,t)$
+    such that $F(N_t \times (a_t,b_t)) \subset U_t$ for some evenly covered $U_t$. Since every point in $X$ has such a neighbourhood, we may take $F(y_0,t) = x_0$. By comppactness of $\lbrace y_0 \rbrace \times I$, a finite number of these cover $y_0 \times I$. There thus exists a partitionof $I$ $0 = t_0 < t_1 < \cdots < t_n = 1$ such that there exists a neighbourhood $N$ of $y_0$ such that $F(N\times [t_i,t_{i+1}])$ is evenly covered.\\\\
+    Then, proceeding by induction, assume that $\widetilde{F}$ has been constructed on $N \times [0,t_1]$. Replace $N$ with $\widetilde{F}^{-1}\vert_{N \times [0,t_1]}(\widetilde{U}_t)$ for $\widetilde{F}(t_0,t_i) \subset \widetilde{U}_t$. Then, from here define $\widetilde{F}$ on $N \times [0,t_{i+1}]$ by $\widetilde{F} := (p\vert_{\widetilde{U}_{t_{i+1}}})^{-1} \circ F.$ Then, by gluing, $\widetilde{F}$ on $N \times [0,t_{i+1}]$ is continuous.
+\begin{exercise}
+    Show that $\widetilde{F}\vert_{y_0 \times I}$ is unique (or just look at Hatcher).
+\end{exercise}
+Now, just glue all these solutions together to obtain the cover 
+$Y = \bigcup_{y_0}(I \times N_{y_0})$.
+\end{proof}
+\end{proof}
+
+Observe that 
+given the isomorphism $p : \mathbb{R} \to \mathbb{S}^1$, then observe that $\pi_1(\mathbb{S}^1) \cong \mathbb{Z} = p^{-1}(0)$. This is not a coincidence, and we ill come back in a month to see why this happens.
+
+\begin{theorem}[Gauss' Fundamental Theorem of Algebra]
+    Let $p(e)$ be a non-constant polynomial $p : \C \to \C$. Then, there exists $z_0 \in \C$ such that $p(z_0) = 0$.
+\end{theorem}
+
+\begin{proof}
+    Without loss of generality, let $p(z) = z^n + a_1 z^{n-1} + \cdots + a_n$.
+    For some $r \in [0,\infty)$, define 
+    $$f_r(s) = \frac{p(re^{2\pi is})/p(r)}{\vert p(re^{2\pi is}/p(r)\vert}.$$
+    Note here that $f_0 = c_1$. As $r$ varies continuously, $f_r$ is path-homotopic to $f_0$for all $r$.  Now, observe that $r > \vert a_1 \vert + \cdots + \vert a_n\vert$, and $r > 1$, and that $$\vert z^n \vert > (\vert a_1\vert + \cdots + \vert a_n \vert) \vert z \vert^{n-1} \geq \vert a_1 z^{n-1}\vert + \cdots + \vert a_n\vert \geq \vert a_1 z^{n+1} + \cdots + a_n\vert.$$
+    It follows then that $p_t(z) = z^n +_ t (a_1z^{n-1} + \cdots + a_n)$. It follows then that 
+    $p_t$ has no roots in $\mathbb{S}^1_r$ for $0\leq t \leq 1$.
+    Then, $f_r = p_r(s)$, but $p_0(s) = \omega_n(s)$. It follows then that $0 = [f_0] \cdot [f_r] = [p_0] = [\omega_n] = n$.
+    Thus $n=0$, and we are done.
+\end{proof}
+
+\section{Lecture 3, 08/03/2024}
+
+Today, we will consider maps $\mathbb{S}^2 \to \mathbb{R}^2$, and we will
+prove the Borsuk-Ulam theorem. 
+
+\begin{theorem}[Borsuk-Ulam]
+    Every continuous map $f : \mathbb{S}^1 \to \mathbb{R}^2$ maps
+    pairs of antipodal points to the same point.
+\end{theorem}
+
+\begin{proof}
+    Consider $g(x) = f(x) - f(-x)$. By contradiction, suppose that no such 
+    $x$ exists for which $g(x) = 0$. 
+    Then, $$g(x) = \frac{f(x)-f(-x)}{\vert f(x) - f(-x)\vert} \in \mathbb{S}^1,$$
+    where by abuse of notation we denote the above function by $g$.
+    set 
+    $$\eta : \mathbb{S}^1 \to \mathbb{S}^1, \quad (x,y) \longmapsto (x,y,0)$$
+    where the image of $\eta$ is a copy of a great circle in 
+    $\mathbb{S}^2$. 
+    Let $\widetilde{g\circ \eta}$ be the unique lift of $g\circ \eta$ -- 
+    then, $\widetilde{g\circ \eta} (t + 1/2) = \widetilde{g\circ \eta}(t) + \frac{2k\pi + 1}{2}$, for some $k \in \mathbb{Z}$.
+    Then, let us consider the continuous function 
+    $$I \longrightarrow \frac{1}{2}\mathbb{Z},\quad t\mapsto \widetilde{g\circ \eta}(t + 1/2) - \widetilde{g\circ \eta}(t)$$.
+    Then, since $\frac{1}{2}\mathbb{Z}$ is discrete, this function is constant.
+    It follows then that $\widetilde{g\circ \eta}(1) = \widetilde{g\circ \eta}(1/2) + \frac{2k\pi + 1}{2}$, and so 
+    $\widetilde{g\circ \eta}(0) = 0$, but 
+    also $\widetilde{g\circ \eta}(0) = \frac{2k\pi + 1}{2}$, which is non-zero.
+    It follows that 
+    $g\circ \eta : I \to \mathbb{S}^1$ represents $[g\circ \eta] = 2k + 1\in \mathbb{Z} \cong \pi_1(\mathbb{S}^1)$, and moreover $2k+1 \neq 0$.
+    But $\eta : I \to \mathbb{S}^1$ is path homotopic to a constant map.
+    This then implies that $g\circ \eta$ is homotopic to a constant,
+    and so $[g\circ \eta] = 0$, which is a contradiction.
+\end{proof}
+
+\begin{theorem}[Brower's Fixed Point Theorem, Thm 1.10, Hatcher]
+    Let $h : D^2 \to D^2$ be a map. Then, there exists $x \in D^2$ such that
+    $h(x) = x$, where
+    $$D^2 = \lbrace x \in \mathbb{R}^2 : \vert x \vert \leq 1\rbrace.$$
+\end{theorem}
+
+\begin{definition}
+    A \emph{retraction} if a map $r : X \to A$ 
+    such that $r\vert_A = 1_A$.
+\end{definition}
+
+\begin{proof}[Proof Idea]
+    We wish to construct a retraction $D^2 \to \mathbb{S}^1 \subset D^2$.
+    Use the fact that $\pi_1(\mathbb{S}^1)\cong \mathbb{Z}$ to show this
+    is impossible.\\\\
+    Define $r : D^2 \to \mathbb{S}^1$ by $r(x) = L_x \cap \mathbb{S}^1$,
+    where $L_x$ is the line passing through $x$.
+    Then, we claim that if $h$ is continuous, then so is $r$.
+    If $x \in \mathbb{S}^1$, then $r(x) = X$ as required. 
+    See Hatcher for rest of the proof.
+\end{proof}
+
+\subsection{Induced Homomorphisms}
+
+Given a map $\varphi: X \to Y$, the \emph{induced homomorphism} is the group 
+homomorphism $$\varphi_\ast : \pi_1(X,x) \longrightarrow \pi_1(Y,\varphi(x)), \quad [f] \longmapsto [\varphi \circ f].$$
+One checks that $\varphi_\ast$ is well-defined -- in particular, one checks 
+that composition of maps commutes with compositions of path homotopy.
+
+\begin{proposition}[Prop 1.12, Hatcher]
+    Given two spaces $X$ and $Y$, we have
+    $$\pi_1(X\times Y, (x,y)) \cong \pi_1(X,x) \times \pi_1(Y,y).$$
+\end{proposition}
+
+\begin{proof}
+    Consider projections 
+    $\on{pr}_X : X \times Y \to X$ and $\on{pr}_Y : X \times Y \to Y$.
+    Then, any map $f : Z \to X\times Y$ is continuous if and only if 
+    $\on{pr_X} \circ f$ and $f \circ \on{pr}_Y$ are continuous.
+    Define $$\Phi : \pi_1(X\times Y,(x,y)) \longrightarrow \pi_1(X,x) \times \pi_1(Y,y),\quad [f] \longmapsto ([\on{pr}_X\circ f], [\on{pr}_Y\circ f]).$$
+    $\Phi$ defines a group homomorphism since $(\on{pr}_X)_\ast$ and 
+    $(\on{pr}_Y)_\ast$ define group homomorphisms.
+\end{proof}
+
+\begin{example}
+    Let $\mathbb{T}^2$ be the $2$-torus. Then, 
+    $\pi_1(\mathbb{T}^2) = \pi_1(\mathbb{S}^1\times\mathbb{S}^1) \cong \mathbb{Z} \times \mathbb{Z}$.
+    Generally, $\pi_1(T^n) \cong \mathbb{Z}^n$.
+\end{example}
+
+\begin{definition}
+    A map $r_t : I \times X \to A$ is a \emph{deformation retraction} if 
+    \begin{itemize}
+        \item[(i)] $r_0 = A$,
+        \item[(ii)] $r_t\vert_A = 1_A$ for all $t$,
+        \item[(iii)] $r_1 = A$ -- that is, $r_1$ is a retraction.
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    If $\varphi_t$ is homotopic rel $x_0$, then 
+    $\varphi_t\vert_{I \times \lbrace x_0 \rbrace} = c_{x_0}$.
+    This implies then that $(\varphi_0)_\ast = (\varphi_1)_\ast$.
+\end{definition}
+
+\begin{proposition}[Prop 1.17, Hatcher]\label{prop1.17}
+    If $A\subset X$ is a retraction, $x_0 \in A$, then 
+    $\pi_1(A,x_0) \subseteq \pi_1(X,x_0)$ is a retraction.
+    In particular, $i_\ast : \pi_1(A,x_0) \to \pi_1(X,x_0)$ is injective.
+    Moreover, if $A\subseteq X$ is a deformation retract, then 
+    $i_\ast : \pi_1(A,x_0) \to \pi_1(X,x_0)$ is an isomorphism.
+\end{proposition}
+
+\begin{remark}
+    Note that $\pi_1(-)$ defines a functor 
+    $$\pi_1 : \mathbf{Top} \longrightarrow \mathbf{Ab},$$
+    where $\mathbf{Top}$ is the category of topological spaces,
+    and $\mathbf{Ab}$ is the category of abelian groups.
+\end{remark}
+
+\begin{proof}[Proof of Proposition \ref{prop1.17}]
+    $r\circ i = 1_A$, and thus we have that $(r\circ i)_\ast = 1$.
+    It follows then that $r_\ast \circ i_\ast = 1$, and thus 
+    $i_\ast$ is injective.\\\\
+    If $r_t$ is a deformation retraction, then $i\circ r : X \to A$ 
+    is homotopic rel $x_0$ to $1_X$.
+\end{proof}
+
+\begin{corollary}[Corollary 1.16, Hatcher]
+    $\mathbb{R}^2 \not\cong \mathbb{R}^n$, for $n \neq 2$.
+\end{corollary}
+
+\begin{proof}
+    By contradiction, suppose that 
+    $$f : \mathbb{R}^2 \longrightarrow \mathbb{R}^n$$
+    is a homeomorphism. Then, 
+    $$f\vert_{\mathbb{R}^2\setminus \lbrace 0\rbrace} :\mathbb{R}^2 \setminus \lbrace 0 \rbrace \longrightarrow \mathbb{R}^n\setminus \lbrace f(0)\rbrace,$$
+    is a homeomorphism.
+    But then we have a map 
+    $$(f\vert_{\mathbb{R}^2\setminus\lbrace0\rbrace})_\ast : \pi_1(\mathbb{S}^1) \longrightarrow \pi_1(\mathbb{S}^{n-1}),$$
+    and by Proposition \ref{prop1.18}, $\pi_1(\mathbb{S}^{n-1}) = 0$
+    for $n \geq 2$. But $\pi_1(\mathbb{S}^1)\cong \mathbb{Z}$, which is 
+    not isomorphic to $0$. A contradiction.
+\end{proof}
+
+\chapter{Week Three}
+
+\section{Lecture 1, 13/03/2024}
+
+\subsection{Homotopy rel $A$}
+
+Maps of pairs are given by maps
+$$f : (X,A) \longrightarrow (Y,B),$$
+such that the map $f : X \to Y$ has the property that 
+$f(A) \subseteq B$. If we specalise $A = \lbrace x_0 \rbrace$ and 
+$B = \lbrace y_0\rbrace$ to be singleton sets, then we get maps 
+of pointed spaces, which are maps such that $f(x_0) = y_0$.
+Then, there is a notion of a \emph{homotopy rel $A$}. There is a pointwise
+and a set-wise definition of this notion.
+Given maps $$f,g : (X,A) \longrightarrow (Y,B),$$
+we have maps $$I \times A \longrightarrow I \times B, \quad H : I\times X \longrightarrow Y.$$
+Typically, for a deformation retraction we require that $f\vert_A = g\vert_A$,
+and $H\vert_{I\times A} = f\vert_A \circ \on{pr}_A$.
+We mention this because the definition of a deformation retraction is nothing 
+more than a pointwise homotopy rel $A$. For a setwise homotopy rel $A$, we 
+simply require that $H\vert_{\lbrace t\rbrace \times X}$ is a map of 
+pairs.
+
+\subsection{Pointed Homotopy}
+
+Let $$[X,Y] := \lbrace [f] : f : X \to Y\rbrace,$$
+where $[f]$ denotes the homotopy class of $f$.
+Given pointed spaces, we have:
+$$[(X,x), (Y,y)]_\ast := \lbrace f_\ast : f : (X,x) \longrightarrow (Y,y)\rbrace,$$
+where $[f]_\ast$ denotes the \emph{pointed homotopy class} of $f$.\\\\
+The key point is that 
+$$\pi_1(X,x_0) = [(\mathbb{S}^1,1), (X,x_0)]_\ast, [f] \longmapsto [\overline{f}],$$
+where $\overline{f}$ is the induced map on 
+$I\setminus \lbrace 0,1\rbrace \to \mathbb{S}^1$.
+
+\begin{remark}
+    We have:
+    $$\pi_0(X) = [(\mathbb{S}^0,1), (X,x_0)]_\ast,$$
+    $$\pi_1(X) = [(\mathbb{S}^1,1), (X,x_0)]_\ast,$$
+    $$\pi_2(X) = [(\mathbb{S}^2,e_1), (X,x_0)]_\ast,$$
+    which is pointed-homotopy invariant.
+    Moreover, $\pi_3(X) = [(\mathbb{S}^3,e_1)$,
+    and all $\pi_i(X)$ are abelian groups. These are examples
+    of \emph{higher homotopy groups}, and they will be discussed more in Week 
+    $11$.
+\end{remark}
+
+Hatcher has some sneaky proofs for the following results:
+
+\begin{proposition}[Prop 1.14, Hatcher]\label{prop1.14}
+    $\pi_1(\mathbb{S}^n,x_0)$ is trivial for all $n \geq 2$.
+\end{proposition}
+
+\begin{proposition}[Prop 1.18, Hatcher]\label{prop1.18}
+    If $\varphi : X \to Y$ is a homotopy equivalence between
+    path-connected spaces, then the induced map:
+    $$\varphi_\ast :  \pi_1(X,x_0) \longrightarrow \pi_1(Y,\varphi(x_0)),$$
+    is an isomorphism.
+\end{proposition}
+
+Before we can prove Prop \ref{prop1.18} from Hatcher, we need the following 
+lemma:
+
+\begin{lemma}[Lemma 1.19, Hatcher]\label{lem1.19}
+    If $\varphi_t : X \to Y$ is a homotopy, then the diagram $$\begin{tikzcd}
+                                                                              & {\pi_1(Y,\varphi(x_0))} \arrow[dd, "\beta_h"] \\
+{\pi_1(X,x_0)} \arrow[ru, "(\varphi_0)_\ast"] \arrow[rd, "(\varphi_1)_\ast"'] &                                               \\
+                                                                              & {\pi_1(Y,\varphi(x_1))}                      
+\end{tikzcd}$$
+    commutes.
+\end{lemma}
+
+\begin{proof}
+    Go see Hatcher.
+\end{proof}
+
+\begin{proof}[Proof of Proposition \ref{prop1.18}]
+    Consider the composition of maps 
+    $X \stackrel{\varphi}{\to} Y \stackrel{\psi}{\to} X$,
+    and let $\psi$ be a homotopy inverse to $\varphi$.
+    That is, $\phi \circ \varphi \sim 1_X$, and 
+    $\psi \circ \varphi \sim 1_Y$.
+    Thus, there are induced maps
+    $$\pi_1(X,x_0) \stackrel{\varphi_\ast}{\longrightarrow} \pi_1(Y,\varphi(x_0)) \stackrel{\psi_\ast}{\longrightarrow} \pi_1(X,\psi(\varphi(x_0))) \stackrel{\varphi_\ast}{\longrightarrow} \pi_1(Y,\varphi(\psi(\varphi(x_0)))),$$
+    and by Lemma \ref{lem1.19},
+    $\psi_\ast \circ \varphi_\ast$ is an isomorphism, and 
+    $\varphi_\ast \circ \psi_\ast$ is an isomorphism.
+\end{proof}
+
+
+\paragraph{Final word on basepoints} There are maps
+$$\pi_1(X,x_0) = [(\mathbb{S}^1,1),(X,x_0)]_\ast \longrightarrow [(\mathbb{S}^1,1), (X,x_0)] \longrightarrow [\mathbb{S}^1,X],$$
+obtained by forgetting the relevant structure with each sucessive map.
+In particular, we may show that the conjugacy classes of $\pi_1(X,x_0)$ 
+is equal to $[\mathbb{S}^1,X]$.\\\\
+Now we can prove our first negative result:
+
+\begin{proof}[Proof of Proposition \ref{prop1.14}]
+    We may cover $\mathbb{S}^n$ by $$\mathbb{S}^n = A \cup B,$$
+    where $A = \mathbb{S}^n \setminus \lbrace \text{north pole}\rbrace$,
+    and $B = \mathbb{S}^n \setminus \lbrace \text{south pole}\rbrace$.
+    As spaces, $A$ and $B$ are homeomorphic to $\mathbb{R}^n$, and 
+    thus retractible -- that is, $\pi_1(A) \cong \pi_1(B) \cong 1$.
+    Given path $f$, if $f(I) \subseteq B$, then $[f]$ is in the 
+    image of the map $\pi_1(B) \to \pi_1(\mathbb{S}^n)$, and thus $[f]$ 
+    is trivial since the image of a trivial group is trivial.
+    The same is true for $A$.\\\\
+    The goal is to show that $f$ is path-homotopic to $[f_1]\ast \cdots \ast [f_n]$, where $f_i(I)$ lies either in $A$ or $B$. To do this, we wish to cover
+    the interval $I$ by $f^{-1}(A)$ and $f^{-1}(B)$, and use the compactness
+    of $I$ to find a partition of $I$ such that $f([t_i,t_{i+1}])$ is contained 
+    in either $A$ or $B$.
+    Suppose that $f_i([t_i,t_{i+1}])$ is contained in $A$, and assume
+    inductively that $f(t_i) = x_0$. Since $A\cap B$ is path-connected,
+    define a path $h$ from $f(t_{i+1})$ to $x_0$. Then, add
+    $h_i\overline{h_i}$ to $f_i$. Then, 
+    define $$f_i := f\vert_{[t_i,t_{i+1}]},$$
+    from which we obtain:
+    $$f = f_0 \ast f_1 \ast \cdots \ast f_m = (f_0 \ast h_0) \ast (\overline{h_0} \ast f_1 \ast h_1) \ast (\overline{h_1}) \ast f \ast h_2) \ast \cdots \ast (\overline{h_m}\ast f_m),$$
+    and each $f_i \ast h_i$ has image in either $A$ or $B$.
+\end{proof}
+
+\section{The Vam Kampen Theorem}
+
+\paragraph{Goal:} Suppose that $X = \bigcup_\alpha A_\alpha$ such that 
+$x_0 \in A_\alpha$ is path-connected, and 
+$A_\alpha \cap A_\beta$ is path-connected for all $\alpha,\beta$,
+and $A_\alpha \cap A_\beta \cap A_\gamma$ is path connected for all
+$\alpha,\beta,\gamma$.
+Then, we wish to determine $\pi_1(X,x_0)$ in terms of the components
+$\pi_1(A_\alpha, x_0)$.
+
+\subsection{Some Algebra}
+To achieve the goal, we need some algebra.
+
+\begin{definition}
+    The \emph{free product} of groups $G_\alpha$ is the group 
+    $\ast_\alpha G_\alpha$, whose underlying set is given by:
+    $$W  = \lbrace \text{reduced words from $G_\alpha$} : [\omega]\rbrace.$$
+    In particular, a \emph{reduced word} is a string 
+    $g_1\cdots g_m$ where 
+    $g_i \in G_{\alpha_i}\setminus \lbrace e_{\alpha_i}\rbrace,$
+    and if $g_i \in G_{\alpha_i}$, then $g_{i+1}\not\in G_{\alpha_i}$.
+    such 
+    An \emph{alphabet} is the set 
+    $$\sqcup_\alpha (G_\alpha \setminus \lbrace e_\alpha\rbrace).$$
+    In fact, reduced words can be thought of as equivalence classes of all words.
+    The group operation $\ast$ is given by \emph{juxtaposition} and 
+    \emph{reduction}: given two reduced words $\omega_1 = g_1\cdots g_m$ and 
+    $\omega_2 = h_1\cdots h_n$, then 
+    $$\omega_1 \omega_2 = g_1\cdots g_m h_1\cdots h_n.$$
+\end{definition}
+
+\section{Lecture 2, 14/03/2024}
+
+Recall that the general setting of the van Kampen theorem is that we 
+are trying to compute the fundamental group of a space after we have 
+chopped it up into a bunch of pieces whose intersections are path-connected.
+The required algebra is the algebra of the free product.\\\\
+The empty word $\phi$ denotes the identity in the free group 
+$\ast_\alpha G_\alpha$. One readily checks that inverses hold.
+Indeed, associativity holds as well, and one can simply grind it out. 
+But there is a much more clever way of proving this.
+Let $\mathfrak{S}_W$ denote the permutation group on the set $W$ of reduced 
+words, whose elements are bijections $K : W \to W$ under composition. Define
+a map $$W \longrightarrow \mathfrak{S}_W,\quad g \longmapsto L_g,$$
+where $L_g$ is the left-multiplication map acting on a reduced $\omega$ by
+$L_g(\omega) = g\omega$. From this, one then checks that
+$L_{gg'} = L_g L_{g'}$. From this, one can then define the map
+$$\Phi : W\longrightarrow \mathfrak{S}_W, \quad g_1,\cdots,g_m \longmapsto L_{g_1\cdots g_m},$$
+which is injective since $L_{g_1\cdots g_m}(\phi) = g_1\cdots g_m$.
+It follows then that if $L_{g_1\cdots g_m} = L_{g_1'\cdots g_m'}$,
+then $g_1\cdots g_m = g_1'\cdots g_m'$.
+By construction, $\Phi$ maps juxtaposition in $W$ to composition in 
+$\mathfrak{S}_W$. It is injective, and thus juxtaposition is associative
+since composition is associative in $\mathfrak{S}_W$.
+It thus follows that $\ast_\alpha G_\alpha$ is a group.
+
+\begin{example}[The Free Product on $2$ Words]
+    Let $$F_2 := \mathbb{Z} \ast \mathbb{Z} = \lbrace a_1^{k_1}b_1^{k_2}\cdots\rbrace,$$
+    where each $k_i \in \mathbb{Z}\setminus \lbrace 0 \rbrace$ for each 
+    $i > 2$.
+    Then, we can define $F_n := \mathbb{Z} \ast \cdots \ast \mathbb{Z}$.
+\end{example}
+
+\subsection{Amalgamated Free Product}
+
+We have that 
+$\pi_1(A_\alpha \cap A_\beta) = \lbrace e\rbrace$. Then, we have a commutative
+diagram $$\begin{tikzcd}
+                                                         & {\pi_1(A_\alpha,x_0)} \arrow[rd] &                \\
+{\pi_1(A_\alpha \cap A_\beta,x_0)} \arrow[ru] \arrow[rd] &                                  & {\pi_1(X,x_0)} \\
+                                                         & {\pi_1(A_\beta,x_0)} \arrow[ru]  &               
+\end{tikzcd}$$
+The maps going into $\pi_1(A_\alpha,x_0)$ and $\pi_1(A_\beta,x_0)$ land in 
+completely different homotopy classes. So, in order to ensure that this does
+not happen, it is useful to define the \emph{amalgamated free product}.\\\\
+In general, suppose that we have 
+$$\begin{tikzcd}
+                                                & G_\alpha \\
+K \arrow[ru, "i_\alpha"] \arrow[rd, "i_\beta"'] &          \\
+                                                & G_\beta 
+\end{tikzcd}$$
+Then, define 
+$$G_\alpha \ast_K G_\beta := G_\alpha \ast G_\beta /N,$$
+where $N$ is the smallest normal subgroup of $G_\alpha \ast G_\beta$
+containing the elements of the form $i_\alpha(k) i^{-1}_\beta(k) = i_\alpha(k)i_\beta(k^{-1})$. That is, a typical element of $N$ has the form
+$$h_1 i_\alpha(k_1) i_\beta(k_1^{-1}) h_1^{-1} h_2i_\alpha(k_2)i_\beta(k_2^{-1})h_2^{-1}\cdots$$
+The grup $G_\alpha \ast_K G_\beta$ is called the \emph{amalgamated free product}
+of $G_\alpha$ and $G_\beta$.\\\\
+More generally, we have
+$$\begin{tikzcd}
+                                                                 & G_\alpha \\
+    {K_{\alpha,\beta}} \arrow[ru, "i_{\alpha\beta}"] \arrow[rd, "i_{\beta\alpha}"'] &          \\
+                                                                 & G_\beta 
+\end{tikzcd}$$
+for all $\alpha \neq \beta$. From this, we take the normal subgroup to be
+$$N = \langle i_{\alpha\beta}(k)i_{\beta\alpha}(k^{-1}), i_{\beta\alpha}(k)i_{\alpha\beta}(k{-1})\rangle.$$
+This then defines an amalgamated free product of $G_\alpha$ over all
+$\alpha,\beta$. We denote this by $\ast_{K_{\alpha,\beta}}G_\alpha.$
+
+\begin{remark}
+    Can reduce this to $$K_\alpha /\ker (i_{\alpha\beta}\cap \ker (i_{\beta\alpha}),$$
+    and we have maps induced maps $\overline{i_{\alpha\beta}}$, and 
+    $\overline{i_{\beta\alpha}}$.
+\end{remark}
+
+\begin{example}
+    There is an isomorphism
+    $$\on{SL}_2(\mathbb{Z}) \cong \mathbb{Z}/4\mathbb{Z} \ast_{\mathbb{Z}/2\mathbb{Z}} \mathbb{Z}/6\mathbb{Z}.$$
+    In this case, we have the diagram:
+    $$\begin{tikzcd}
+                                                                     & \mathbb{Z}/6\mathbb{Z} \arrow[rd] &                                                                             \\
+\mathbb{Z}/2\mathbb{Z} \arrow[ru, "i_\alpha"] \arrow[rd, "i_\beta"'] &                                   & \mathbb{Z}/6\mathbb{Z} \ast_{\mathbb{Z}/2\mathbb{Z}} \mathbb{Z}/4\mathbb{Z} \\
+                                                                     & \mathbb{Z}/4\mathbb{Z} \arrow[ru] &                                                                            
+\end{tikzcd}$$
+\end{example}
+
+\begin{example}
+    $$\begin{tikzcd}
+    \pi_1(A_\alpha \cap A_\beta) \arrow[r] \arrow[d] & \pi_1(A_\alpha) \arrow[d]                                                             &          \\
+    \pi_1(A_\beta) \arrow[r]                         & \pi_1(A_\alpha) \ast_{\pi_1(A_\alpha\cap A_\beta)} \pi_1(A_\beta) \arrow[r, "\simeq"] & \pi_1(X)
+    \end{tikzcd}$$
+    $$\begin{tikzcd}
+    \mathbb{Z} \arrow[r] \arrow[d, "i"'] & \lbrace e \rbrace \arrow[d]        \\
+    \pi_1(A_\beta) \arrow[r]             & \pi_1(A_\beta)/\langle i(1)\rangle
+    \end{tikzcd}$$
+    $$\begin{tikzcd}
+    K \arrow[r, "\operatorname{id}_K"] \arrow[d] & K \arrow[d]        \\
+    G \arrow[r]                                  & G \cong G \ast_K K
+    \end{tikzcd}$$
+\end{example}
+
+\subsection{Presentations of Groups}
+
+A \emph{presentation} of a group is given by:
+$$G = \langle g_1,\cdots, g_m : r_1,\cdots,r_k\rangle,$$
+where $g_1,\cdots, g_m$ are the generators, and 
+$r_1,\cdots,r_k$ are relations that the generators satisfied.
+One can re-write $G$ in terms of a free product by:
+$$G = \ast_{i=1}^m \mathbb{Z}/ N\langle r_1,\cdots,r_k\rangle,$$
+where $N\langle r_1,\cdots,r_k\rangle$ is the normal subgroup
+generated by the relations.
+
+\begin{example}
+    $$\ast_2\mathbb{Z} = \langle g_1,g_2 : \text{no relations}\rangle.$$
+    $$\mathbb{Z}^2 = \langle g_1,g_2 : [g_1,g_2] = g_1g_2g_1^{-1}g_2\rangle,$$
+    $$\mathbb{Z}/d\mathbb{Z} = \langle g : g^d = 0\rangle.$$
+\end{example}
+
+\subsection{Van Kampen's Theorem}
+
+\begin{theorem}[(Vam Kampem) Thm 1.20, Hatcher]
+    Let $X = \bigcup_\alpha A_\alpha$, where each $A_\alpha$ is open,
+    and each $A_\alpha \cap A_\beta$ is path-connected. Let 
+    $x_0 \in A_\alpha$. 
+    Then, $i_\alpha : A_\alpha \hookrightarrow X$ be the injection map.
+    Then, we have maps: $$\ast_\alpha (i_\alpha)_\ast : \ast_\alpha \pi_1(A_\alpha,x_0) \longrightarrow \pi_1(X,0)$$
+    and $$i_{\alpha\beta}: A_\alpha \cap A_\beta \longrightarrow A_\alpha.$$
+    Then, $\Phi$ is surjective.\\\\
+    Moreover, if $A_\alpha \cap A_\beta \cap A_\gamma$ are path-connected
+    for all $\alpha,\beta,\gamma$, then $\ker\Phi$ is the subgroup normally
+    generated by 
+    $$(i_{\alpha\beta})_\ast(k) (i_{\beta\alpha})_\ast(k^{-1}), \quad (i_{\beta\alpha})_\ast(k) (i_{\alpha\beta})_\ast(k^{-1}).$$
+\end{theorem}
+
+\begin{example}
+    Recall that we proved that $\pi_1(\mathbb{S}^1,1) = \lbrace e\rbrace$
+    follows from van Kampen by setting covering $\mathbb{S}^2$ by 
+    $U_N \cap U_S$, where $U_N$ and $U_S$ are the the sphere without 
+    the north and south poles. 
+    Then, we have a map 
+    $$\pi_1(U_N) \ast_{\pi_1(U_N \cap U_S)} \pi_1(U_S) \longrightarrow \pi_1(\mathbb{S}^2),$$
+    but since $U_N \cong U_S \cong \mathbb{R}^2$, it is thus retractible
+    and has trivial fundamental group. 
+    Thus, $\pi_1(\mathbb{S}^2)$ is trivial.
+\end{example}
+
+\begin{example}
+    Cover $\mathbb{S}^1 = U_N \ast U_S$ similarly as before.
+    We can argue by a similar argument that $U_N$ and $U_S$ 
+    retractible, and thus conclude that $\pi_1(\mathbb{S}^1)$ is trivial.
+    But this is not true, as we already know. 
+    What went wrong here is that $U_N \cap U_S = (0,1) \sqcup (0,1)$, 
+    which is not path-connected.
+\end{example}
+
+\subsection{Cell Addition and Cell Complexes}
+
+Define a map 
+$$\varphi : \mathbb{S}^{k-1} \longrightarrow X,$$
+and define a path $\gamma$ going from $x_0$ to $\varphi(\ast)$.
+Then, we can define a space
+$$Y = X \cup_\varphi D^k.$$
+Let us restrict ourselves to the case where $k=2$. We wish to consider 
+maps $$\pi_1(X,x_0) \longrightarrow \pi_1(Y,x_0).$$
+Our goal is to derive a van Kampen decomposition of 
+$\pi_1(Y,x_0)$.
+In this case, consider:
+$$X \cup_\varphi \underbrace{( (1,1-\varepsilon) \times \mathbb{S}^{k-1})}_{\subseteq D^k},$$ 
+which deformation retracts back onto $X$ by construction.
+Let us define $$Y = X \cup_\varphi ( (1,1-\varepsilon) \times \mathbb{S}^{k-1}) \cup \on{Int}(D^k),$$ 
+Then, we have the van Kampen diagram:
+$$\begin{tikzcd}
+{\pi_1( (-1,1-\varepsilon) \times \mathbb{S}^{k-1})} \arrow[r] \arrow[d] & \pi_1(D^k) \cong \lbrace e\rbrace                            \\
+{\pi_1(X,x_0) \cong \pi_1(A_\alpha,x_0)} \arrow[r]                       & {\pi_1(X,x_0)/N\langle \mathbb{Z} (h\varphi \overline{h})\rangle} 
+\end{tikzcd}$$
+The point is that if we understand van Kampen's theorem, then we understand
+how the fundamental group of cells change under cell addition.
+
+\section{Lecture 3, 03/15/2024}
+
+Given any map $$f: X \longrightarrow Y,$$ 
+then the \emph{mapping cylinder} is 
+$$\on{Cyl}(f) := ( (I\times X) \sqcup Y)/ \simeq,$$ where $(x,1) = f(x)$.
+As Assignment One will show, the mapping cylinder is homotopy equivalent to $Y$.
+The \emph{cone} $CX$ of $X$ is:
+$$CX := (X\times I)/\sim,$$ where $(x,0) \sim (x',0)$.
+As an example,
+$$C\mathbb{S}^{n-1} \cong D^n.$$
+The \emph{mapping cone} $\on{Cone}(f)$ of $f$ is given by:
+$$\on{Cone}(f) := (CX \sqcup Y)/\simeq,$$
+where $[x,1] \simeq f(x)$.
+
+\begin{example}
+    Cell attachment is equivalent to the mapping cone of a map
+    $f : \mathbb{S}^{n-1} \to Y$.
+    In particular,$$Y \cup_f D^n = \on{Cone}(f).$$
+\end{example}
+
+\subsection{Wedge Spaces}
+
+\begin{definition}
+    $(X,x)$ is \emph{well-pointed} if for each open neighbourhood $U$ of $x$
+    is contractible.
+\end{definition}
+
+\begin{example}
+    Manifolds $M$ are well-pointed for all $m \in M$.
+\end{example} 
+Suppose that $X = \sqcup_\alpha X_\alpha$ is a wedge product of well-pointed base points 
+$x_\alpha \in X_\alpha$. Then, 
+\begin{equation}\label{eqn_thing}
+    \pi_1(X)  \cong \ast_\alpha \pi_1(X_\alpha, x_\alpha).
+\end{equation}
+
+\begin{proof}
+    Set $A_\alpha = X_\alpha \bigcup_{\beta \neq \alpha} U_\beta,$
+    of which $x_\beta$ is an element. Then,
+    $X_\alpha \to A_\alpha$ is homotopy equivalent. We have:
+    $$X_\alpha \cap X_\beta = U_\alpha \vee_{x_\alpha = x_\beta} U_\beta,$$
+    is path-connected. Then, the triple intersections are given by
+    $$X_\alpha \cap X_\beta \cap X_\gamma = U_\alpha \vee U_\beta \vee U_\gamma,$$
+    which is also path-connected. Moreover, they are path-connected and contractible.
+    Therefore, by van Kampen's theorem, 
+    $$\Phi : \ast_\alpha (X_\alpha,x_\alpha) \longrightarrow \pi_1(X),$$
+    is surjectivewith trivial kernel.
+    Thus, the isomorphism \eqref{eqn_thing} holds.
+\end{proof}
+
+\begin{example}
+    Generally, 
+    $$\pi_1\left(\vee_{i=1}^n \mathbb{S}^1\right) \cong F_n,$$
+    where $F_n$ is the free group on $n$ generators.
+\end{example}
+
+\subsection{Back to Cell Attachment}
+
+Let $(X,x_0)$ be path-connected.
+Then, let 
+$$Y := X^{k+1} :=  X \cup_{\sqcup_i \varphi_i} \left(\bigsqcup_{i=1}^n D^k\right).$$
+
+\begin{proposition}[Prop 1.26, Hatcher]
+    In the situation above, suppose that $k\geq 2$,
+    and consider the map
+    $$i_\ast : \pi_1(X,x_0) \longrightarrow \pi_1(Y,x_0).$$
+    \begin{itemize}
+        \item[(a)] If $k = 2$, then $i_\ast$ is surjective, with kernel
+        normally generated by the classes $[h_i\varphi \overline{h_i}]$,
+        for $i=1,\cdots,n$.
+    \item[(b)] If $k \geq 3$, then $i_\ast$ is an isomorphism.
+    \item[(c)] The inclusion of the $2$-skeleton $X^2$ in 
+        $X^2 \hookrightarrow X$ of a 
+        CW-complex induces an isomorphism $\pi_1(X^2,x_0) \to \pi_1(X,x_0)$.
+\end{itemize}
+\end{proposition}
+
+\begin{proof}
+    \leavevmode
+    \begin{itemize}
+        \item[(a)] Let $0$ be the centre of $D^2$, and take 
+            $$A_\alpha = (Y \setminus \lbrace 0 \rbrace) \cup_{\widetilde{h}} (I\times I),$$
+            where $$\widetilde{h} : (I \times \lbrace 0 \rbrace) \cup (\lbrace 0 \rbrace \times I) \longrightarrow Y,$$
+            and let $h$ be the map 
+            $h : \lbrace 0 \rbrace \times I \to Y$.
+            The map $\widetilde{h}$ pushes into the disc $\varphi^{-1}(\ast) = h(1)$.
+            It follows then that $A_\beta = \on{Int}(D^2)$.
+            First, let us define $$\widetilde{Y} := Y \cup (I \times I),$$
+            and note that $Y \subseteq \widetilde{Y}$ is a deformation retract.
+            Moreover, $X\subset A_\alpha$ as a deformation retraction.
+            $A_\alpha \cap A_\beta$ contains $\mathbb{S}^1 \subseteq \on{Int}(D^2)$
+            as a deformation retraction. In praticular, $A_\alpha \cap A_\beta$ is 
+            homotopy equivalent to $\mathbb{S}^1$. By construction,
+            $A_\beta \cong \on{Int}(D^2)$, which is contractible.
+            From this, one then obtains the following van Kampen diagram:
+            $$\begin{tikzcd}
+\pi_1(A_\alpha \cap A_\beta) \arrow[r] \arrow[d] & \pi_1(A_\alpha) \arrow[d] \\
+\pi_1(A_\beta) \arrow[r]                         & \pi_1(\widetilde{Y})     
+\end{tikzcd}$$
+            which is, explicitly:
+            $$\begin{tikzcd}
+                \mathbb{Z} \arrow[r, "i"] \arrow[d] & \pi_1(\widetilde{X}) \arrow[d]          \\
+                \lbrace e \rbrace \arrow[r]                         & \pi_1(\widetilde{X})/N\langle i(1)\rangle
+            \end{tikzcd}$$
+            where we have that $\pi_1(A_\alpha \cap A_\beta) \cong \pi_1(\mathbb{S}^1)\cong \mathbb{Z}$,
+            and $\pi_1(A_\beta) \cong 0$ since its retractible,
+    \item[(b)] The proof is similar to the $k=2$ case.
+        By Proposition \ref{prop1.14}, $\pi_1(\mathbb{S}^{k-1}) = \lbrace e\rbrace$.
+        So, we obtain the van Kampen diagram:
+        $$\begin{tikzcd}
+    \lbrace e\rbrace \arrow[r, "i"] \arrow[d] & \pi_1(\widetilde{X}) \arrow[d]      \\
+    \lbrace e \rbrace \arrow[r]               & \pi_1(\widetilde{Y}) \cong \pi_1(Y)
+\end{tikzcd}$$
+    \item[(c)] Follows from (b) via an inductive argument.
+\end{itemize}
+\end{proof}
+
+\begin{example}[Closed Surfaces]
+    Let $M_g$ be a compact, connected surface of genus $g$, and let
+    $$N_n := \#_n \mathbb{R}P^2,$$
+    where $\#$ is the connected sum of manifolds.
+    Given two manifolds $M_1$ and $M_2$, then we take $M_1 \setminus \on{Int}(D^2)$,
+    and $M_2 \setminus \on{Int}(D^2)$, into which we glue in an interval 
+    $\mathbb{S}^{n-1}\times I$ between the holes we cut out of the manifolds.
+    This is the check sum, and is defined as:
+    $$M_1 \# M_2 := \left((M_1 \setminus \on{Int}(D^2)) \cup (M_2 \setminus \on{Int}(D^2)) \cup \mathbb{S}^{n-1} \times I\right)/ \simeq.$$
+    \paragraph{Fact:} for $n=2$, the homotopy type of $M_1 \# M_2$
+    is well-defined. For $n \geq 3$, one needs to take a choice of orientation.\\
+    Recall that the $2$-torus can be given by 
+    $$T^2 = (I\times I)/\simeq \cong (\mathbb{S}^1_a \times \mathbb{S}^1_b) \cup_\varphi D^2,$$
+    where $a$ and $b$ are there to keep track of the two copies of the circle,
+    and $[\varphi] \in \pi_1(\mathbb{S}^1 \vee \mathbb{S}^1) \cong F_2(a,b)$.
+    If we travel once around the square defined by $(I\times I)/\simeq$, 
+    we find that $[\varphi] = aba^{-1}b^{-1} = [a,b]$.
+    Then, we have the van Kampen diagram:
+    $$\begin{tikzcd}
+    {\pi_1(T^2) \cong \langle a,b : [a,b] = 0 \rangle \cong \mathbb{Z}^2} \arrow[d] \\
+    \pi_1(\mathbb{S}^1 \times \mathbb{S}^1) \arrow[d]                           \\
+    \pi_1(\mathbb{S}^1) \times \pi_1(\mathbb{S}^1) \arrow[d, "\cong"]           \\
+    \mathbb{Z} \times \mathbb{Z} \cong \mathbb{Z}^2                            
+    \end{tikzcd}$$
+\end{example}
+
+\begin{example}
+    Let us consider $$\pi_1(\mathbb{R}P^2).$$
+    One finds that $\mathbb{R}P^2 \cong \mathbb{S}^1 \times_\varphi D^2$.
+    Take some $[\varphi] \in \pi_1(\mathbb{S}^1)$.
+    Drawing the picture out, we find that $[\varphi] = 2a$, 
+    and thus by van Kampen, we have that
+    $$\pi_1(\mathbb{R}P^2) = \langle a : 2a = 0 \rangle \cong \mathbb{Z}/2\mathbb{Z}.$$
+\end{example}
+
+\chapter{Week Four}
+
+\section{Lecture 1, 20/03/2024}
+
+TODO: watch first 15 minutes of lecture
+
+\begin{proof}[Proof Idea]
+    An element of $G \ast H$ is a reduced word 
+    $$g_1\cdots g_m \longmapsto p_{\alpha_1} (g_1) \cdots p_{\alpha_m}(g_m),$$
+    where $g_i \in G_{\alpha_i}$, and $G = G_{\alpha_1}$, and 
+    $H = G_{\alpha_m}$. The exercise is to check that this map 
+    defines a homomorphism.
+\end{proof}
+
+In the amalgamated case, if we are given maps 
+$p : G \to U$ and $q : H \to U$, we have the commutative diagram:
+$$\begin{tikzcd}
+    K \arrow[r, "i"] \arrow[d, "j"]                 & G \arrow[d, "j_G"] \arrow[rdd, "p", bend left] &   \\
+    H \arrow[r, "j_H"] \arrow[rrd, "q", bend right] & G \ast_K H                                     &   \\
+                                                    &                                                & U
+\end{tikzcd}$$
+That is, we have the property that $$p\circ i = q \circ j.$$
+Then, there exists a unique map $\phi : G \ast_K H \to U$
+such that $$\phi \circ j_H = p, \quad \phi \circ j_H = q,\quad \phi \circ i_G \circ i = \phi \circ j_H \circ j$$.
+That is, such that the diagram $$\begin{tikzcd}
+    K \arrow[r, "i"] \arrow[d, "j"]                 & G \arrow[d, "j_G"] \arrow[rdd, "p", bend left] &   \\
+    H \arrow[r, "j_H"] \arrow[rrd, "q", bend right] & G \ast_K H \arrow[rd, "\exists!\phi", dashed]  &   \\
+                                                    &                                                & U
+\end{tikzcd}$$ commutes.
+
+\begin{proof}[Proof Idea]
+    Observe that for $\phi : G \ast H \to U$, the maps
+    $\phi(i(k)j(k^{-1})) = e$, and $\phi(j(k) i(k^{-1})) = e$. 
+    From this, it follows then that the restriction map $\phi\vert_N$ is 
+    trivial, where $$N = \langle i(k)j(k^{-1}) : k \in K \rangle.$$
+    It follows then that $\phi$ descends to $\phi_\alpha : G \ast_K H \to U$.
+\end{proof}
+
+\subsection{Mapping Cylinders}
+
+We now talk about assignment problems! Given a continuous map $f : X \to Y$,
+$$M_f := ((X\times I) \sqcup Y)/((x,1) \simeq f(x).$$
+In other words, we attach the endpoint of $x\in X$ to its image in $f$.
+Then, from this, one may deduce that there is a retraction
+$$r : M_f \longrightarrow Y, \quad [x,t] \longmapsto f(x),\quad y\longmapsto y.$$
+One may check using that using the universal property of quotient spaces,
+this is indeed a continuous map. From this, one may then put this into a 
+deformation retraction.
+There is an obvious inclusion $i : X \hookrightarrow M_f$ given by 
+$x\mapsto (x,0)$. From this, we obtain two maps 
+$$r \circ i : X \longrightarrow Y.$$ 
+Then, one observes that $r \circ i = f$ by construction.
+
+\begin{example}
+    Consider the winding map 
+    $$f_d : \mathbb{S}^1 \longrightarrow \mathbb{S}^1,\quad z\longmapsto z^d.$$
+    If we take $M_{f_2}$, then one may show that $M_{f_2}$ is homeomorphic 
+    to the M\"obius band. If we draw out the usual picture used to create the 
+    M\"obius band, we see that we have one copy of $\mathbb{S}^1$ embedded 
+    in the edges with arrows, and another copy of $\mathbb{S}^1$ along the 
+    boundary of the M\"obius band that is twice as large as the other copy.\\\\
+    Another hint! Problem 1.2 basically takes a bunch of these mapping cylinders 
+    and then attaches them together, denoted by $X_{d,\infty}$.
+    You are not being asked to determine $\pi_1(X_{d,\infty})$ precisely,
+    you just need to show that it is different from $\pi_1(\mathbb{S}^1)$.
+    A key hint is to show that given the embedding $i : \mathbb{S}^1_0 \hookrightarrow X_{d,\infty}$,
+    the induced homomorphism 
+    $$i_\ast : \pi_1(\mathbb{S}^1_0) \longrightarrow \pi_1(X_{d,\infty}),$$
+    is non-zero. Once we show that, we are most of the way there, supposedly.
+    Use the fact that $D^2$ is compact, and thus its image lies in some 
+    $X_{d,k}$ for some sufficiently large $k$, because it cannot "fit" into all the 
+    pieces of the mapping cone telescope because of its compactness.
+\end{example}
+
+A map $$\mathbb{S}^1 \longrightarrow X,$$ is \emph{nul-homotopic} if and only if 
+$f$ extends to $\overline{f} : D^2 \to X$.
+
+\begin{proof}
+    There is a canonical identification 
+    $$D^2 \cong C\mathbb{S}^1 \cong (\mathbb{S}^1 \times I)/(x_0 \sim (x',0)).$$
+    Let $q : \mathbb{S}^1 \times I \to C\mathbb{S}^1$.
+    Then, $\overline{f} \circ q \vert_{\mathbb{S}^1 \times \lbrace 1\rbrace} = f$,
+    and $\overline{f}\circ q \vert_{\mathbb{S}^1 \times \lbrace 0 \rbrace} = c_x$,
+    and thus $f$ is null-homotopic.
+\end{proof}
+
+\subsection{Discussion of van Kampen's Theorem (Thm 1.20, Hatcher)}
+
+Recall that we have a map 
+$$\Phi : \ast_\alpha \pi_1(A_\alpha, x_0) \longrightarrow \pi_1(X,x_0),$$
+and we have shown that this is surjective. We wish to now analyse its kernel.
+
+\begin{definition}
+    A \emph{factorisation} of $[f] \in \pi_1(X,x_0)$ is a word 
+    $[f_1] \cdots [f_m]$, where $[f_i]$ belongs to $\pi_1(A_{\alpha_i},x_0)$,
+    and $$[f] = (i_{\alpha_1})_\ast([f_1])\cdot  (i_{\alpha_2})_\ast([f_2]) \cdots (i_{\alpha_m})_\ast ([f_m]).$$
+    This is an \emph{unreduced} word for the groups 
+    $\pi_1(A_\alpha,x_0)$.
+\end{definition}
+We consider the equivalence relation on factorisations 
+generated by: \begin{itemize}
+    \item[(i)] multiplying adjacent elements in the same group,
+    \item[(ii)] if $$[f_i] \in \on{Im}((i_{\alpha,\beta})_\ast : \pi_1(A_\alpha \cap A_\beta, x_0) \to \pi_1(A_\alpha,x_0)),$$
+    then we regard $[f_i]$ as being in the image of the map $$(i_{\beta\alpha})_\ast : \pi_1(A_\alpha \cap A_\beta, x_0) \longrightarrow \pi_1(A_\beta).$$
+\end{itemize}
+If two factorisations are equivalent, then they define the same element in the amalgamated product 
+$\ast_\alpha \pi_1(A_\alpha,x_0)$.
+We must show that path homotopic factorisations are equivalent.
+We can define a map $$f_t : I \times I \longrightarrow X,$$
+and then "chop up" the square $I\times I$ into little rectangles $[a_i,b_i] \times [a_j,b_j]$.
+The point of this construction is that we can show the rectangles $R_i \subset I \times I$ 
+such that $f(R_i) \subset A_{\alpha_i}$.
+
+\section{Lecture 2, 21/03/2024}
+
+\subsection{Proof Idea of van Kampen's Theorem}
+
+Suppose that $[f]_1\ast \cdots \ast [f_m]$ factorises $[f]$, and 
+each $[f_i] \in \pi_1(A_{\alpha_i},x_0)$. 
+Suppose that $[f]_1'] \ast \cdots \ast [f_n']$ is another factorisation
+of $[f]$, where $[f_j'] \in \pi_1(A_{\alpha_j},x_0)$.
+Then, we chop up the square $I \times I$ into little rectangles 
+such that we only have triple intersections (i.e. no quadruple intersections).
+We also pick the rectanlges in such a way that the rectangles $R_i$ match 
+up with the factorisations. 
+\paragraph{Claim:} we obtain such rectangles $R_i$ such that there is a 
+homotopy $F : I \times I \to X$ such that $F(R_i) \subset A_{\alpha_i}$.\\\\
+In particular, the homotopy maps $F(\lbrace 0,1\rbrace \times I) = x_0$, so 
+that two edges of the rectangle get mapped to a point, which gives us a loop.\\\\
+Let $v \in I \times I$ be a vertex -- i.e. a point where vertical and horizontal lines meet. 
+We know that $F(v)$ belongs to $A_{\alpha_1} \cap A_{\alpha_2} \cap A_{\alpha_3}$
+(it is possible that $\vert \lbrace \alpha_1,\alpha_2,\alpha_3\rbrace \vert < 3$).
+Now, take a path $h_v$ from $F(v)$ To $x_0$. Then, insert copies of $h_v\overline{h_v}$ into paths arriving at $v$. \\\\
+Hence, the loop $F \circ \gamma_r$ -- where $\gamma_r$ separates 
+$R_1,\cdots,R_r$ from the other rectangles -- defines a factorisation
+of $[f]$, at least once choices are made to place loops in $A_{\alpha_i}$.
+Finally, passing from $R_i$ to $R_{i+1}$, we obtain 
+path homotopic loops.
+
+\begin{remark}
+    We must decide to place all relevant loops in the same $\pi_1(A_{\alpha_i},x_0)$.
+\end{remark}
+
+\begin{remark}
+    \textbf{ALSO}, this is not examinable! We are only required to apply 
+    van Kampen's theorem, not to prove it.
+\end{remark}
+
+\subsection{Assignment Tips and Tricks: Mapping Tori}
+
+In the most general situation, we can consider an arbitrary continuous map 
+$f : X \to X$. Then, define 
+$$T_f := \frac{X\times I}{(x,1) \sim (f(x),0)}.$$
+By construction, $T_{\on{id}} = X \times \mathbb{S}^1$.
+Observe that there is always a map 
+$$T_f \longrightarrow \mathbb{S}^1,\quad [x,t]\longmapsto [t],$$
+under the identification $\mathbb{S}^1 \cong [0,1]/(0 \sim 1)$.
+As an example, let us consider a map 
+$f : \mathbb{S}^1 \to \mathbb{S}^1$ defined by $z\mapsto e^{i\theta}z$,
+for some $\theta \in [0,2\pi]$. Then, the mapping torus 
+$T_f \cong \mathbb{S}^1 \times \mathbb{S}^1$, the $2$-torus, since we can connect this to the identity 
+map. Explicitly, the homeomorphism is given by $(z,[t]) \mapsto [ze^{i\theta t}, t]$. \\\\ 
+Consider another map $f : \mathbb{S}^1 \to \mathbb{S}^1$ defined by $z\mapsto \overline{z}$,
+which is an antiholomorphic map that flips the circle $180$ degrees around, 
+and reverses the orientation. Then, $T_f$ is homeomorphic to the Klein bottle 
+$K^2$. If $f(x_0) = x_0$, then 
+$$\pi_1(T_f) \cong \pi_1(X,x_0) \ltimes \mathbb{Z},$$
+where $\mathbb{Z}$ acts on $\pi_1(X,x_0)$ by $1$ acting by 
+$f_\ast$. 
+\begin{definition}
+    Let $N$ and $A$ be groups, and $\phi : A \to \on{Aut}(N)$ be a 
+    homomorphism. 
+    Then, $$N \rtimes_\varphi A,$$ 
+    is a group with underlying set $N\times A$, defined by 
+    $$(n_1,a_1) (n_2,a_2) = (n_1 \varphi(a_1) n_2, a_1a_2).$$
+    Note that if $\varphi$ is non-trivial, then $N\ltimes A$ is 
+    \emph{non-abelian}.
+\end{definition}
+One checks that $N\rtimes_\varphi A$ defines a group.
+Using the isomorphism, we see then that $\pi_1(K^2) \cong \mathbb{Z} \ltimes \mathbb{Z}$, 
+where the semidirect product is defined by the homomorphism 
+$\varphi : \mathbb{Z} \to \on{Aut}(\mathbb{Z}) \cong \mathbb{Z}/2\mathbb{Z}$.
+So, if we have the map $f_{-1} : \mathbb{S}^1 \to \mathbb{S}^1$ 
+defined by $z\mapsto \overline{z}$, then the induced homomorphism 
+$$(f_{-1})_\ast : \pi_1(\mathbb{Z}) \longrightarrow \pi_1(\mathbb{Z}),$$
+defined by multiplication by $-1$.\\\\
+Moreover, another hint is that there is a canoincal relationship between 
+$T_f$ and $T_{f^d}$. More on that tomorrow! If you can answer that you're basically 
+done with question $4$.
+
+\subsection{Covering Spaces (Chapter 1.2, Hatcher)}
+
+Recall that $p : \widetilde{X} \to X$ is a \emph{covering space} if 
+every $x\in X$ has an open neighbourhood $U$ such that 
+$p^{-1}(U) \cong \sqcup_\alpha U_\alpha$, where
+each $p\vert_{U_\alpha}$ is a homeomorphism onto $U$. 
+From now on, we assume that $X$ is path-connected.
+We have the result that we've already proved:
+\begin{proposition}[Homotopy Lifting, Prop 1.30, Hatcher]
+    Given a homotopy $F_t : Y \times I \to X$ and a covering map 
+    $p : \widetilde{X} \to X$, there exists a 
+    unique map $\widetilde{F}_t$ such that the diagram
+    $$\begin{tikzcd}
+        Y \times \lbrace 0 \rbrace \arrow[d, hook] \arrow[r, "\widetilde{F}_0"]   & \widetilde{X}    \\
+        Y \times I \arrow[r, "F_t"] \arrow[ru, "\exists!\widetilde{F}_t", dashed] & X \arrow[u, "p"]
+    \end{tikzcd}$$
+    That is, such that $p \circ \widetilde{F}_t = F_t$.
+\end{proposition}
+
+\begin{proposition}[Prop 1.31, Hatcher]\label{prop13.1}
+    Let $\widetilde{x_0} \in p^{-1}(x_0)$. 
+    Then, the induced homomorphism 
+    $$p_\ast : \pi_1(\widetilde{X}, \widetilde{x_0})  \longrightarrow \pi_1(X,x_0),$$
+    is injective.
+\end{proposition}
+
+\begin{proof}
+    Suppose that $p_\ast([\gamma]) = e$. Then, $p \circ \gamma$ is 
+    path-homotopic to the constant loop $c_{x_0}$ via a homotopy 
+    $F_t$. Then, by the lifting property, there exists a lift 
+    $\widetilde{F}_t$ using $p$ as a lift. Then, we have the diagram:
+    $$\begin{tikzcd}
+        I \times \lbrace 0 \rbrace \arrow[d, hook] \arrow[r, "\widetilde{F}_0"]   & \widetilde{X}    \\
+        I \times I \arrow[r, "F_t"] \arrow[ru, "\exists!\widetilde{F}_t", dashed] & X \arrow[u, "p"]
+    \end{tikzcd}$$
+    We claim that $\widetilde{F}_t$ is a path homotopy to 
+    $c_{\widetilde{x_0}}$. Observe that 
+    $$\widetilde{F}_t \vert_{\lbrace 1\rbrace \times I} : I \longrightarrow p^{-1}(x_0),$$
+    where $p^{-1}(x_0)$ is discrete. It follows then that 
+    $\widetilde{F}_t\vert_{\lbrace 1\rbrace \times I}$ is a path homotopy 
+    that lifts the constant loop. Thus, it lifts the constant loop. More on this next time.
+\end{proof}
+
+\section{Lecture 3, 22/03/2024}
+
+\begin{remark}[Diarmuid Wisdom]
+    The hardest thing about covering spaces is trying to remember 
+    that it's a map, not a space.
+\end{remark}
+
+We will continue our discussion of covering spaces 
+$p : (\widetilde{X}_0, \widetilde{x_0}) \to (X,x_0)$.
+Recall that we have Proposition \ref{prop13.1}, which is a
+useful fact to have.
+
+\begin{remark}
+    Homotopy lifting means that path homotopies lift to path homotopies.
+    Moreover, the uniqueness of lifting implies that constant 
+    maps lift to constant maps.
+\end{remark}
+
+We want to relate the algebra of our fundamental group to the topology of 
+our situation. Recall that if $H$ is a subgroup of $G$, then we 
+can always write $$G = \sqcup_{g_\alpha} Hg_\alpha,$$ 
+where $Hg$ is a right coset of $G$ -- that is, the right cosets of $G$ 
+give a partition of $G$. Recall the index $[H:G]$ of $H$ in $G$ is the 
+size of $H$ in $G$. In particular, 
+$[H:G] = \vert \lbrace g_\alpha \rbrace\vert$.
+As an example, $3\mathbb{Z}$ has index $3$ in $\mathbb{Z}$. 
+The trivial subgroup $\lbrace 0 \rbrace$ has index $\infty$ 
+in $\mathbb{Z}$.
+
+\begin{proposition}[Prop 1.32, Hatcher]\label{prop1.32}
+    Suppose that $\widetilde{X}$ and $X$ are path-connected 
+    Then, the image of the induced homomorphism 
+    $$\left[p_\ast\left(\pi_1(\widetilde{X},\widetilde{x_0})\right) : p_1(X,x_0)\right] = \vert p^{-1}(x_0)\vert,$$
+    which is called the \emph{degree} of the cover $p$. Hatcher calls it the 
+    ``number of sheets''.
+\end{proposition}
+
+\begin{proof}
+    Consider a map 
+    $$\Phi : \pi_1(X,x_0) \longrightarrow p^{-1}(x_0),\quad [\gamma] \longmapsto [\widetilde{\gamma}],$$
+    where $\widetilde{\gamma}$ is the lift of $\gamma$ given by $\widetilde{\gamma}(0) = \widetilde{x_0}$.
+    This is well-defined by the homotopy lifting property. In particular, we are applying 
+    homotopy lifting to the case where $Y = \on{pt}$, and we thus can regard $\gamma$ as a 
+    homotopy. \\\\
+    We now wish to show that  $\Phi$ is constant on the right cosets of 
+    $p_\ast(\pi_1(\widetilde{X},x_0))$. To see this, let 
+    $\gamma = \delta \cdot \gamma'$, where $\delta \in \on{Im}(p_\ast)$.
+    From this, we wish to determine $\widetilde{\gamma}(1)$. 
+    By our construction, we have $\widetilde{\gamma}(1) = (\widetilde{\delta}\cdot\widetilde{\gamma'})(1)$.
+    But since $\widetilde{\delta}_{\widetilde{x_0}}(1) = \widetilde{x_0}$,
+    it follows that $\widetilde{\gamma}_{\widetilde{x_0}} (1) = \widetilde{\gamma}_{x_0}(1)$.
+    This uses the fact that $[\gamma'] \in \on{Im}(p_\ast)$ if and only if 
+    $\widetilde{\gamma}_{\widetilde{x_0}} = \widetilde{x_0}$ (see Hatcher).
+    It follows then that $\Phi$ descends to a map on the left coset: 
+    $$\Phi : H\setminus G \longrightarrow p^{-1}(x_0),$$ 
+    where $G = \pi_1(X,x_0)$ and $H = p_\ast\left(\pi_1(\widetilde{X},\widetilde{x_0})\right)$.
+    Since $\widetilde{X}$ is path-connected, there exists $\widetilde{\gamma'}$ such that 
+    $\widetilde{\gamma'}(0) = \widetilde{x_0}$, and 
+    $\widetilde{\gamma}(1) = x \in p^{-1}(x_0)$. 
+    Now, $p\circ \gamma$ is a loop at $x_0$ such that $\widetilde{p\circ \gamma}_{x_0} = \widetilde{\gamma}$,
+    amd thus $\Phi([p\circ \widetilde{\gamma}]) = x \in p^{-1}(x_0)$.
+    This shows surjecitivty.\\\\ 
+    Next, we wish to show injectivity. Suppose that $\Phi(H[\gamma_1]) = \Phi(H[\gamma_2])$.
+    Then, $\widetilde{\gamma_1\overline{\gamma_2}}(1) = \widetilde{x_0}$.
+    It follows then that $[\gamma_1\overline{\gamma_2}] \in \on{Im}(p_\ast)$,
+    and therefore $H[\gamma_1] = H[\gamma_2]$ by property of cosets.
+\end{proof}
+
+Given a map $f : Y \to X$, and a covering space $p : \widetilde{X} \to X$, 
+a natural question to ask is if there exists a lift 
+$Y \to \widetilde{X}$ such that the diagram $$\begin{tikzcd}
+    & \widetilde{X} \arrow[d, "p"] \\
+Y \arrow[r, "f"'] \arrow[ru, dashed] & X                           
+\end{tikzcd}$$
+commutes. Observe that if such a lift does exist, then the induced 
+homomorphisms give a commutative diagram: $$\begin{tikzcd}
+    & {\pi_1(\widetilde{X},\widetilde{x_0})} \arrow[d, "p_\ast"] \\
+{\pi_1(Y,y_0)} \arrow[r, "f_\ast"'] \arrow[ru, "\widetilde{f_\ast}", dashed] & {\pi_1(X,x_0)}                                            
+\end{tikzcd}$$
+That is, $f_\ast = p_\ast \circ \widetilde{f_\ast}$. 
+It follows from this then that $\on{Im}(f_\ast) \subseteq \on{Im}(p_\ast)$.
+However, this turns out to be an if and only if, as we will show later.
+
+\begin{definition}[Template of a Definition]
+    Let $P$ be a topological property (i.e. path-connectedness, compactness etc.),
+    and $X$ a space. Then, we say that $X$ is \emph{locally $P$} if 
+    for all $x \in X$, and for all neighbourhoods $U$ of $x$, 
+    there exists a neighbourhood $x \in V \subset U$ such that $V$ is $P$.
+\end{definition}
+
+\begin{remark}
+    You don't always want open neighbourhoods for the above definition -- i.e. if 
+    we are concerned with local compacntess then we will require closed neighbourhoods
+    contained in an open neighbourhood of $x$.
+\end{remark}
+
+\begin{remark}
+    For some reason path-connected \emph{doesn't} imply locally path-connected???
+    The topolgoists sine curve is an example of this.
+\end{remark}
+
+\begin{proposition}[Prop 1.33, Hatcher]
+    If $X$ is path-connected and locally path-connected,
+    then any map $f :Y \to X$ can be lifted to one on $\widetilde{X}$
+    if and only if 
+    $$f_\ast (\pi_1(Y,y_0)) \subseteq p_\ast(\pi_1(\widetilde{X},\widetilde{x_0})).$$
+\end{proposition}
+
+\begin{proof}
+    The $\implies$ direction is clear, as we have already done that.
+    Let us consider the other direction. Then, we have maps:
+    $$\begin{tikzcd}
+        & \widetilde{X} \arrow[d, "p"] \\
+Y \arrow[r, "f"'] & X                           
+\end{tikzcd}$$
+    Let $y\in Y$. Then, since $X$ is path-connected, then 
+    there exists a path $\gamma : I \to Y$ such that $\gamma(0) = y_0$
+    and $\gamma(1) = y$.
+    Then, the path $f\circ \gamma$ in $X$ can be lifted to a path 
+    $\widetilde{f\circ \gamma}$ starting at $x-0$. Then, we can define 
+    $$\widetilde{f}(y) := \widetilde{f\circ \gamma}_{x_0}(1).$$
+    Let us check that $\widetilde{f}$ is well-defined. 
+    If $\gamma'$ is path-homotopic to $\gamma$, then 
+    $$\widetilde{f\circ \gamma}_{x_0}(1) = \widetilde{f \circ \gamma'}_{x_0}(1),$$
+    by path-lifting.
+    Now, we wish to check this for path-homotopy classes. 
+    In general, let $\gamma'(0) = y_0$, and $\gamma'(1) = y$.
+    Then, $\gamma \simeq \gamma' \overline{\gamma}\gamma$.
+    Observe that $[\gamma'\overline{\gamma}] \in \pi_1(Y,y_0)$.
+    Then, $f\circ \gamma' \simeq f\circ (\gamma' \overline{\gamma}\gamma) = f\circ (\gamma' \overline{\gamma}) \cdot f\circ \gamma$.
+    Then, we see that $$\widetilde{f\circ \gamma'}(1) = \widetilde{f\circ \gamma}(1),$$
+    since $[f\circ \gamma'] \in f_\ast(Y,y_0) \subset p_\ast(\widetilde{X},\widetilde{x_0})$,
+    and thus the induced homomorphism is $\widetilde{f}_\ast$ is well-defined.\\\\
+    We now show that $\widetilde{f}$ is continuous. Let $N\subseteq Y$ be a neighbourhood of 
+    $y \in Y$ such that $f(N) \subset U$, where $U$ is evenly covered by $p$.
+    (we're running out of time so just go see Hatcher)
+\end{proof}
+
+\begin{remark}
+    Local path-connectedness is actually a stronger condition than path-connectedness, 
+    since you can choose as small of a neighbourhood as you want 
+    and then prove your result on that. Which is wild.
+\end{remark}
+
+\subsection{More Assignemnt Tips on Mapping Tori}
+
+Suppose that we have a homeomorphism $f : X \to X$, we can raise 
+to the $d$-th power by $f^d$. Then, we have $T_{f^d}$ and $T_f$.
+Now that we know some more things about covering spaces, we can say more 
+about how they may be related.\\\\
+The answer is that they are related by a covering space. Suppose that 
+$d=3$. Then, we can take three copies of the interval, and glue each 
+copy of the interval to $f$. One can check that this is a three-fold covering.
+Call this thing $T_{f,f,f}$. 
+This construction is modelled on the $z\mapsto z^d$ map. 
+We want to show that $$T_{f^3} \cong T_{f,f,f}.$$
+This is what we have to show. If you glue two cylinders via a 
+homeomorphism, it is still a homeomorphism. And you can always untwist it.
+Moreover, you can say that you can assume that the homeomorphism has a 
+fixed point.
+
+\chapter{Week Five}
+
+\section{Lecture 1, 27/03/2024}
+
+Let us recall one of the key results that we unfortunately skipped. 
+
+\begin{proposition}[Prop 1.33, Hatcher]
+    Let $Y$ be path-connected, and locally path-connected, and consider 
+    a covering space $p : \widetilde{X} \to X$ fitting into a diagram:
+    $$\begin{tikzcd}
+        & \widetilde{X} \arrow[d, "p"] \\
+Y \arrow[r, "f"] \arrow[ru, "\widetilde{f}", dashed] & X                           
+\end{tikzcd}$$
+    Then, a lift $\widetilde{f}$ exists if and only if 
+    $f_\ast(\pi_1(Y,y)) \subseteq p_\ast(\pi_1(\widetilde{X},\widetilde{x}_0))$.
+\end{proposition}
+
+\begin{example}
+    As a nice application of Proposition 1.33, let us look at the covering space 
+    $$p  : \mathbb{R} \longrightarrow \mathbb{S}^1.$$ 
+    Then, for any simply-connected space $Y$, any map $Y \to \mathbb{S}^1$ is 
+    null-homotopic, since 
+    the fundamental group of $Y$ is trivial. Since $\mathbb{R}$ is contractible, 
+    it follows that every map into $\mathbb{R}$ is null-homotopic via the straight 
+    line homotopy. 
+    Then, apply Proposition 1.33 to show that we have a lift 
+    $\widetilde{f} : Y \to \mathbb{R}$, 
+    which factors through the null-homotopic map $Y \to \mathbb{S}^1$. 
+    Thus, the lift $\widetilde{f}$ is also null-homotopic.
+\end{example}
+
+\begin{proposition}[Hatcher, Prop 1.34]
+    Consider maps 
+    $$\begin{tikzcd}
+        & {(\widetilde{X}, \widetilde{x_0})} \arrow[d, "p"] \\
+{(Y,y)} \arrow[r, "f"] & {(X,x)}                                          
+    \end{tikzcd}$$
+    where $p$ is a covering space, and $f$ has lifts 
+    $\widetilde{f}_1, \widetilde{f_2} : Y \to \widetilde{X}$.
+    If $Y$ is path-connected, then $\widetilde{f_1} = \widetilde{f_2}$ 
+    if and only if $\widetilde{f_1}(y_0) = \widetilde{f}_2(y_0)$.
+\end{proposition}
+
+\begin{proof}
+    $\Longleftarrow$ Let 
+    $$Z = \lbrace y : \widetilde{f_1}(y) = \widetilde{f_2}(y)\rbrace.$$
+    Let $f(y) \in U$, where $U$ is evenly covered. Then, by continuity, there 
+    exists a neighbourhood $N$ such that 
+    $\widetilde{f_1}(N) \subset \widetilde{U_1}$, and $\widetilde{f_2}(N) \subset \widetilde{U_2}$
+    If $\widetilde{U_1} \neq \widetilde{U_2}$, then we may conclude that 
+    $N$ is not contained in $Z$, and thus $Z$ is closed. Conversely, if the two 
+    agree, then we can agree that $Z$ is open, since $N \subset Z$. 
+    If $Z \subset Y$ is non-empty, open and closed, then $Z=Y$ since $Y$ is 
+    connected.
+\end{proof}
+
+\subsection{Classification of Covering Spaces}
+
+Our goal now is to classify all pointed covering spaces of $(X,x)$, where 
+$X$ is path-connected and locally path-connected. By a classification, we 
+mean the following. Given two covering spaces $p_1$, and $p_2$ over $X$, 
+there exists a pointed homeomorphism $h$ such that that the diagram
+$$\begin{tikzcd}
+    {(\widetilde{X}_1,\widetilde{x}_1)} \arrow[rd, "p_1"'] \arrow[rr, "h"] &         & {(\widetilde{X}_2,\widetilde{x}_2)} \arrow[ld, "p_2"] \\
+                                                                           & {(X,x)} &                                                      
+\end{tikzcd}$$ commutes.\\\\
+Observe that if $p_1 \cong p_2$, then since $p_1 = p_2 \circ h$, 
+it follows then that 
+$$(p_1)_\ast (\pi_1(\widetilde{X}_1,\widetilde{x}_1)) = (p_2)_\ast (f_\ast (\pi_1(\widetilde{X}_1, \widetilde{x}_1))) = (p_2)_\ast (\pi_1(\widetilde{X}_2,\widetilde{x}_2)).$$
+That is, $\on{Im}(p_1)_\ast = \on{Im}(p_2)_\ast$, and so $H = \on{Im}(p_1)_\ast$ is an invariant 
+of covering spaces up to isommorphism.
+
+\begin{example}
+    Recall that for $X = \mathbb{S}^1 \vee \mathbb{S}^1$,
+    $\pi_1(X) = \mathbb{Z} \ast \mathbb{Z} =: F_2$,
+    which is the free group on two letters. 
+    In this case, $\widetilde{X} = \mathbb{S}^1 \vee \mathbb{S}^1 \vee \mathbb{S}^1$,
+    and $\pi_1(\widetilde{X}) = F_3$, and we have $F_3 \hookrightarrow F_2 = \pi_1(X)$.
+    The group $H$ here is generated by $\langle a^2,b^2,ab\rangle$, which is a 
+    subgroup of index $2$ in $F_2$. In particular, note that the index of the 
+    subgroup is equal to how many sheets the cover has. Indeed, in this case, 
+    $\widetilde{X} \to X$ is a two-sheeted cover.
+\end{example}
+
+\subsection{Existence}
+
+We want, for every subgroup $H$ of $\pi_1(X,x)$, a covering space 
+$p : (\widetilde{X}, \widetilde{x}_0) \to (X,x)$ such that 
+$\on{Im}p_\ast = H$. The covering space corresponding to the case for which 
+$H = \lbrace e\rbrace$ will be called the \emph{universal cover} 
+$$X_{\on{univ}},$$ 
+since every other covering space will arise as a quotient of the universal cover.
+If such a cover exists, then any point $x\in X$, and evenly covered set $U$ 
+containing $x$, the homomorphism 
+$$\pi_1(U,x) \longrightarrow \pi_1(X,x),$$ is trivial. Choose any one of the 
+even covers $\widetilde{U}_i$ in $\widetilde{X}$. Then, $p\vert_{\widetilde{U}_i} : \widetilde{U}_i \to U$
+is a homeomorphism, and thus induces a group isomorphism.
+We have the commutative diagram:
+$$\begin{tikzcd}
+    {\pi_1(\widetilde{U}_i,\widetilde{x}_i)} \arrow[r, "i"] \arrow[d, "(p\vert_{\widetilde{U}_i})_\ast"] & {\pi_1(\widetilde{X},\widetilde{x}_0)} \arrow[d, "p"] \\
+    {\pi_1(U,x)} \arrow[r]                                                                               & {\pi_1(X,x)}                                         
+\end{tikzcd}$$
+However, the composition $p\circ i$ is trivial, and since $(p\vert_{\widetilde{U}_i})_\ast$ 
+is an isomorphism, it follows that the map $\pi_1(U,x) \to \pi_1(X,x)$ must be trivial.
+
+\begin{definition}
+    A space $X$ is \emph{semi-locally simply-connected} if for all $x\in X$, 
+    there exists a neighbourhood $U$ of $x$ such that for all $x' \in U$, 
+    the map $\pi_1(U,x') \to \pi_1(X,x')$ is trivial -- that is, every loop in 
+    $U$ must be contractible.
+\end{definition} 
+
+\begin{example}[A non-semi-locally simply-connected space]
+    Consider an infinite shrinking wedge of circles (a.k.a a Haiwaiian earring),
+    given by $$X = \bigcup_n \mathbb{S}_{1/n}^1 \subseteq \mathbb{R}^2,$$
+    It is not well-behaved at the point where all the circles intersect, and 
+    it is not semi-locally simply-connected.
+\end{example}
+
+\section{Lecture 2, 28/03/2024}
+
+\begin{theorem}[Classification of Covering Spaces, Thm 1.38, Hatcher]
+    Let $X$ be path-connected, locally path-connected, and semi-locally simply-connected.
+    Then, there are bijections 
+    $$\lbrace \text{isomorphism classes of pointed covering spaces}\rbrace \stackrel{p_\ast}{\longleftrightarrow} \lbrace \text{Subgroups of $\pi_1(X,x)$},$$ 
+    where by $\stackrel{p}{\longleftrightarrow}$ we mean that the bijection is given by the induced 
+    map $p_\ast$ of the covering space.
+\end{theorem}
+
+If we forget the basepoint of the covering spaces, then the bijection becomes 
+$$\lbrace \text{isomorphism classes of covering spaces} \rbrace \longleftrightarrow \lbrace \text{conjugacy classes $[H]$ of subgroups of $\pi_1(X,x_0)$}\rbrace.$$
+\begin{proof}[Proof Idea]
+    Let us first begin by showing that existence of the covering space corresponding to 
+    the group $H = \lbrace e\rbrace$. The resulting covering space will be called the \emph{universal covering space},
+    and be denoted by $\widetilde{X}_{\on{univ}}$. All other covering spaces will arise as a quotient 
+    of this covering space.\\\\ 
+    Recall that $\pi_1(X,x_0)$ acts on $\Pi_1(X,x_0,x)$ freely and transitively. 
+    Thus, let us set $$\widetilde{X} := \bigcup_{x\in X} \Pi_1(X,x_0,x),$$
+    for some fixed $x_0 \in X$. Then, we take a map 
+    $$p : \bigcup_{x\in X} \Pi_1(X,x_0,x) \longrightarrow X, \quad [\gamma] \longmapsto \gamma(1),$$
+    where $\gamma(1) = x$. This is called the \emph{universal covering} of $X$. The next 
+    step is to topologise $\widetilde{X}$ -- keep in mind that the whole idea of covering spaces is that their local 
+    topology is the same as the topology on the base space $X$.\\\\ 
+    Define $\mcal{U} \subseteq \tau_X$, where 
+    $$\mcal{U} = \lbrace U \in \tau_X : \text{$U$ is path-connected and $\pi_1(U) \to \pi_1(X)$ is trivial}\rbrace,$$
+    which are basepoint independent because if the map is trivial, then it is trivial 
+    on every basepoint. Note that as a consequence, 
+    two paths that are path-homotopic in $U$ 
+    is also path-homotopic in $X$ by path-connectedness. Thus,
+    $$i_\ast : \Pi_1(U,x_1,x_2) \longrightarrow \Pi_1(X,x_1,x_2),$$ 
+    then $\vert \on{Im}i_\ast \vert = 1$.\\\\ 
+    Note that if $V \subset U$, and $V$ is path-connected, and $U \in \mcal{U}$, then
+    $V \in \mcal{U}$, since we the induced map of the inclusion $\pi_1(V,x) \to \pi_1(X,x)$
+    is trivial, and the map $\pi_1(V,x) \to \pi_1(X,x)$ is also trivial, since 
+    $X$ is locally path-connected. 
+    This implies that $\mcal{U}$ is a \emph{basis} for $\tau_X$ -- that is, every 
+    $U \in \tau_X$ can be written as a union of elements in $\mcal{U}$.
+    
+    \begin{example}
+        Let $X$ be a metric space. Then, the set 
+        $$\mcal{B} := \lbrace B_\varepsilon(x) : x \in X, \varepsilon > 0\rbrace,$$ 
+        forms a basis for $\tau_d$, where $d : X \times X \to \mathbb{R}_{\geq 0}$ 
+        is a metric on $X$.
+    \end{example}
+    
+    A set $\mcal{B} \in \mcal{P}(X)$ defines $\tau_B$ for which $\mcal{B} \subset \tau_\mcal{B}$
+    is a basis if \begin{itemize}
+        \item[(i)] for all $X = \bigcup_\beta U_\beta$, $U_\beta \in \mcal{B}$,
+        \item[(ii)] for all $U_{\beta_1}, U_{\beta_2} \in \mcal{B}$ and $x \in U_{\beta_1} \cap U_{\beta_2}$,
+        there exists $U_{\beta_3} \in \mcal{B}$ such that $x \in U_{\beta_3} \subset U_{\beta_1}\cap U_{\beta_2}$.
+    \end{itemize}
+    Define $\tau_\mcal{B}$ by $U \in \tau_\mcal{B}$ if and only if 
+    $$U = \bigcup_\beta U_\beta,$$
+    for $U_\beta \in \mcal{B}$.\\\\ 
+    To summarise, $\mcal{U}$ is a basis for $\tau_X$, and we define $\widetilde{\mcal{U}}$ satisfying 
+    (i) and (ii) from $\mcal{U}$, and use $\widetilde{\mcal{U}}$ to topologise $\widetilde{X}$, 
+    which we recall is 
+    $$\widetilde{X} =  \bigcup_{x \in X} \Pi_1(X,x_0,x).$$
+    Define 
+    $$\widetilde{\mcal{U}} := \lbrace U_{[\gamma]} : \text{$U \in \mcal{U}$ , $[\gamma] \in \widetilde{X}$, $\gamma(1) \in U$}\rbrace,$$
+    and $$U_{[\gamma]} := \lbrace [\gamma \cdot \eta] : \text{$\eta \in \Pi_1(U,\gamma(1),u)$, $u \in U$}\rbrace.$$
+    \begin{remark}
+        $U_{[\gamma]}$ depends only on $U$ and $[\gamma]$.
+    \end{remark}
+    Observe that the map 
+    $$p : U_{[\gamma]} \longrightarrow U,\quad [\gamma\cdot \eta] \longmapsto (\gamma \cdot \eta)(1),$$
+    is surjective, since $U$ is path-connected. Moreover, $p$ is injective, since different 
+    choices of $\eta$ are path-homotopic in $X$.
+    \paragraph{Claim:} $U_{[\gamma]} = U_{[\gamma']}$ if and only if $[\gamma'] \in U_{[\gamma]}$.
+    \begin{proof}
+        Suppose that $\gamma' = \gamma$. Then, elements of $U_{[\gamma']}$ 
+        have the form 
+        $[\gamma' \cdot \eta] = [\gamma \cdot \eta \cdot \mu]$. This proves the $\subseteq$ 
+        direction. The other direction is analogous.
+    \end{proof}
+    \paragraph{Claim:} $\widetilde{\mcal{U}}$ is a basis for a topology.
+    \begin{proof}
+        Certainly, every $[\gamma] \in \widetilde{X}$ lies in some $U_{[\gamma]}$,
+        just choose some $\gamma(1) \in U$. 
+    \end{proof}
+    Now, let us consider $U_{[\gamma]}$,
+    and $V_{[\gamma']}$, and suppose that 
+    $[\gamma''] \in U_{[\gamma]} \cap V_{[\gamma']}$. Then, $U_{[\gamma']} = U_{[\gamma'']}$,
+    and similarly $V_{[\gamma']} = V_{[\gamma'']}$ by our previous claim. 
+    Now, let us take an open, path-connected subset $W \subset U \cap V$ such that 
+    $\gamma''(1) \in W$.
+    Then, $W_{[\gamma'']} \subset U_{[\gamma']} = U_{[\gamma]}$, and $W_{[\gamma'']} \subset V_{[\gamma'']} = V_{[\gamma]}$.
+    That is, 
+    $$W_{[\gamma'']} \subset U_{[\gamma]} \cap V_{[\gamma']}.$$ 
+    It follows then that $(\widetilde{X}, \tau_{\widetilde{\mcal{U}}})$ is a topological space.
+    Now, we need to show the two facts:
+    \begin{itemize}
+        \item[(i)] $p$ is continuous, 
+        \item[(ii)] $p$ is a covering space.
+    \end{itemize}
+    Recall the bijection $$p : U_{[\gamma]} \longrightarrow U.$$
+    Then, one can check that $p$ defines a bijection to 
+    $$\lbrace V_{[\gamma']} \rbrace \subseteq \widetilde{\mcal{U}},$$ 
+    where $[\gamma'] \in U_{[\gamma']}$. This implies that $p$ is continuous. 
+    To check that $p$ is a covering space, it remains to show that 
+    $U_{[\gamma]} \cap U_{[\gamma']} = \emptyset$ if $[\gamma] \neq [\gamma']$,
+    and $\gamma(1) = \gamma'(1)$. But, this holds since $U_{[\gamma]} = U_{[\gamma']}$ 
+    if and only if $[\gamma'] \in U_{[\gamma']}$ by our previous claim. All 
+    $[\gamma''] \in U_{[\gamma]}$ such that $\gamma''(1) = x$ are 
+    path-homotopic.\\\\
+    We must show now that $X$ is path-connected, and simply-connected. Recall that 
+    $$\widetilde{X} = \lbrace [\gamma] : \text{base point $\widetilde{x} = [c_{x_0}]$}\rbrace.$$
+    We wish to construct a path $\gamma_t$ going from $\gamma$ to $c_{x_0}$.
+    So, let us set 
+    $$\gamma_t(s) = \begin{cases}
+        s \quad \text{if} \quad s \leq 1-t,\\
+        1-t \quad \text{if} \quad s\geq 1-t,
+    \end{cases}$$
+    One can check that $\gamma_t(s)$ is continuous.
+    But since $p_\ast : \pi_1(\widetilde{X},\widetilde{x}) \to \pi_1(X,x_0),$ is injective,
+    it suffices to show that the image of $p_\ast$ is trivial.
+    Let $\widetilde{\gamma}$ be a path on $\widetilde{X}$. Observe that $\widetilde{\gamma} \sim \widetilde{\gamma_1}$.
+    But $\widetilde{\gamma_1} = c_{x_0}$, and so $[\widetilde{\gamma}] = [c_{\widetilde{x}}]$.
+    The map $p\circ \widetilde{\gamma}$ has a lift, but since $\widetilde{\gamma}$ is the constant 
+    path, it gets lifted to the constant path in $X$. Thus, the image of $p_\ast$ is trivial, since our choice of 
+    $\gamma$ was arbitrary. Just go read Hatcher.
+\end{proof}
+
+\section{Lecture 3, 29/03/2024}
+
+Good Friday. No lecture.
+
+\chapter{Week Six}
+
+\section{10/04/2024}
+
+Before the easter break, we proved the following.
+Let $X$ be a path-connected, locally path-connnected, and semi-locally simply connected 
+(p.c., l.p.c., s.l.s.c.).
+Then, there exists a covering space $$p  : \widetilde{X} \longrightarrow X,$$ 
+such that $\pi_1(\widetilde{X}) = 0$ -- that is, $\widetilde{X}$ is simply-connected.
+It follows then that $p_\ast$ is the trivial homomorphism.
+
+\begin{proposition}[Prop 1.36, Hatcher]
+    If $X$ is p.c., l.p.c., and s.l.s.c., then for all subgroups $H < \pi_1(X,x)$, 
+    there exists a path-connected covering space 
+    $$p_H : (\widetilde{X}_H, \widetilde{x}_0) \longrightarrow (X,x_0),$$
+    such that the image of $(p_H)_\ast$ is $H$.
+\end{proposition}
+
+\begin{proof}
+    Recall that 
+    $$\widetilde{X}_{univ} := \bigcup_{x \in X} \Pi(X,x_0) = \lbrace [\gamma] : \gamma(0) = x_0\rbrace,$$
+    such that there is a sequence of maps 
+    $$\widetilde{X}_{univ} \longrightarrow \widetilde{X}_H \stackrel{p_H}{\longrightarrow} X.$$
+    Then, define an equivalence relation on $\widetilde{X}_{univ}$ by
+    $[\gamma] \sim [\gamma']$ if and only if $\gamma(1) = \gamma'(1)$ and 
+    $[\gamma \cdot \bar{\gamma'}] \in H$.
+    One checks that this defines an equivalence relation. 
+    Define $$\widetilde{X}_H := \widetilde{X}_{univ} / \sim,$$
+    and define the map $p_H$ by:
+    $$\widetilde{X}_H \longrightarrow X,\quad [[\gamma]] \longmapsto \gamma(1),$$
+    which makes sense since the equivalence relation on $\widetilde{X}_{univ}$ 
+    does nothing to the end points of the path by construction.
+    Further, note that $p_H$ is induced from the map $p_{univ} : \widetilde{X}_{univ} \to \widetilde{X}$.
+    One readily checks that $p_H$ indeed defines a covering Space. 
+    In particular, $\pi_1(X,x)$ labels the $U_{[\gamma]}$'s in $\widetilde{X}$, each of 
+    which is a disjoint copy of the space $U$ in $X$. \\\\ 
+    The last thing that remains to be checked is the fact the image of $(p_H)_\ast$
+    is equal to $H$. We may argue this by lifting. This follows essentially by construction, 
+    using the fact that there exists a path (that is not a loop) from a point in 
+    $U_{[\gamma]}$ to $U_{[\gamma']}$. But under the quotient, all such points are identified,
+    and each point corresponds to a loop in $H$.
+\end{proof}
+
+\begin{example}
+    Consider a map 
+    $$p : \mathbb{R} \longrightarrow \mathbb{S}^1,$$
+    and let $H = d\mathbb{Z}$. We know that $\pi_1(\mathbb{S}^1,1) \cong \mathbb{Z}$.
+    Then, the map $p$ factors through a map 
+    $$\mathbb{R} \longrightarrow \mathbb{R}/d\mathbb{Z} \stackrel{p}{\longrightarrow} \underbrace{\mathbb{R}/\mathbb{Z}}_{\cong \mathbb{S}^1}.$$
+\end{example}
+
+\begin{proposition}[Prop 1.37, Hatcher]
+    If $X$ is a path-connected, locally path-connected, then two 
+    covering spaces $p_1 : (\widetilde{X}_1, \widetilde{x}_1) \to (X,x)$,
+    and $p_2 : (\widetilde{X}_2,\widetilde{x}_2) \to (X,x)$
+    are isomorphic if and only if $\on{Im}((p_1)_\ast) = \on{Im}((p_2)_\ast)$.
+\end{proposition}
+
+\begin{proof}
+    Use the unique lifting property of Proposition 1.34. Given two covering spaces 
+    $p_1$ and $p_2$, there exists a lift $\widetilde{h}_1 : \widetilde{X}_2 \to \widetilde{X}_1$, 
+    by the existence of the lifting property.
+    Conversely, there exists another lift $\widetilde{h}_2 : \widetilde{X}_1 \to \widetilde{X}_2$. 
+    $$\begin{tikzcd}
+        \widetilde{X}_1 \arrow[rd, "p_1"'] \arrow[rr, "h_1", bend left] &   & \widetilde{X}_2 \arrow[ld, "p_2"] \arrow[ll, "h_2", bend left] \\
+                                                                        & X &                                                               
+    \end{tikzcd}$$
+    But by uniqueness of lifts, it follows that $\widetilde{h}_1 \circ \widetilde{h}_2$ is the identity 
+    -- that is, $h_1$ and $h_2$ are inverses of one another.
+\end{proof}
+
+This proves the pointed classification of covering spaces in Theorem 1.38. 
+
+\subsection{Classification of Pointed Covering Spaces}
+
+Consider two covering spaces with different choices of base points:
+$$\begin{tikzcd}
+    {(\widetilde{X}, \widetilde{x}_1)} \arrow[r, "p"] & (X,x_0) \\
+    {(\widetilde{X},\widetilde{x}_2)} \arrow[ru, "p"] &  
+\end{tikzcd}$$
+\paragraph{Question:} How are $p_\ast(\pi_1(\widetilde{X},\widetilde{x}_1))$ and 
+$p_\ast(\pi_1(\widetilde{X},\widetilde{x}_2))$ related?\\\\
+Let $\gamma : I \to \widetilde{X}$ be such that $\gamma(0) = \widetilde{x}_1$, 
+and $\gamma(1) = \widetilde{x}_2$. Then, define a map 
+$$\beta_\gamma : \pi_1(\widetilde{X}, \widetilde{x}_1) \longrightarrow \pi_1(\widetilde{X}, \widetilde{x}_2), \quad [\delta] \longmapsto [\overline{\gamma} \cdot \delta \cdot \gamma].$$
+Under $p_\ast$, we conjugate by $[p \circ \gamma]$, and we obtain:
+$$\on{Im}(p_1)_\ast = [p\circ \overline{\gamma}] \on{Im}(p_2)_\ast [p\circ \gamma].$$
+
+\subsection{Deck Transformations and Group Actions}
+
+\begin{definition}
+    Let $p : \widetilde{X} \to X$ be a covering space. Then, 
+    $$\mcal{G}(\widetilde{X}) := \lbrace h : X \stackrel{\simeq}{\to} X : p \circ h = p\rbrace = \on{Aut}(p).$$
+    By construction, $\on{Aut}(p)$ is a subgroup of the group of homeomorphisms on 
+    $\widetilde{X}$. The gruop $\mcal{G}(\widetilde{X})$ (or $\on{Aut}(p)$) is called the
+    group of \emph{deck transformations} of $p$.
+\end{definition}
+
+\begin{example}
+   Consider the covering space 
+   $$p : \mathbb{R} \to \mathbb{S}^1, \quad t \longmapsto e^{2\pi it} = e^{2\pi i(t+n)},\quad n \in \mathbb{Z}.$$
+   Then, $$\mcal{G}(\mathbb{R}) = \mathbb{Z},$$
+   by the $\mathbb{Z}$-invariance of $p$. 
+   Note that $\mcal{G}(\mathbb{R}) \cong \pi_1(\mathbb{S}^1,1)$. Later, we will learn that this 
+   is not a coincidence. 
+\end{example}
+
+\begin{example}
+    Consider the $d$-fold cover of $\mathbb{S}^1$, given by 
+    $$p_d : \mathbb{S}^1 \longrightarrow \mathbb{S}^1,\quad z\longmapsto z^d.$$
+    Then, $$\mcal{G}(p_d) \cong \mathbb{Z}/d\mathbb{Z}.$$
+    Observe that 
+    $$\mcal{G}(p_d) \cong \pi_1(\mathbb{S}^1,1) / \on{Im}(p_d)_\ast.$$
+\end{example}
+
+\begin{definition}[Normal Covering Space]
+    Let $X$ be path-connected. 
+    A map $p : \widetilde{X} \to X$ is a \emph{normal covering space} if 
+    $\mcal{G}(\widetilde{X})$ acts transitively on $p^{-1}(x)$, for all $x\in X$.
+\end{definition}
+
+\begin{remark}
+    If $X$ is path-connected, there is an embedding 
+    $\mcal{G}(\widetilde{X}) \hookrightarrow p^{-1}(x)$, 
+    given by $h \mapsto h(\widetilde{x}_0)$.
+\end{remark}
+
+\section{Lecture 2, 11/04/2024}
+
+Recall for each covering space, 
+$p : \widetilde{X} \to X$, that $\mcal{G}(\widetilde{X}) := \on{Aut}(p),$
+the automorphism group of $p$. We say that $p$ is \emph{normal} if $\mcal{G}(\widetilde{X})$
+acts transitively on the fibres $p^{-1}(x)$.
+
+\begin{proposition}[Prop 1.39, Hatcher]
+    Let $p : (\widetilde{X}, \widetilde{x}) \to (X,x)$ be a covering space with $\widetilde{X}$ path-connected, 
+    and $X$ path-connected, and locally path-connected.
+    Then, \begin{itemize}
+        \item[(i)]  $p$ is normal if and only if $H:= p_\ast(\pi_1(\widetilde{X},\widetilde{x}))$ is 
+        normal in $\pi_1(X,x)$,
+        \item[(ii)] There is a group isomorphism: $$\mcal{G}(\widetilde{X}) \cong N(H)/H,$$ where 
+        $$N(H) := \lbrace [\gamma]  \in \pi_1(X,x) : [\gamma] H [\overline{\gamma}] = H\rbrace,$$
+        is the \emph{normaliser} of $H$.
+    \end{itemize}
+\end{proposition}
+
+\begin{proof}
+    \leavevmode 
+    \begin{itemize}
+        \item[(i)] Base-point change in $\widetilde{X}$ conjugates $H$ by the image of a path between 
+        the basepoints. So, $[p\circ \gamma] \in N(H)$ if and only if 
+        $p_\ast(\pi_1(\widetilde{X},\widetilde{x}_2)) = \pi_\ast(\pi_1(\widetilde{X},\widetilde{x}_2))$.
+        Then, by lifting, there exists some 
+        $$h : (\widetilde{X},\widetilde{x}_1) \longrightarrow (\widetilde{X}, \widetilde{x}_2).$$ 
+        Then, using the uniqueness of liftings, we may find an inverse for $h$. Since every loop in $X$ 
+        based at $x$ lifts to such a $\gamma$, we see that $p$ is normal if and only if 
+        $N(H) = \pi_1(X,x)$ -- that is, $H$ is normal in $\pi_1(X,x)$. 
+        \item[(ii)] Define $$\varphi : N(H) \longrightarrow \mcal{G}(\widetilde{X}), \quad [\gamma] \longmapsto h_{[\gamma]},$$
+        where $h_{[p\circ \gamma]}.$ By the path-connectivedness of $\widetilde{X}$, $\varphi$ is surjective.
+        Given some $h \in \mcal{G}(\widetilde{X})$, take $\gamma$ to be a path from $\widetilde{x}_1$ 
+        to $\widetilde{x}_2 = h(\widetilde{x}_1)$. As an exercise, check that $\varphi$ is a 
+        homomorphism and $\ker \varphi = H$.
+    \end{itemize}
+\end{proof}
+
+\subsection{Group Actions}
+
+Given a group $G$, and a space $Y$, an \emph{action} of $G$ on $Y$ is a group homomorphism 
+$$\rho : G \longrightarrow \on{Homeo}(Y).$$
+We will write group actions as follows: 
+$$ G \times Y \longrightarrow Y,\quad (g,y) \longmapsto g \cdot y := \rho(g)y.$$
+With this definition, for $g_1, g_2 \in G$, we have $g_1 \cdot (g_2\cdot y) = (g_1g_2)\cdot y$.
+
+\begin{remark}
+    If the multiplication and inverse maps $m : G \times G \to G$ and 
+    $i : G \to G$ are continuous, then $G$ is called a \emph{topological group}.
+    Moreover, if the group $G \times Y \to \on{Homeo}(Y)$ is continuous, then we have a 
+    \emph{continuous group action}.
+\end{remark}
+
+\begin{definition}[Covering Space Action]
+    A space $Y$ is equipped with a \emph{covering space action} if
+    for all $y\in Y$, there exists a neighbhourhood $U$ containing $y$ such that 
+    for all $g_1 \neq g_2 z \in G$, $g_1U \cap g_2U = \emptyset$.
+\end{definition}
+
+A group action defines an equivalence relation on $X$ by setting $x\sim x'$ if and only if 
+$x = gx'$, for some $g\in G$. The equivalence classes under this equivalence relation are called 
+the \emph{orbits} of $G$: 
+$$X/G := [x] = \lbrace x' : x' \sim x\rbrace.$$ 
+Then, we wish to determine when the map 
+$$q : X \longrightarrow X/G,$$ is a covering space. 
+
+\begin{definition}
+    An action is \emph{free} if for all $g \in G$, $gx = x$ implies that $g =e$
+    the identity element -- that is, the only fixed point is the identity.
+    An action is \emph{transitive} if $X/G$ is a singleton set.
+\end{definition}
+
+Note that if $\widetilde{G}(\widetilde{X})$ acts on $\widetilde{X}$, then this action
+is a covering space action.
+To see this, take an evenly covered subset $U\subset X$, and let 
+$\widetilde{x} \in \widetilde{U}_i \subset \widetilde{X}$. Then, 
+$$h(\widetilde{x}) = \begin{cases}
+    \widetilde{x} \Longleftrightarrow h = \on{id}\\ 
+    \widetilde{x} \in \widetilde{U}_i, \quad \widetilde{U}_i \cap \widetilde{U}_j = \emptyset
+\end{cases}$$
+
+\begin{proposition}[Prop 1.40, Hatcher]
+    \begin{itemize}
+        \item[(i)] If $G$ acts on $Y$ as a covering space action, then $Y \to Y/G$ is a covering 
+        \item[(ii)] If $Y$ is path-connected, then $G = \mcal{G}(Y)$. 
+        \item[(iii)] If $Y$ is path-connecte and 
+    locally path-connected, then $G \cong \pi_1(Y/G)/p_\ast(\pi_1(Y))$.
+
+    \end{itemize}
+    space.
+\end{proposition}
+
+\begin{proof}[Proof Idea]
+    \begin{itemize}
+        \item[(i)] We wish to show that $Y/G$ is evenly covered. Given $[y]$, take $Y \subset U$,
+        where $U$ is as in the covering space action. Then, $[y] \in p(U)$ is 
+        evenly covered by $p$. One checks that $p\vert_U : U \to p(U)$ is a 
+        homeomorphism and $p^{-1}(p(U)) \cong \bigsqcup U$.
+        \item[(ii)] Evidenlty, $G \subseteq \mcal{G}(Y)$ via the group action $G \times Y \to Y$.
+        Each $g \in G$ defines a homeomorphism $g : Y \to Y$ that commutes with the projection 
+        $Y \to Y/G$. In particular, the diagram: 
+        $$\begin{tikzcd}
+            Y \arrow[rd] \arrow[rr, "g"] &     & Y \arrow[ld] \\
+                                         & Y/G &             
+            \end{tikzcd}$$
+        commutes. Then, if $Y$ is path-connected, $G \to \mcal{G}(Y)$ is surjective (exercise). 
+        \item[(iii)] This is an immediate consequence of Proposition 1.31(ii) from Hatcher, which we proved.
+    \end{itemize}
+\end{proof}
+
+\begin{example}
+    Consider maps 
+    $$\pi : \mathbb{S}^n \longrightarrow \mathbb{RP}^n,$$
+    where $\mathbb{RP}^n$ is the space of lines pasing through the origin in 
+    $\mathbb{R}^n$. There is a $\mathbb{Z}/2\mathbb{Z} \cong \lbrace \pm 1\rbrace$ action on $\mathbb{S}^1$ 
+    given by $$\mathbb{S}^1 \times \mathbb{Z}/2 \longrightarrow \mathbb{S}^1,\quad (x,-1) \longmapsto -x.$$
+    One readily checks that this defines a covering space action, and thus $\mathbb{S}^n$ defines a 
+    covering space of $\mathbb{RP}^n$.
+    For $n \geq 2$, we know that $\pi_1(\mathbb{S}^n)$ is trivial, and thus 
+    $\mathbb{S}^n \to \mathbb{RP}^n$ is the universal covering. In particular, 
+    $\pi_1(\mathbb{RP}^2) \cong \mathbb{Z}/2\mathbb{Z}$ by Proposition 1.40(iii).
+\end{example}
+
+In fact, this is a general phenomenon. If we are given a universal covering 
+$$\widetilde{X}_{\on{univ}} \longrightarrow X,$$ then 
+$$\mcal{G}(\widetilde{X}_{\on{univ}}) \cong \pi_1(X,x).$$
+To see this, let us consider 
+$$p : \widetilde{X}_{\on{univ}} \longrightarrow X.$$
+Then, the fibres of this map are given by 
+$$p^{-1}(x) = \Pi_1(X,x,x_0) \equiv \pi_1(X,x_0).$$ 
+Since $\widetilde{X}_{\on{univ}} \to X$ is normal, it follows then that 
+$$\widetilde{G}(\widetilde{X}_{\on{univ}}) \longrightarrow p^{-1}(x_0),$$ is a bijection 
+(of sets). It thus follows that 
+$\mcal{G}(\widetilde{X}_{\on{univ}}) \equiv \pi_1(X,x_0)$.
+
+\begin{example}
+    Given the covering space $p : \mathbb{R} \to \mathbb{S}^1$, we have that 
+    $$\pi_1(\mathbb{S}^1,1) \cong \mathbb{Z} \subseteq \on{Homeo}(\mathbb{R}).$$
+    Moreover, the map 
+    $$\mathbb{R} \times \mathbb{R} \longrightarrow \mathbb{S}^1 \times \mathbb{S}^1 = T^2.$$ 
+    Then, $\pi_1(T^2) = \mathbb{Z}^2 \subseteq \on{Homeo}(\mathbb{R}^2)$.
+\end{example}
+
+\subsection{Cayley Graphs and Cayley Complexes}
+
+Consider a group $G$, together with a set of generators $g_1,\cdots, g_n$. 
+That is, $$G = \langle g_1,\cdots, g_n : r_1,\cdots, r_m\rangle.$$
+Let $S$ be the generating set of $G$. Then, the Cayley graph is constructed as follows:
+\begin{itemize}
+    \item each element $g\in G$ is assigned to a vertex, 
+    \item each element $s \in S$ is assigned a colour $c_s$,
+    \item for every $g\in G$ and $s \in S$, there is a directed edge of colour $c_s$ from the vertex
+    $g$ to the vertex $gs$
+\end{itemize}
+
+\section{Lecture 3, 12/04/2024}
+
+\subsection{Eilenberg-Maclane Spaces}
+
+\begin{definition}
+    A path-connected space $X$ is an \emph{Eilenberg-Maclane space} (or $K(G,1)$-space) if 
+    $\pi_1(K) \cong G$, and its universal covering $\widetilde{K}_{\on{univ}} \simeq \on{pt}$ -- i.e. $\widetilde{K}$ is contractible.
+    Recall that this means that $\pi_i(K) = 0$ for all $i \geq 2$.
+\end{definition}
+
+\begin{example}
+    $\mathbb{S}^1$, $T^2$, $K^2$, and $F_g^2$ for $g \geq 1$ are all $K(G,1)$-spaces.
+\end{example}
+
+$K(G,1)$ always exists, and we can build it by taking $$G = \langle g_1,\cdots, g_n : r_1, \cdots, r_m\rangle.$$
+From this, we can then build a space whose fundamental group is $G$ by taking 
+$$\mathbb{S}^1_{g_1} \vee \cdots \vee \mathbb{S}^1_{g_n},$$ where the subscript is used to 
+label each copy of $\mathbb{S}^1$ in the wedge product. The fundamental group of this is $F_n$, which is 
+$G$ but if the relations $r_i$ were all empty. To obtain the relations, we attach $2$-cells to 
+$\vee_{i=1}^m \mathbb{S}_{g_i}^1$ along maps generating the relation $r_j$.\\\\
+Recall that $\pi_1(T^2) \cong \mathbb{Z}^2 = \langle a,b : [a,b] = 0\rangle$. We may construct 
+$$X_G := \left(\vee_{i=1}^m \mathbb{S}^1_{g_i}\right) \cup \left(\bigcup_{i=1}^n D_{ij}^2\right),$$
+whici is called the \emph{presentation $2$-complex}. By construction, one may see that 
+$$\pi_1(X_G) \cong G.$$
+From here, we can then attach $3$-cells to $X_G$ to kill $\pi_2$. Then, we can attach $4$-cells to kill $\pi_3$,
+and so on.
+
+\subsection{Homology}
+
+\paragraph{Goal:} Given a space $X$, we wish to associate to it a family of abelian groups $H_i(X)$
+that define functors $H(-) : \mathbf{Top} \to \mathbf{Ab}$. More generally, one can also define $H_i(X)$ 
+to be $R$-modules. Then, one recovers abelian groups by taking $R = \mathbb{Z}$. To specialise what coefficients 
+we are using, we will write $$H_i(X; \mathbb{Z}) = H_i(X).$$ If we are choosing coefficients from an 
+$R$-module $M$, we write $$H_i(X;R).$$
+
+\begin{definition}
+    The \emph{standard $n$-simplex} is given by 
+    $$\Delta^n = \lbrace t = (t_0,\cdots,t_n) \in \mathbb{R}^{n+1} : \sum_{i=0}^n t_i = 1, \quad t_i \geq 0\rbrace.$$
+\end{definition}
+
+\begin{example}
+    $\Delta^0 = \lbrace 1\rbrace$. $\Delta^1 \cong [0,1]$, and is given by the line going fro $(1,0)$ to $(0,1)$. 
+    $\Delta^2$ can be thought of as a triangle 
+    with vertices given by the canonical basis vectors of $\mathbb{R}^3$.
+\end{example}
+
+More generally, given points $v_0,\cdots,v_n$ linearly independent in $\mathbb{R}^{n+1}$ 
+(or any $(n+1)$-dimensional vector space), set 
+$$[v_0, \cdots, v_n] := \left\lbrace \sum_{i=0}^n t_iv_i : t \in \Delta^n \right\rbrace.$$
+The set $[v_0,\cdots,v_n]$ is called an \emph{affine $n$-simplex}.
+Moreover, there is a map 
+$$\Delta^n \longrightarrow [v_0,\cdots, v_n],\quad t\longmapsto \sum_{i=0}^n t_iv_i.$$
+If we specify an ordering of vertices, then an affine $n$-simplex is canonically homeomorphic to 
+$\Delta^n$. The image of the map $\Delta^n \to [v_0,\cdots,v_n]$ are called \emph{barycentric coordinates}.
+
+\begin{definition}
+    The \emph{$i$-th face} of $[v_0,\cdots,v_n]$ is the $(n-1)$-simplex 
+    $$[v_0,\cdots, \widehat{v_i},\cdots, v_n],$$ where the 
+    $\widehat{(-)}$ denotes omission.
+    For $\Delta^n$, define a map:
+    $$\partial_i \Delta^n = [e_0,\cdots, \widehat{e_i},\cdots,e_n],$$
+    called the \emph{boundary map}.
+\end{definition}
+
+\begin{remark}
+    $\Delta^n \cong D^n \cong B^n \cong \underbrace{I \times \cdots \times I}_{\text{$n$ times}}$.
+\end{remark}
+
+Define:
+$$\partial \Delta^n := \bigcup_{i=0}^n \partial_i \Delta^n,$$ 
+$$\partial [v_0,\cdots, v_n] = \bigcup_{i=0}^n [v_0,\cdots,\widehat{v_i},\cdots, v_n],$$
+$$\on{Int}(\Delta^n)  = \Delta^n \setminus \partial \Delta^n,$$ 
+hence why $\partial$ is the called the \emph{boundary operator}.
+
+\subsection{Simplicial Homology for $\Delta$-Complexes}
+
+\begin{definition}
+    A \emph{$\Delta$-complex} structure on a space $X$ consists of a collection of maps 
+    $$\sigma_\alpha : \Delta^n \longrightarrow X,$$ 
+    where $n = n(\alpha)$, such that:
+    \begin{itemize}
+        \item[(i)] $$\sigma_\alpha\vert_{\on{Int}(\Delta^n)} : \on{Int}(\Delta^n) \longrightarrow X,$$
+        is injective, and for all $x \in X$, there exists a unique $\alpha$ such that 
+        $x \in \on{Im}(\sigma_\alpha \vert_{\on{Int}(\Delta^n)})$,
+        \item[(ii)] $$\sigma_\alpha \vert_{\partial_i\Delta^n} \in \lbrace \sigma_\alpha : \text{identify $\partial_i\Delta^n$ with $\Delta^{n-1}$}\rbrace,$$
+        \item[(iii)] $U \subset X$ is \emph{open} if and only if $\sigma_\alpha^{-1}(U) \subset \Delta^n$ is open in $\mathbb{R}^{n+1}$ for all $\alpha$.
+    \end{itemize}
+\end{definition}
+
+\begin{remark}[Diarmuid Wisdom]
+    $\Delta$-complexes are important, but they are not the main game. They're just a useful tool for getting us into 
+    homology. However, this is not an excuse to fall asleep for the next $15$ minutes.
+\end{remark}
+
+\paragraph{Fact:} $$X \cong \left(\bigsqcup_\alpha \Delta_\alpha^{n(\alpha)} \right)/ \sim,$$ 
+where $\sim$ is defined via canonical homeomorphisms between faces.
+
+\begin{example}
+    The $\Delta$-complex structure on $\mathbb{S}^1$ is given by 
+    $$\lbrace \sigma_\alpha \rbrace = \lbrace \sigma^0,\sigma^1\rbrace,$$
+    using the fact that $\mathbb{S}^1 \cong I /(0 \sim 1)$. In this case, we have one 
+    $0$-simplex labelled by $v_0$, which is the image of $\sigma^0$, and an edge 
+    from $v_0$ to itself, which is the image of $\sigma^2$.
+\end{example}
+
+\begin{example}
+    For $T^2 \cong (I \times I)/\sim$, we have $1$-simplices labelled by 
+    $v$, and $2$-simplices labelled by $a$ and $b$, and $3$-simplices labelled by $U$ and $L$
+    (given by drawing a diagonal line $c$ -- which is a $1$-simplex -- across the square, and labelling the two partitioned areas 
+    by $U$ and $L$). Together, this is written to be:
+    $$\lbrace \sigma_v^0, \sigma_a^1, \sigma_b^1, \sigma_c^1, \sigma_U^2, \sigma_L^2\rbrace.$$
+\end{example}
+
+\begin{definition}[Homology of $\Delta$-complex Structure]
+    Set $$\Delta_n(X) := \left\lbrace \sum_\alpha n_\alpha \sigma_\alpha^n \right\rbrace,$$
+    the \emph{free abelian group on the $n$-simplices}, which consists of all formal linear combinations of 
+    the $n$-simplices. Let $\Delta_n(X;M)$ be the free abelian group for which $n_\alpha \in M$, where $M$ is an $R$-module.
+    That is, $\Delta_n(X;M)$ is a free $R$-module in $\sigma_\alpha^n$, tensored over $R$ 
+    with respect to $M$. It follows then that 
+    $$\Delta_n(X;M) \cong \bigoplus_{i=1}^{r_n} M,$$ where $r_n$ is the number of $n$-simplices 
+    $\sigma_\alpha^n$. Define the \emph{boundary homomorphism} to be the map 
+    $$\partial_n : \Delta_n(X) \longrightarrow \Delta_{n-1}(X),\quad \sigma_\alpha^n \longmapsto \sum_{i=0}^n (-1)^i\sigma_\alpha\vert_{\partial_i\Delta^n}.$$
+\end{definition}
+
+\begin{remark}
+    The factor of $(-1)^i$ is just a miraculous addition that works. We will see in a bit why 
+    we need this factor.
+\end{remark}
+
+Next, we wish to show that the boundary operator has the property that $\partial^2 = 0$, which we need 
+to define homology.
+
+\begin{example}
+    Using the simplex $[v_0,v_1]$, we have: 
+    $$\partial_1 \circ \partial_2 = \partial_1 ([v_0,v_1] - [v_0,v_2] + [v_1,v_2]) = -v_1 + v_2 -(-v_2 + v_2) + (-v_0 + v_1) = 0.$$
+\end{example}
+
+Indeed, we see that this is the case in general:
+
+\begin{lemma}[Lemma 2.1, Hatcher]
+    $\partial_{i-1} \circ \partial_i = 0$.
+\end{lemma}
+
+\begin{proof}
+    \begin{align*}
+        \partial_{n-1} \circ \partial_n (\sigma_\alpha^n) &= \partial_{n-1} \left(\sum_{i=0}^n (-1)^i \sigma_\alpha\vert_{[v_0,\cdots,\widehat{v_i},\cdots, v_n]}\right)\\
+        &= \sum_{j < i} (-1)^{i+j} \sigma_\alpha\vert_{[v_0,\cdots,\widehat{v_j},\cdots,\widehat{v_i},\cdots, v_n]}
+        + \sum_{j > i} (-1)^{i+j} \sigma_\alpha\vert_{[v_0,\cdots,\widehat{v_i},\cdots,\widehat{v_j},\cdots, v_n]}\\
+        &= 0,
+    \end{align*}
+    since $[v_0,\cdots,\widehat{v_i},\cdots,\widehat{v_j},\cdots,v_n] = - [v_0,\cdots,\widehat{v_j},\cdots, \widehat{v_i},\cdots,v_n]$.
+\end{proof}
+
+\chapter{Week Seven}
+
+\section{Lecture 1, 17/04/2024}
+
+\begin{definition}
+    A \emph{chain complex} (over $R = \mathbb{Z})$ is a sequence of free 
+    $R$-modules 
+    $$\cdots \longrightarrow C_{i+1} \stackrel{\partial_{i+1}}{\longrightarrow} C_i \stackrel{\partial_i}{\longrightarrow} C_i\longrightarrow \cdots,$$
+    and homomorphisms $\partial_i : C_i \to C_{i-1}$ such that $\partial_{i-1} \circ \partial_i = 0$,
+    for all $i\in \mathbb{Z}$. Usually, as convention we set $C_i = 0$ for all $i < 0$.
+\end{definition}
+
+\begin{definition}
+    The $i$-th \emph{homology} of the complex $C_\ast$ is defined to be:
+    $$H_i(C_\ast,\partial) := \frac{\ker \partial_i}{\on{Im} \partial_{i+1}}.$$
+\end{definition}
+
+\begin{example}
+    If $X$ is a $\Delta$-complex, then 
+    $$H_i(X) = H_i(\Delta_\ast(X)).$$
+\end{example}
+
+\begin{example}
+    If $X = \mathbb{S}^1$, then $\Delta^1 = [v_0v_1]$. This is formed from 
+    $\lbrace \sigma_0, \sigma_1\rbrace$.
+    $f : \Delta^1 \to \mathbb{S}^1$ is the surjection. 
+    Then, we have a boundary map 
+    $$C_1 \stackrel{\partial_1}{\longrightarrow} C_0,$$
+    which is 
+    $$0 \longrightarrow \mathbb{Z} \stackrel{0}{\longrightarrow} \mathbb{Z}.$$
+    Then, $\partial \delta_1 = f(v_1) - f(v_0) = v - v = 0$.
+    Thus, 
+    $$H_1(\mathbb{S}^1,\mathbb{Z}) = \begin{cases}
+        \mathbb{Z},\quad i = 0,1,\\
+        0,\quad \text{otherwise}.
+    \end{cases}$$
+\end{example}
+
+\begin{example}
+    Another $\Delta^1$-structure can be defined on $\mathbb{S}^1$ by taking 
+    $\lbrace \sigma_a^1, \sigma_b^1, \sigma_v^0, \sigma^0_w\rbrace$.
+    Then, we have a chain complex 
+    \begin{align*}
+        0 \longrightarrow \mathbb{Z}^2 &\longrightarrow \mathbb{Z}^2 \longrightarrow 0\\ 
+        a &\longmapsto w - v\\ 
+        b &\longmapsto v-w
+    \end{align*}
+    Then, 
+    $$H_0(\mathbb{S}^1,\mathbb{Z}) \cong \mathbb{Z}^2(v,w)/(v-w) \cong \mathbb{Z},$$
+    $$H_1(\mathbb{S}^1,\mathbb{Z}) \cong \ker \partial_1 = \lbrace ma + mb : m \in \mathbb{Z}\rbrace \cong \mathbb{Z},$$
+    where the last isomorphism in $H_1(\mathbb{S}^1,\mathbb{Z})$ follows from the fact that 
+    $\partial_1(a) = - \partial_1(b)$.
+\end{example}
+
+\begin{example}
+    Consider the $2$-torus $T^2$. Recall that we have simplices 
+    $$\lbrace \sigma_U^2, \sigma_L^2, \sigma_a^1, \sigma_b^1, \sigma_c^1\rbrace.$$
+    Then, we have a chain complex 
+    \begin{align*}
+        0 \longrightarrow \mathbb{Z}^2 = \langle U,L\rangle \longrightarrow \mathbb{Z}^3 = \langle a,b,c\rangle&\longrightarrow \mathbb{Z} \longrightarrow 0\\
+        a &\longmapsto v-v = 0\\ 
+        b &\longmapsto 0\\
+        c & \longmapsto 0
+    \end{align*}
+    The map $\mathbb{Z}^2 \to \mathbb{Z}^3$ is given by:
+    $$U \longmapsto c -a - b,\quad L \longmapsto c-a-b.$$
+    Then, we have 
+    $$H_2(T^2,\mathbb{Z}) \cong \mathbb{Z}([U-L]),$$
+    $$H_1(T^2,\mathbb{Z}) \cong \mathbb{Z}^2([a],[b]),$$
+    where $[c] = [a] + [b]$.
+    $$H_0(T^2,\mathbb{Z}) \cong \mathbb{Z}([v]).$$
+\end{example}
+
+\subsection{Remarks on Simplicial Complex and Homology}
+
+It is important to know the difference between simplicial complex and singular 
+complex.
+
+\begin{remark}[Historical Remark]
+    A \emph{simplicial complex} is a $\Delta$-complex, where each simplex embeds into 
+    $X$. That is, in any a simplicial complex, we know identify faces from different 
+    simplices. A \emph{finite simplicial complex} is homeomorphic to a subcomplex 
+    of $\Delta^n$ for some $n$.
+\end{remark}
+
+\begin{remark}
+    The minimal simplicial structure on $T^2$ has $18$ $2$-simplices.
+    Chop up $T^2 = (I \times I)/\sim$ into $9$ squares, and divide each square 
+    in half along the diagonal to get two triangles. All together, we will have $18$
+    triangles, corresponding to $18$ simplices.
+    So, we have a chain complex 
+    $$0 \longrightarrow \mathbb{Z}^{18} \longrightarrow \mathbb{Z}^{27} \longrightarrow \mathbb{Z}^{9} \longrightarrow 0.$$
+    Later we will see that the alternating sum of the dimensions of the complexes -- 
+    in this case given by $18 - 27 + 9 = 0$ -- is equal to the Euler characteristic of the space.
+    A priori, in this case the Euler characteristic of $T^2$ is $0$.
+\end{remark}
+
+\subsection{Singular Homology}
+
+\begin{definition}
+    Let $X$ be a space. A \emph{singular $n$-simplex} in $X$ is a map 
+    $$\sigma : \Delta^n \longrightarrow X.$$
+\end{definition}
+
+\begin{definition}
+    The \emph{$n$-th chain group} $C_n(X)$ is the free abelian group on the singular $n$-simplices 
+    in $X$. 
+    \begin{remark}
+        Note that $C_n(X)$ is a large group -- in particular, it is uncountably generated.
+    \end{remark}
+    In particular, any $\zeta \in C_n(X)$ is a finite formal sum $$\zeta = \sum_i n_i\delta_i,$$
+    for some $i \in \mathbb{Z}$, and $n_i \in M$, for some $R$-module $M$.
+\end{definition}
+
+\begin{definition}
+    The \emph{boundary map} is defined to be: 
+    $$\partial_n : C_n(X) \longrightarrow C_{n-1}(X),\quad \sigma \longmapsto \sum_{i=0}^n \sigma\vert_{[v_0,\cdots, \widehat{v_i},\cdots,v_n]},$$
+    and extending linearly.
+\end{definition}
+
+The same proof seen in Lemma 2.1 shows that the boundary map has the property that $\partial^2 = 0$.\\\\
+Let $C_\ast(X) = (C_\ast(X), \partial)$ be the singular chain complex of $X$. 
+Then, the $n$-th singular homology group of $X$ is $$H_i(X,\mathbb{Z}) = \frac{\ker \partial_n}{\on{Im} \partial_{n+1}}.$$
+If $\partial_\zeta = 0$, we call $\zeta$ a \emph{cycle}, and we write 
+$$[\zeta] \in H_n(X,\mathbb{Z}),$$
+and call it the \emph{homology class} represented by $\zeta$.
+
+\begin{remark}[Relation to Geomtery]
+    Given a cycle $\zeta = \sum_i n_i \sigma_i$, 
+    re-write this as $\sum_j \varepsilon_j \sigma_j$, where $\varepsilon_j \in \lbrace \pm 1\rbrace$.
+    Since $\partial(\zeta) = 0$, the $(n-1)$-dimensional faces, can be paired and identified 
+    to give a $\Delta$-complex, 
+    $$f_\zeta : K_\zeta \longrightarrow X.$$
+    $K_\zeta$ has a lot of manifold points, and only fails to be a manifold around the $(n-1)$-skeleton.
+    In particular, this is a finite $\Delta$-complex, and one can show that $H_n(K_\zeta,\mathbb{Z}) \cong \mathbb{Z}$,
+    and $[\zeta] = (f_\zeta)_\ast (1)$, where
+    $$(f_\zeta)_\ast : H_i(K_\zeta) \longrightarrow H_i(X).$$
+\end{remark}
+
+\paragraph{Slogan:} cycles give geometric carriers of homology classes. \\\\
+So, for instance, we have $H_1(T^2,\mathbb{Z}) \cong \mathbb{Z}(a,b)$, 
+where the generators correspond to the two copies of the circle embedded in $T^2$ 
+given by $\mathbb{S}^1_a \hookrightarrow T^2$, and $\mathbb{S}^1_b \hookrightarrow T^2$,
+where the subscript denotes the copy of $\mathbb{S}^1$ corresponding to one of the generators 
+of the $1$-st homology.
+
+\begin{proposition}[Prop 2.6, Hatcher]
+    Write as a disjoint union of path-connected components:
+    $$X = \sqcup_\alpha X_\alpha.$$
+    Then, 
+    $$H_n(X) = \bigoplus_\alpha H_n(X_\alpha).$$
+\end{proposition}
+
+\begin{proof}
+    Each $\delta : \Delta^n \to X$ has path-connected image in some $X_\alpha$, and 
+    $\partial\sigma$ has image in $X_\alpha$.
+    So, $$C_\ast(X,\partial) = \bigoplus_\alpha C_\ast(X_\alpha,\partial_\alpha).$$
+    Thus, 
+    $$H_\ast(X) \cong \bigoplus_\alpha H_\ast(X_\alpha),$$
+    where we can simply write $\ast$ as a variable for $i$, or we can take the 
+    \emph{total homology}: 
+    $$H_\ast(X) := \bigoplus_{i=0}^\infty H_i(X).$$
+    The result works for both definitions of $H_\ast(X)$.
+\end{proof}
+
+\begin{proposition}[Prop 2.7, Hatcher]
+    If $X \neq \empty$ is path-connected, then $$H_0(X) \cong \mathbb{Z}.$$
+\end{proposition}
+
+\begin{proof}
+    By definition. $H_0(X) = C_0(X) / \on{Im}\partial_1$. 
+    But by definition, the boundary of a $0$-simplex is always $0$, and so 
+    $$C_1(X) \stackrel{\partial_1}{\longrightarrow} C_0(X) \longrightarrow 0.$$
+    Define $$\varepsilon:  C_0(X) \longrightarrow \mathbb{Z},\quad \sum_i n_i\varepsilon_i \longmapsto \sum_i n_i.$$ 
+    Since $X \neq \emptyset$, $\varepsilon$ is onto.
+    \paragraph{Claim:} $\on{Im} \partial_1 = \ker \varepsilon$, which would imply that $\varepsilon$ 
+    induces a pushforward map 
+    $$\varepsilon_\ast : H_0(X) \longrightarrow \mathbb{Z},$$ 
+    which is an isomorphism by the claim. We will finish the proof of this next time.
+\end{proof}
+
+\begin{remark}
+    In general, 
+    $$H_0(X) \cong \bigoplus_\alpha H_0(X_\alpha) = \bigoplus_\alpha \mathbb{Z},$$
+    where the number of copies of $\mathbb{Z}$ is equal to the number of path-connected 
+    components of $X$.
+\end{remark}
+
+\section{Lecture 2, 18/04/2024}
+
+\begin{proposition}[Prop 2.7, Hatcher]
+    If $X\neq \emptyset$ is path-connected, then $H_0(X) \cong \mathbb{Z}$.
+\end{proposition}
+
+\begin{proof}
+    Define $$\varepsilon : C_0(X) \longrightarrow \mathbb{Z}, \quad \sum_i n_i \delta_i \longmapsto \sum_i n_i.$$
+    \paragraph{Claim:} $\on{Im}\partial_1 = \ker \varepsilon$.\\\\
+    Observe that $\on{Im}\partial_1 \subset \ker \varepsilon$, since  if $\delta' : \Delta' \to X$
+    is a singular $1$-simplex, then 
+    $$\varepsilon(\partial(\sigma')) = \varepsilon (\sigma(v_1) - \sigma(v_0)) = 1 - 1 = 0.$$
+    Suppose now that $$\varepsilon\left(\sum_i n_i \sigma^0_i\right) = 0.$$
+    Let $x_i = \sigma^0_i(\ast)$. Let $\sigma^1_i$ be paths from a basepoint $x_0$ to 
+    $x_i$. 
+    \paragraph{Claim:} $\partial_1\left(\sum_i n_i\sigma^1_i\right) = \sum_i n_i \delta_i^0$.\\\\
+    To see this, observe that 
+    $$\partial\left(\sum_i \sigma_i^1\right) = \sum_i n_i \sigma_i^0 - \underbrace{\sum_i n_i x_0}_{=0}. = \sum_i n_i \sigma_i^0,$$
+    where the first equality follows from the fact that $\sigma_i^1(v_0) = x_0$.\\\\
+    This claim thus implies the converse inclusion, and thus shows that 
+    $\ker \varepsilon = \on{Im}\partial_1$.
+\end{proof}
+
+\begin{definition}
+    The \emph{reduced homology} of $X$ is given by:
+    $$\widetilde{H}_0(X) := H_0(C^{\on{aug}}_\ast),$$
+    where $C^{\on{aug}}_\ast$ is the \emph{augmented chain complex}, which is given by:
+    $$\cdots \longrightarrow C_n(X) \longrightarrow C_{n-1}(X) \longrightarrow \cdots \longrightarrow C_0(X) \stackrel{\varepsilon}{\longrightarrow} \mathbb{Z} \longrightarrow 0.$$
+    This define a chain complex since 
+    $\varepsilon \circ \partial_1 = 0$.
+\end{definition}
+
+\begin{remark}
+    $$\widetilde{H}_i(X) = \begin{cases}
+        H_i(X), \quad i > 0\\ 
+        H_0(X) / \mathbb{Z},\quad i = 0
+    \end{cases}.$$
+\end{remark}
+
+\begin{example}
+    $$\widetilde{H}_i(\mathbb{S}^0) = \begin{cases}
+        0, \quad i > 0,\\ 
+        \mathbb{Z},\quad i = 0.
+    \end{cases}$$
+    Then, 
+    $$H_1(\mathbb{S}^0) \cong \mathbb{Z} \oplus \mathbb{Z} \stackrel{\varepsilon}{\longrightarrow} \mathbb{Z}.$$
+    Then, $\widetilde{H}_0(\mathbb{S}^0) \cong \mathbb{Z}^{\vert \alpha \vert - 1}$,
+    where $\vert \alpha\vert$ denotes the number of path connected components of $X$.
+\end{example}
+
+\begin{proposition}[Prop 2.8, Hatcher]
+    If $X = \lbrace \on{pt}\rbrace$, then 
+    $$H_i(\on{pt}) = 0,\quad \text{for all} \quad i > 0,$$
+    $$\widetilde{H}_i(\on{pt}) = 0,\quad \text{for all} \quad i \geq 0.$$
+\end{proposition}
+
+\begin{proof}
+    $\Delta_n(\on{pt}) = \mathbb{Z}(c_{\on{pt}})$.
+    This gives us an $n$-simplex 
+    $$\sigma^n : \Delta^n \longrightarrow \on{pt}.$$
+    Recall that an $n$-simplex has $(n+1)$-faces. Thus, there is precisely one 
+    simplex here, given by 
+    $$C_n(\on{pt}) \longrightarrow C_{n-1}(\on{pt}),\quad \sigma \longmapsto \sum_i (-1)^i \sigma^{n-1}.$$
+    It follows then that 
+    $$C_{2k+1}(\on{pt}) \longrightarrow C_{2k}(\on{pt}),$$
+    is the zero map, and the next map 
+    $$C_{2k}(\on{pt}) \longrightarrow C_{2k-1}(\on{pt}),$$
+    is an isomorphism. This is because if we have a $2$-simplex $\sigma^2 : \Delta^2 \to \on{pt}$,
+    then 
+    $$\partial \sigma^2 = \underbrace{\sigma^2\vert_{[v_1v_2]} - \sigma^2\vert_{[v_0v_2]}}_{=0} + \sigma^2\vert_{v_0v_1}.$$
+    More generally, 
+    $$\sigma^n\vert_{[v_0 \cdots \widehat{v_i}\cdots v_n]} = \sigma^n\vert_{[v_0 \cdots \widehat{v_j}\cdots v_n]},$$
+    for all $i,j$. So, the chain complex is given by 
+    $$C_4 \stackrel{\simeq}{\longrightarrow} C_3 \stackrel{0}{\longrightarrow} C_2 \stackrel{\simeq}{\longrightarrow} C_1 \stackrel{0}{\longrightarrow} C_0 \longrightarrow 0.$$
+    Thus, by inspection, 
+    $$H_i(C_\ast(\on{pt})) = \begin{cases}
+        0 \quad i > 0\\ 
+        \mathbb{Z},\quad i = 0
+    \end{cases}.$$
+\end{proof}
+
+\begin{remark}
+    Let $X$ be path-connected, and consider $\pi_1(X,x_0)$. 
+    Observe that $\gamma : I \to X$, for $\gamma(0) = \gamma(1) = x_0$, can be 
+    identified with a singular $1$-cycle $\Delta^1$.
+    So, there is a natural map 
+    $$\rho_1 : \pi_1(X,x_0) \longrightarrow H_1(X),\quad [\gamma] \longmapsto [\sigma_\gamma^1],$$
+    mapping a path homotopy class to a homology class.
+    As we will see, $H_1(-)$ defines a functor as well. As such, what we see here is an example 
+    of a natural transformation.
+\end{remark}
+
+One may show that the natural map $\rho_1$ is a surjective homomorphism, with kernel given by the 
+normal subgroup generated by commutators: 
+$$\langle [\gamma_1], [\gamma_2] \rangle.$$
+That is, one may identify 
+$$H_1(X) = \pi_1(X,x_0)_{\on{ab}},$$
+where $\pi_1(X,x_0)_{\on{ab}}$ denotes the \emph{abelianisation} of $\pi_1(X,x_0)$.
+In particular, given any group $G$, $$G_{\on{ab}} := G /\langle [g,h]\rangle.$$
+(see Hatcher A.2 for more details). 
+More generally, there exists maps 
+$$\rho_n : \pi_n(X,x_0) \longrightarrow H_n(X),$$
+called \emph{Hurewitz homomorphisms} (look up Hurewitz's theorem for more information, or 
+wait until week 11). 
+
+\subsection{Homotopy Invariants of Homology}
+
+
+\begin{definition}
+    Let $f : X \to Y$ be a continuous map. Then, $f$ induces a map of chain complexes:
+    $$f_\# : C_n(X) \longrightarrow C_n(X), \quad \sigma_\alpha \longmapsto f \circ \sigma_\alpha.$$
+    Extending linearly, the map is defined to be:
+    $$\sum_\alpha n_\alpha \sigma_\alpha \longmapsto \sum_\alpha n_\alpha \left(f\circ \sigma_\alpha\right).$$
+    The composition $f\circ \sigma : \Delta^n \to Y$ is continuous, and thus defines a singular complex in 
+    $Y$. Further, a \emph{chain map} is given by:
+    $$\begin{tikzcd}
+        \cdots \arrow[r] & C_n(X) \arrow[r, "\partial"] \arrow[d, "f_\#"] & C_{n-1}(X) \arrow[r] \arrow[d, "f_\#"] & \cdots \\
+        \cdots \arrow[r] & C_n(Y) \arrow[r, "\partial"]                   & C_{n-1}(Y) \arrow[r]                   & \cdots
+    \end{tikzcd}$$
+    such that each square commutes. Indeed, by construction the squares commute since:
+    $$\partial (f_\# \sigma) = \partial (f \circ \sigma) = \sum_i f\circ \partial_i\sigma = f_\# \left(\sum_i \partial_i\sigma\right) = f_\#(\partial \sigma).$$
+    Hence, $$\partial f_\# = f_\# \partial.$$
+    In general, a collection of maps $f_i : C_i \to D_i$, for $i \in \mathbb{Z}$ is called a \emph{chain map} 
+    if $f \partial f_i = f_{i-1}\partial$, for any abstract chain complexes $C_\ast$ and $D_\ast$.
+\end{definition}
+
+\begin{remark}
+    The study of chain complexes and their properties is called \emph{homological algebra}.
+\end{remark}
+
+\begin{lemma}
+    Any chain map induces a homomorphism 
+    $$H_i(C_\ast) \longrightarrow H_i(D_\ast),\quad [c] \longmapsto [f_i(c)].$$
+\end{lemma}
+\begin{proof}
+    $[c] \in H_i(C_\ast)$ if and only if $\partial c = 0$.
+    Since $\partial f_i(c) = f_i (\partial c) = 0$, 
+    it follows that $[f_i(c)] \in H_i(D_\ast)$.
+    Moreover, 
+    $[c] = c + \partial_{i+1}(C_{i+1}),$ 
+    which gets mapped to $f_i([c]) + \partial_{i-1}(D_{i+1})$.
+\end{proof}
+
+It follows then that $f : X \to Y$ induces a map in homology:
+$$f_\ast : H_i(X) \longrightarrow H_i(Y).$$
+
+\paragraph{Basic Properties:} 
+\begin{enumerate}
+    \item The composition $X \stackrel{f}{\to} Y \stackrel{g}{\to} Z$, induces a map 
+    $$(g\circ f)_\ast : H_i(X) \stackrel{f_\ast}{\longrightarrow} H_i(Y) \stackrel{g_\ast}{\longrightarrow} H_i(Z).$$
+    \item The identity $1_X$ induces the identity map $1_{H_i(X)}$ in homology.
+\end{enumerate}
+
+The following is the non-trivial property:
+
+\begin{theorem}[Thm 2.10, Hatcher, Homotopy Invariance]\label{thm2.10}
+    Let $f,g : X \to Y$ be homotopic maps. 
+    $$f_\ast = g_\ast : H_i(X) \longrightarrow H_i(Y).$$
+\end{theorem}
+
+\begin{corollary}[Cor 2.11, Hatcher]
+    If $f : X \to Y$ is a homotopy equivalence, with homotopy inverse $g : Y \to X$,
+    then, $f_\ast : H_i(X) \to H_i(Y)$ is an isomorphism with inverse 
+    $g_\ast : H_i(Y) \to H_i(X)$.
+\end{corollary}
+
+\begin{proof}
+    $g\circ f : X \to X$ is homotopic to the identity $1_X$. Hence, $(g \circ f)_\ast = (1_X)_\ast = 1_{H_i(X)}$.
+    But on the other hand, $g_\ast \circ f_\ast = 1_{H_i(X)}$. Similarly, one shows that $f_\ast \circ g_\ast = 1_{H_i(Y)}$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{thm2.10}]
+    Let $H : X \times I \to Y$ be a homotopy from $f$ to $g$. 
+    That is, we have maps: $$g : X \times \lbrace 1 \rbrace \to Y,\quad f : X \times \lbrace 0\rbrace \longrightarrow Y.$$
+    We may define a simplex: $$\sigma \times \on{id}_I : \Delta^n \times I \longrightarrow X \times I,$$
+    with $$\sigma^n : \Delta^n \longrightarrow X \times \lbrace 0 \rbrace.$$
+    For $C_0(X)$, $\on{pt} \times X \cong \Delta^1$. For $C_1(X)$, 
+    $\Delta^1 \times I \cong \Delta^1 \cup \Delta^1$. This is a square with vertices 
+    given by $v_0, v_1, w_0, w_1$.
+    Thus, we have 
+    $$\Delta^1 \cup \Delta^1 \stackrel{g\circ \sigma^1}{\longrightarrow} X \times I \stackrel{H}{\longrightarrow} Y,$$
+    the composition of which is $f\circ \sigma^1$. We will finish this proof of tomorrow. Or you can go read Hatcher.
+\end{proof}
+
+\section{Lecture 3, 19/04/2024}
+
+\subsection{Assignment Tips}
+
+\paragraph{Q 2.4} Uses cellular homology and tensor products. In the case of the $2$-torus, 
+recall that we have a $\Delta$-complex given by 
+$\lbrace \sigma_v^0, \sigma_a^1, \sigma_b^1, \sigma_c^1, \sigma_U^2, \sigma_L^2\rbrace$.
+This gives us a chain complex $$\mathbb{Z}^2 \longrightarrow \mathbb{Z}^3 \longrightarrow \mathbb{Z}.$$
+The Klein bottle $K$ has a chain complex given by 
+$$\mathbb{Z} \longrightarrow \mathbb{Z}^2 \longrightarrow \mathbb{Z}.$$ 
+The second map will be zero no matter how we define these maps.
+Recall that $H_1(X) \cong \pi_1(X,x)_{\on{ab}}$. The cell attaching maps 
+$\mathbb{S}^1 \to \mathbb{S}^1_a \vee \mathbb{S}^1_b$, we induce a map 
+$$\underbrace{H_1(\mathbb{S}^1)}_{\cong \mathbb{Z}} \longrightarrow \underbrace{H_1(\mathbb{S}_a^1 \vee \mathbb{S}_b^\vee)_{\cong \mathbb{Z} \oplus \mathbb{Z}}}, \quad z \longmapsto aba^{-1}b, \quad 1 \longmapsto (0,2).$$
+One checks that $H_1(K^2) \cong \pi_1(K^2) \cong (\mathbb{Z} \rtimes \mathbb{Z})_{\on{ab}}$.
+
+\paragraph{Q 2.2} This is probably the hardest question on the assignment. A \emph{manifold with boundary} 
+is a topological space $M$ such that $x\in \partial M$ is locally homeomorphic to the upper half plane 
+$\mathbb{R}^{\geq 0} \times \mathbb{R}^{n-1}$. For every point in the interior of $M$ is locally homeomorphic 
+to $\mathbb{R}^n$.\\\\ 
+One can glue two copies of the manifold $M$ together via the antipodal map by 
+$$\widetilde{X} = M \cup_a M,$$ where $a : \mathbb{S}^n \to \mathbb{S}^n$ is the antipodal map.
+Then, $\mathbb{Z}/2$ acts on $\widetilde{X}$ by the twisting around the area where we glue.
+We actually end up with a free $\mathbb{Z}/2$ action, and free $\mathbb{Z}/2$ actions are (inaudible).
+
+\subsection{Homotopy Invariants}
+
+\begin{theorem}
+    If $f,g : X \to Y$ are homotopic maps, then $f_\ast = g_\ast : H_i(X) \to H_i(Y)$.
+\end{theorem}
+
+\begin{proof}
+    Let $H : X \times I \to Y$ be the homotopy. Then, we have induced chain maps:
+    $$f_\ast, g_\ast : C_\ast(X) \longrightarrow C_\ast(Y).$$
+    Then, we have a map 
+    $$\Delta^n \times I \stackrel{\sigma \times 1_XI}{\longrightarrow} X \times I \stackrel{H}{\longrightarrow} Y.$$
+    Let us first restrict to the case where $n = 1$.
+    In this case, we have $\Delta^1 \times I$, which is a square 
+    whose vertices are labelled by $v_0,v_1,w_0,w_1$. We have maps:
+    $$g : \Delta^1 \times \lbrace 1\rbrace \longrightarrow Y, \quad f : \Delta^1 \times lbrace 0 \rbrace \longrightarrow Y.$$
+    Then, this induces maps 
+    $$f_\#(\sigma^1) = f\circ \sigma\vert_{[v_0,v_1]},$$
+    $$g_\#(\sigma^1) = g\circ \sigma\vert_{[w_0,w_1]}.$$
+    Define $$P : C_1(X) \longrightarrow C_2(X), \quad \sigma \longmapsto H\circ \sigma^2\vert_{[v_0,w_0,w_1]} - H\circ \sigma\vert_{[v_0,v_1,w_1]},$$
+    called the \emph{prism operator}.
+    Then, applying the boundary map, we obtain:
+    \begin{align*}
+        \partial ([v_0,w_0,w_1] - [v_0,v_1,w_1]) &= ([v_0,w_0] - [v_0,w_1] + [w_0,w_1]) - ([v_0,v_1] - [v_0, w_1] + [v_1,w_1])\\ 
+        &= [w_0, w_1] - [v_0,v_1] + [v_0,w_1] - [v_1,w_1]\\ 
+        &= -P \partial
+    \end{align*}
+    What this shows us is that $\partial P = g_\# - f_\# = - P\partial$.
+    Indeed, we can chop $\Delta^n \times I$ into $(n-1)$ $n$-simplices via 
+    $$\bigcup_{i=0}^n [v_0,\cdots, v_i,w_i, \cdots, w_m].$$
+\end{proof}
+
+\begin{remark}
+    More explicitly, in the example above, what we really have are maps:
+    $$\begin{tikzcd}
+        {\Delta^2_{[v_0,v_1,v_2]}} \arrow[r]  & Y \arrow[rd] \arrow[rr, "g"] &     & Y \arrow[ld] \\
+        {\Delta^2_{[w_0,w_1,w_2]}} \arrow[ru] &                              & Y/G &             
+        \end{tikzcd}$$
+    and the prism operator just takes the difference betwen the two $2$-simplices that are being mapped in.
+\end{remark}
+
+\begin{definition}
+    Generally, a \emph{prism operator} is a map 
+    $$P_H :  C_n(X) \longrightarrow C_{n+1}(Y),$$ 
+    such that $\partial P = g_\# - f_\# - P \partial$.
+\end{definition}
+
+\chapter{Week Eight}
+
+\section{Lecture 1, 24/04/2024}
+
+\subsection{Relative Homology} 
+
+For any pair $(X,A)$, define: 
+$$C_n(X,A) := \frac{C_n(X)}{C_n(A)}.$$
+Recall that a singular pair is a map $\Delta^n \to X$, which might factor through $A$, in which 
+case one may consider a singular pair in $A$. This leads us to consider pairs $(X,A)$.
+Since we have boundary maps:
+$$\begin{tikzcd}
+    C_n(X) \arrow[r, "\partial"]           & C_{n-1}(X)           \\
+    C_n(A) \arrow[u] \arrow[r, "\partial"] & C_{n-1}(A) \arrow[u]
+\end{tikzcd}$$
+we thus have an induced boundary map
+$$\partial : \frac{C_n(X)}{C_n(A)} \longrightarrow \frac{C_{n-1}(X)}{C_{n-1}(A)} =: C_{n-1}(X,A).$$
+
+\begin{lemma}
+    There exists a long exact sequence 
+    $$H_{k-1}(X,A) \stackrel{\partial}{\longrightarrow} H_k(A) \stackrel{i_\ast}{\longrightarrow} H_k(X) \longrightarrow H_k(X,A) \stackrel{\partial}{\longrightarrow} H_{k-1}(A).$$
+\end{lemma}
+
+\begin{remark}
+    By abuse of notation, we are denoting all the boundary maps to be $\partial$, but in practise they 
+    are different maps.
+\end{remark}
+
+\begin{proof}[Proof Sketch]
+    We have a level-wise short exact sequence of chain complexes and chain maps, given by 
+    the chain map 
+    $$0 \to C_\ast(A) \stackrel{i_\ast}{\to} C_\ast(X) \stackrel{j_\ast}{\to} C_\ast(X,A) \to 0.$$
+    Whenever we have a short exact sequence of chain complexes,  
+    $$0 \to A_\ast \to B_\ast \to C_\ast \to 0,$$ we obtain a long exact sequence in homology 
+    $$\cdots \to H_{i+1}(C) \stackrel{\partial}{\to} H_i(A) \stackrel{i_\#}{\to} H_i(B) \stackrel{j_\#}{\to} H_i(C) \to \cdots.$$
+    The key point of the proof is the definition of $\partial : H_{i+1}(C) \to H_i(A)$.
+    We have chain maps:
+    $$\begin{tikzcd}
+        A_{n+1} \arrow[r] \arrow[d] & A_n \arrow[r] \arrow[d] & A_{n-1} \arrow[r] \arrow[d] & A_{n-2} \arrow[d] \\
+        B_{n+1} \arrow[r] \arrow[d] & B_n \arrow[r] \arrow[d] & B_{n-1} \arrow[r] \arrow[d] & B_{n-2} \arrow[d] \\
+        C_{n+1} \arrow[r]           & C_n \arrow[r]           & C_{n-1} \arrow[r]           & C_{n-2}          
+    \end{tikzcd}$$
+    Using the fact that each vertical map is short exact, we may use a diagram chasing argument to conclude that 
+    $\partial \widetilde{a} = 0$.
+\end{proof}
+
+\section{Lecture 2, 25/04/2024}
+
+\section{Lecture 3, 26/04/2024}
+
+\chapter{Week Nine}
+
+\section{Lecture 1, 01/05/2024}
+
+\section{Lecture 2, 02/05/2024}
+
+\section{Lecture 3, 03/05/2024}
+
+\chapter{Week Ten}
+
+\section{Lecture 1, 08/05/2024}
+
+\subsection{Equivalence of Simplicial and Singular Homology}
+
+We wish to prove naturality: that is, a diagram as below induces a commutative diagram of $H_\ast$ 
+long exact sequences:
+$$\begin{tikzcd}
+    \cdots \arrow[r] & {H^\Delta_{k+1}(X^{i+1},X^i)} \arrow[r] \arrow[d] & H^\Delta_{k}(X^i) \arrow[r] \arrow[d] & H_k^\Delta(X^{i+1}) \arrow[r] \arrow[d] & H_k^\Delta(X^i) \arrow[d] \arrow[r] & \cdots \\
+    \cdots \arrow[r] & {H_{k+1}(X^{i+1},X^i)} \arrow[r]                  & H_k(X^i) \arrow[r]                    & H_k(X^{i+1}) \arrow[r]                  & {H_k(X^{i+1},X^i)} \arrow[r]        & \cdots
+\end{tikzcd}$$
+
+\paragraph{Strategy:} induction on $\dim X$ for $H_k^\Delta(X^i) \to H_k(X^i)$. Our basic input is something of the form 
+$H_k^\Delta(X^{i+1},X^i) \to H_k(X^{i+1},X^i)$. These are isomorphisms:
+$$H_k^\Delta(X^{i+1},X^i) \cong \bigoplus_\alpha \mathbb{Z}(\Delta_\alpha^k), \quad H_k(X^{i+1},X^i) \cong H_k(\vee_\alpha \mathbb{S}^k) \cong \bigoplus_\alpha \mathbb{Z}_\alpha.$$
+
+\begin{lemma}\label{lem111}
+    Singular homology $H_n(\Delta^n, \partial\Delta^n)$ is generated by $[\on{id} : \Delta^n \to \Delta^n]$, where 
+    $$\partial \on{id} = \sum_{i=0}^n \on{id}\vert_{\partial_i\Delta^n} : \partial_i\Delta^n \longrightarrow \partial\Delta^n \subset \Delta^n.$$
+\end{lemma}
+
+\begin{proof}
+    The proof is by induction. Let $\Lambda \supset \Delta^n$ be the union of the last $n$ faces.
+    That is, 
+    $$\Lambda = \bigcup_{i=1}^n [v_0,\cdots,\widehat{v_i},\cdots,v_n].$$
+    \begin{example}
+        For $n = 2$, we have a triangle with vertices labelled by $v_0,v_1,v_2$ with that orientation. 
+        Then, $\Lambda$ is given by omiiting $v_0v_1$, and $v_0v_2$. In fact, $\Lambda$ is a cone on the simplex of the boundary 
+        of the simplex. Hence, $\Lambda$ is contractible, since all cones are contractible, and $\Lambda$ has the homology 
+        of a point.
+    \end{example}
+    Generally, $\Lambda$ is a cone, or a "horn" as Diarmuid calls it because of its shape. Thus, let us consider the triple $(\Delta^n, \partial\Delta^n, \Lambda)$.
+    Consider the map on relative homology:
+    $$H_n(\Delta^n, \partial\Delta^n) \longrightarrow H_{n-1}(\partial \Delta^n, \Lambda) \longrightarrow \underbrace{H_{n-1}(\Delta^n, \Lambda)}_{=0},$$
+    where the last homology group goes to $0$ since $\Delta^n$ and $\Lambda$ have the same homotopy type. 
+    Thus, $H_n(\Delta^n,\partial\Delta^n) \cong H_{n-1}(\partial \Delta^n,\Lambda)$. Additionally, we have a map:
+    $$\begin{tikzcd}
+        0 \arrow[r] & {H_n(\Delta^n,\partial\Delta^n)} \arrow[r, "\partial"] & {H_{n-1}(\partial\Delta^n,\Lambda)} \arrow[r]          & 0 \\
+                    &                                                        & {H_{n-1}(\Delta^{n-1},\partial\Delta^{n-1})} \arrow[u] &  
+    \end{tikzcd}$$
+    Since there are relative homeomorphisms:
+    $$\begin{tikzcd}
+        {(\partial \Delta^n, \Lambda)} \arrow[r]                   & (\partial\Delta^n/\Lambda)                                  \\
+        {(\Delta^{n-1}, \partial\Delta^{n-1})} \arrow[r] \arrow[u] & \Delta^{n-1}/\partial\Delta^{n-1} \arrow[u, "\text{homeo}"]
+        \end{tikzcd}$$
+    there are additions that we can make to the sequence:
+    $$\begin{tikzcd}
+        0 \arrow[r] & {H_n(\Delta^n,\partial\Delta^n)} \arrow[r, "\partial"] & {H_{n-1}(\partial\Delta^n,\Lambda)} \arrow[r] \arrow[rd, no head, Rightarrow] & 0                                 \\
+                    &                                                        & {H_{n-1}(\Delta^{n-1},\partial\Delta^{n-1})} \arrow[u] \arrow[d]              & H_{n-1}(\partial\Delta^n/\Lambda) \\
+                    &                                                        & H_{n-1}(\Delta^{n-1}/\partial\Delta^{n-1}) \arrow[ru, "\cong"']               &                                  
+        \end{tikzcd}$$
+    This will be the inductive step that we will perform.
+    Reduce to the $n=1$ case. Then, by Lemma \ref{lem111}, we have that there is a diagram:
+    $$\begin{tikzcd}
+        {H_i^\Delta(X^i,X^i) \cong \mathbb{Z}([\on{id}:\Delta_\alpha^i \to \Delta_\beta^i])} \arrow[r, "\cong"] \arrow[rdd, bend right=49] & {H_i(X^i,X^{i-1})} \arrow[d] \\
+                                                                                                                                           & {H_i(X^i,X^{i-1})} \arrow[d] \\
+                                                                                                                                           & H_i(\vee_\alpha\mathbb{S}^i)
+        \end{tikzcd}$$
+    By induction on the $5$-lemma, it follows that 
+    $$H_k^\Delta(X) \longrightarrow H_k(X),$$ is an isomorphism for all $k$. If $(X,A)$ is a $\Delta$-complex pair, then 
+    $H_k^\Delta(X,A) \to H_k(X,A)$ is an isomorphism for all $k$.
+    Then, by the $5$-lemma:
+    $$\begin{tikzcd}
+        H_i^\Delta(A) \arrow[r] \arrow[d, "\cong"] & H_i^\Delta(X) \arrow[r] \arrow[d, "\cong"] & {H_i^\Delta(X,A)} \arrow[d, "\text{$\cong$ by $5$-lemma}"] \\
+        H_i(A) \arrow[r]                           & H_i(X) \arrow[r]                           & {H_i(X,A)}                                                
+        \end{tikzcd}$$
+\end{proof}
+
+\subsection{CW-Homology}
+A CW-complex of $X$ is a chain complex 
+$$C_\ast^{\on{CW}}(X) = \left(\bigoplus_{i=0}^\infty C_i^{\on{CW}}(X), \partial_i\right),$$ 
+where each $$C_i(X) = \mathbb{Z}(e_\alpha^i).$$
+We are going to make the identifications $$C_i(X) \cong H_i(X^i,X^{i-1}) \cong H_i(X^i/X^{i-1}).$$
+
+\begin{theorem}\label{thm_comparison}
+    There exists a natural isomorphism $$H_i^{\on{CW}}(X) \longrightarrow H_i(X).$$
+\end{theorem}
+
+\begin{lemma}[Lemma 2.34, Hatcher]\label{lem2.34}
+    \leavevmode 
+    \begin{itemize}
+        \item[(i)]  $$H_k(X^, X^{i-1}) = \begin{cases}
+            0,\quad k \neq n\\ 
+            \mathbb{Z}|^{c_n}, \quad k =n
+        \end{cases}$$
+        \item[(b)] $H_k(X^n) = 0$ for all $k > n$,
+        \item[(c)] $X^n \hookrightarrow X$ induces $H_i(X^n) \to H_i(X)$, 
+        which is an isomorphism for all $i < n$, and surjection for all $i = n$.
+    \end{itemize}
+\end{lemma}
+\begin{proof}
+    (i) follows by construction. For (ii) and (iii), consider a long exact sequence:
+    $$\begin{tikzcd}
+        \cdots \arrow[r] & {H_{k+1}(X^n,X^{n-1})} \arrow[r] & H_k(X^{n-1}) \arrow[r] & H_k(X^n) \arrow[r] & {H_k(X^n,X^{n-1})} \arrow[r] & H_{k-1}(X^{n-1}) \arrow[r] & \cdots
+    \end{tikzcd}$$
+    If $k > n$, 
+    $$H_k(X^n) \cong H_k(X^{n-1}) \cong H_k(X^{n-2}) \cong \cdots \cong H_k(X^0) \cong 0,$$
+    where $X^0 = \on{pt}$. This proves (ii).
+    Note that if $k < n$, we have an isomorphism $$H_k(X^{n-1}) \to H_k(X^n) \to H_k(X^{n+1}) \to \cdots,$$
+    unless $\dim X$ is infinite, in which case just go see Hatcher. For $k = n$, we argue similarly.
+\end{proof}
+
+Now, we want to construct a map between cellular homology, and argue that it is an isomorphism.
+
+\begin{proof}[Proof of Theorem \ref{thm_comparison}]
+    Could repeat $H_\ast^\Delta$-argument. Assume that $$H_n(X^{n+1}) \longrightarrow H_n(X),$$ 
+    is an isomorphism. Then, consider the following diagram:
+    $$\begin{tikzcd}
+        H_n(X^{n-1}) \arrow[rd, "\text{$=0$ by Lemma \ref{lem2.34}(b)}"]                     &                                           & H_n(X^{n+1}) \cong H_n(X) \arrow[r]                                        & {H_n(X^{n+1},X^n) = 0}     \\
+                                                                                             & H_n(X^n) \arrow[ru, two heads] \arrow[rd] &                                                                            &                            \\
+        {H_{n+1}(X^{n+1},X^n)} \arrow[ru, "\partial"] \arrow[rr, "\partial_{n+1}^{\on{CW}}"] &                                           & {H_n(X^n,X^{n-1})} \arrow[r, "\partial_n^{\on{CW}}"] \arrow[d, "\partial"] & {H_{n-1}(X^{n-1},X^{n-2})} \\
+                                                                                             &                                           & H_{n-1}(X^{n-1}) \arrow[ru, "j_{n-1}"']                                    &                            \\
+        0 \arrow[r]                                                                          & H_{n-1}(X^{n-2}) \arrow[ru]               &                                                                            &                           
+    \end{tikzcd}$$
+    By a diagram chase argument, we have isomorphisms:
+    $$H_n(X) \cong H_n(X^{n+1}) \cong H_n(X^n)/ \on{Im}(\partial_{n+1}) \cong j (H_n(X^n)) / \on{Im}\partial_n^{\on{CW}} \cong \ker (\partial_n)/\on{Im}(\partial_n^{\on{CW}}).$$
+    But since $j_{n-1}$ is injective, we thus have that $$\frac{\ker\partial_n}{\on{Im}\partial_{n+1}^{\on{CW}}} \cong \frac{\ker\partial_n^{\on{CW}}}{\on{Im}(\partial_{n+1}^{\on{CW}})} = H_n^{\on{CW}}(X^n,X^{n-1}).$$
+\end{proof}
+
+It follows that map $H_i^{\on{CW}}(X) \to H_i(X)$ is a zig-zag:
+$$\begin{tikzcd}
+    & H_i(X) &                    \\
+    H_i(X^i) \arrow[ru, "i"] \arrow[rr] &        & {H_i(X^i,X^{i-1})} \\
+    {[c]} \arrow[rr, maps to]           &        & {[c]_{\on{CW}}}   
+\end{tikzcd}$$ It is an exercise to check that this is well-defined.
+
+\subsection{Cellular Boundary Map}
+
+We have:
+$$H_i(X^i,X^{i-1}) \longrightarrow H_{i-1}(X^{i-1}) \stackrel{j}{\longrightarrow} H_{i-1}(X^{i-1}, X^{i-2}),$$
+for an $i$-cell $e_\alpha^i = \psi(D_\alpha^i)$. Using the fact that $(D^i,\mathbb{S}^{i-1}) \cong (\Delta^i, \Delta^{i-1})$ and 
+$[\on{id} : (\Delta^i,\partial\Delta^i) \to (\Delta^i, \partial\Delta^i)]$ generates 
+$H_i(\Delta^i, \partial\Delta^i) \cong H_i(D^i, \mathbb{S}^{i-1})$, we see that 
+$\partial_{\on{CW}}(e^i_\alpha)$ is given by taking 
+$$H_{i-1}(\mathbb{S}^{i-1}_\alpha) \stackrel{\varphi_\alpha}{\longrightarrow} H_{i-1}(X^{i-1}) \stackrel{q}{\longrightarrow} H_{i-1}(X^{i-1}/X^{i-2}) \cong H_i(\vee_\beta \mathbb{S}_\beta^i) \stackrel{\on{pr_\beta}}{\longrightarrow} \mathbb{S}_\beta^{i-1},$$
+where $\on{pr}_\beta$ is the projection map.
+Recall that $\partial(e_\alpha^i) = \sum n_{\alpha\beta} e^{i-1}_\beta$, where 
+$$n_{\alpha\beta} = \deg \left(\varphi_\alpha \circ q  \circ \on{pr}_\beta \right).$$
+
+\section{Lecture 2, 09/05/2024}
+
+\subsection{Degree and Local Degree}
+
+Suppose that $y \in \mathbb{S}^n$ is such that $$\vert f^{-1}(y)\vert < \infty.$$
+That is, we are supposing that $y$ is a regular value of a smooth map. 
+We wish to show that for each $x_i \in f^{-1}(y)$, we may assign a degree 
+$\deg_{x_i} (f) \in \lbrace \pm 1\rbrace$ such that $$\deg(f) = \sum_i \deg_{x_i}(f).$$
+Let $V \subset \mathbb{S}^n$ be a neighbourhood of $y$ such that $V \cong \mathbb{R}^n$, and 
+$x_i \in U_i$ neighourhoods such that $f\vert_{U_i} : U_i \to V_i$.
+On homology, we have:
+$$H_n(\mathbb{R}^n, \mathbb{R}^n\setminus \lbrace \on{pt}\rbrace) \stackrel{\partial}{\longrightarrow} H_n(\mathbb{R}^n\setminus \lbrace \on{pt}\rbrace) \cong H_{n-1}(\mathbb{S}^{n-1}) \cong \mathbb{Z},$$
+where the isomorphism follows since $\mathbb{R}^n \setminus \lbrace \on{pt}\rbrace$ deformation retracts to 
+$\mathbb{S}^{n-1}$. Thus, for our choice of open sets, we have:
+$$\begin{tikzcd}
+    & {H_n(U_i, U_i\setminus\lbrace x_i\rbrace)} \arrow[r, "f_\ast"] \arrow[d] \arrow[ld, "\cong"] & {H_n(V,V\setminus \lbrace y\rbrace)} \arrow[d]            \\
+{H_n(\mathbb{S}^n,\mathbb{S}^n\setminus\lbrace x_i\rbrace)} \arrow[r] & {H_n(\mathbb{S}^n,\mathbb{S}^n\setminus f^{-1}(y))} \arrow[r]                                & {H_n(\mathbb{S}^n,\mathbb{S}^n\setminus\lbrace y\rbrace)} \\
+    & H_n(\mathbb{S}^n) \arrow[r] \arrow[u] \arrow[lu, "\cong"]                                    & H_n(\mathbb{S}^n) \arrow[u, "\cong"]                     
+\end{tikzcd}$$
+The left two isomorphisms follow by excision.
+Explicitly, we have:
+$$H_n(\mathbb{S}^n, \mathbb{S}^n \setminus f^{-1}(y)) \cong \bigoplus_{\vert f^{-1}(y)\vert} \mathbb{Z}.$$
+Let $C = \mathbb{S}^n/mH(U_i)$, which is homotopy equivalent to $\mathbb{S}^n \setminus f^{-1}(y)$. 
+Thus, on homology, we have: 
+$$H_n(\mathbb{S}^n, \mathbb{S}^n\setminus f^{-1}(y)) \cong H_n(\mathbb{S}^n, C) \cong H_n(\mathbb{S}^n/C) \cong H_n(V\mathbb{S}^n).$$
+We have a map: $H_n(\mathbb{S}^n) \to H_n(\mathbb{S}^n/C)$, which becomes $$\Delta : \mathbb{Z} \longrightarrow \mathbb{Z}^{\vert f^{-1}(y)\vert},$$ 
+and 
+$$H_n(\mathbb{S}^n, \mathbb{S}^n\setminus f^{-1}(y)) \longrightarrow H_n(\mathbb{S}^n,\mathbb{S}^n\setminus \lbrace y\rbrace),$$ 
+whichb ecomes a map 
+$$\mathbb{Z}^{\vert f^{-1}(y)\vert} \longrightarrow \mathbb{Z}, \quad (d_1,\cdots,d_m) \longmapsto d_1 + \cdots + d_m,$$
+where for simplicity we are writing $m = \vert f^{-1}(y)\vert$.
+This fact follows from the commutativity of the diagram above.
+
+\paragraph{Question:} Is it true that $\deg_{x_i}(f) \in \lbrace \pm 1\rbrace$? This would imply that if $y$ 
+is regular, then $f\vert_{U_i} : U_i \to V$ is a diffeomorphism.
+
+\begin{example}
+    Consider the map $\C \to \C$ defined by $z\mapsto z^2$. We have that $f^{-1}(0) = 0$, thus regular. 
+    Then, $\deg_0(f) = 2$. 
+\end{example}
+
+\begin{example}
+    Consider $f_d : \mathbb{S}^1 \to \mathbb{S}^1$ given by $z\mapsto z^d$. Choose an orientation for the 
+    sphere. We have that $\deg(f_d) = d$. By construction, $f_{-1} : z \mapsto \overline{z}$, 
+    and we have that $\deg(f_{-1}) = -1$.
+\end{example}
+
+\paragraph{Properties of Degrees}
+\begin{enumerate}
+    \item $\deg(R) = -1$ for $R$ a reflection, 
+    \item If $f$ has no fixed points, then $\deg(f) = \deg(A) = (-1)^{n+1}$
+\end{enumerate}
+
+\chapter{Week Eleven}
+
+\section{Lecture 1, 15/05/2024}
+
+\begin{proposition}[Prop 2.30 (extended)]
+    Let $f : M \to N$ be a map between closed, connected, oriented $n$-manifolds 
+    (or a self-map of a closed, connected, orientable $n$-manifold $h : M \to M$), then 
+    $$H_n(M) \cong \mathbb{Z}([M]), \quad H_n(N) \cong \mathbb{Z}([N]),$$ 
+    and define $\deg(f)$ by $f_\ast[M] \deg(f) \cdot [N]$.
+    Then,
+    $$\deg(f) = \sum_{x_i \in f^{-1}(y)} \deg_{x_i}(f),$$
+    where $\deg_{x_i}(f)$ is the local degree of $f$ at $x_i$.
+\end{proposition}
+
+\begin{proof}
+    Take $M/ \left(M\setminus \bigcup_{i=1}^n U_i \right) \cong \vee \mathbb{S}^n$.
+\end{proof}
+
+\end{document}
